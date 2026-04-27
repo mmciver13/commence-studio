@@ -1,0 +1,2423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Commence Studio — Unified commerce, built around the brand that earned it.</title>
+<meta name="description" content="Commence Studio is a unified-commerce + brand architecture studio for growth-stage brands. Strategy, brand, Shopify, content, and growth — engineered as one system." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ──────────────────────────────────────────────────────────────────
+   COMMENCE STUDIO — HOMEPAGE HI-FI v1
+   Design tokens · type ramp · components · interactions
+   Single-file prototype. Mobile-first. WCAG 2.2 AA.
+   ────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* Palette */
+  --paper: #F7F5EE;
+  --paper-2: #FBF9F2;
+  --ink: #0F0F0E;
+  --ink-2: #1B1A17;
+  --mute: #ECE8DC;
+  --mute-2: #E3DECF;
+  --line: #BFB9A6;
+  --subtle: #6F6B5F;
+  --quiet: #8E8A7E;
+  --accent: #C9532E;        /* decorative + non-text */
+  --accent-2: #B14624;      /* text-bearing buttons (5.10:1 on paper) */
+  --accent-3: #A03A1E;      /* extra-conservative (6.17:1) */
+  --accent-soft: #F4E5DA;
+  --forest: #1F3A2E;
+  --forest-2: #15291F;
+  --gold: #A57F2C;          /* 3.39:1 — meets non-text 3:1 for star icons */
+
+  /* Type */
+  --sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Fraunces', 'Tiempos Headline', Georgia, serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radius */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgba(15,15,14,.04), 0 4px 14px rgba(15,15,14,.04);
+  --shadow-2: 0 6px 24px rgba(15,15,14,.08), 0 2px 6px rgba(15,15,14,.04);
+  --shadow-3: 0 24px 64px rgba(15,15,14,.14), 0 6px 16px rgba(15,15,14,.06);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body{
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01","cv11";
+}
+img { display:block; max-width:100%; height:auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: none; }
+
+/* Selection */
+::selection{ background: var(--accent); color: var(--paper); }
+
+/* Container */
+.container{ width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 768px){ .container{ padding: 0 40px; } }
+@media (min-width: 1280px){ .container{ padding: 0 48px; } }
+
+/* Eyebrow */
+.eyebrow{
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--subtle);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
+
+/* Type ramp */
+.h1, h1 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(38px, 5.4vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: var(--ink);
+}
+.h1 .it, h1 .it{
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.h2, h2 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(32px, 4.6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+.h2 .it { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.h3 { font-family: var(--sans); font-weight: 500; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; letter-spacing: -0.015em; margin:0; }
+.h4 { font-family: var(--sans); font-weight: 500; font-size: 22px; line-height: 1.25; letter-spacing: -0.01em; margin:0; }
+.h5 { font-family: var(--sans); font-weight: 500; font-size: 16px; line-height: 1.3; letter-spacing: 0; margin:0; }
+.lede{ font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; color: var(--ink-2); max-width: 60ch; }
+.small{ font-size: 14px; line-height: 1.5; color: var(--subtle); }
+.kpi{ font-family: var(--sans); font-weight: 500; font-size: clamp(40px, 4.8vw, 64px); line-height: 1; letter-spacing: -0.03em; }
+
+/* Buttons */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: var(--r-pill);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  transition: transform .25s var(--ease-out), background .25s var(--ease-out), color .25s var(--ease-out), box-shadow .25s var(--ease-out);
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn-dark{ background: var(--ink); color: var(--paper); }
+.btn-dark:hover{ background: var(--ink-2); box-shadow: var(--shadow-2); }
+.btn-ghost{ background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover{ background: var(--mute); border-color: var(--ink); }
+.btn-accent{ background: var(--accent-2); color: var(--paper); }    /* 5.10:1 AA */
+.btn-accent:hover{ background: var(--accent-3); }                    /* 6.17:1 AA */
+.btn-link{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 500; color: var(--ink);
+  border-bottom: 1px solid currentColor; padding-bottom: 2px;
+}
+.btn-link:hover{ color: var(--accent); }
+.btn .arrow{ display:inline-block; transition: transform .25s var(--ease-out); }
+.btn:hover .arrow{ transform: translateX(3px); }
+
+/* Chip / Tag */
+.chip{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: var(--r-pill);
+  background: var(--mute); color: var(--ink);
+  font-size: 13px; font-weight: 500;
+}
+.chip-line{ background: transparent; border: 1px solid var(--line); }
+.chip-accent{ background: var(--accent-soft); color: var(--accent-2); }
+
+/* Stars */
+.stars{ display:inline-flex; gap: 2px; color: var(--gold); }
+.stars svg{ width: 14px; height:14px; }
+
+/* ──────────────────────────────────────────────────────────────────
+   NAV — Island sticky with mega menu
+   ────────────────────────────────────────────────────────────────── */
+.nav-shell{
+  position: fixed; top: 16px; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: center;
+  pointer-events: none;
+  transition: top .3s var(--ease-out);
+}
+.nav{
+  pointer-events: auto;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 8px 8px 20px;
+  background: linear-gradient(180deg,
+    rgba(247,245,238,.62) 0%,
+    rgba(247,245,238,.42) 100%);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: var(--r-pill);
+  box-shadow:
+    0 10px 36px rgba(15,15,14,.10);
+  width: min(1080px, calc(100% - 32px));
+  position: relative;
+  isolation: isolate;
+}
+/* Specular highlight on nav — top-edge shimmer */
+.nav::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 35%);
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+.nav > *{ position: relative; z-index: 2; }
+.nav.scrolled{
+  background: linear-gradient(180deg,
+    rgba(247,245,238,.78) 0%,
+    rgba(247,245,238,.58) 100%);
+}
+.brand{
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--ink);
+  font-weight: 600; letter-spacing: -0.01em; font-size: 17px;
+}
+.brand .brandmark{
+  width: 26px; height: 26px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.brand .brand-text{
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 17px;
+}
+/* Legacy .mark kept for safety in case any other instance lingers */
+.brand .mark{
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--ink); color: var(--paper);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 16px;
+}
+.nav-links{ display:none; align-items:center; gap: 4px; margin-left: 12px; }
+@media (min-width: 980px){ .nav-links{ display:inline-flex; } }
+.nav-link{
+  position: relative;
+  padding: 10px 14px;
+  border-radius: var(--r-pill);
+  font-size: 14.5px; font-weight: 500;
+  color: var(--ink); transition: background .2s var(--ease-out), color .2s var(--ease-out);
+}
+.nav-link:hover{ background: var(--mute); }
+.nav-link.has-mega::after{
+  content: ""; display: inline-block;
+  width: 6px; height:6px; margin-left: 6px;
+  border-right: 1.5px solid var(--subtle);
+  border-bottom: 1.5px solid var(--subtle);
+  transform: rotate(45deg) translateY(-2px);
+}
+.nav-spacer{ flex: 1; }
+.nav-cta{
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 18px; border-radius: var(--r-pill);
+  font-size: 14.5px; font-weight: 500;
+  transition: background .2s var(--ease-out), transform .2s var(--ease-out);
+}
+.nav-cta:hover{ background: var(--ink-2); transform: translateY(-1px); }
+.nav-burger{
+  display: inline-flex; align-items:center; justify-content:center;
+  width: 40px; height:40px; border-radius: var(--r-pill); background: var(--mute);
+  margin-left: 4px;
+}
+@media (min-width: 980px){ .nav-burger{ display:none; } }
+
+/* Mega menu */
+.mega{
+  position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-6px);
+  width: min(960px, 92vw);
+  background: linear-gradient(180deg,
+    rgba(247,245,238,.78) 0%,
+    rgba(247,245,238,.62) 100%);
+  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  backdrop-filter: saturate(180%) blur(28px);
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: var(--r-xl);
+  box-shadow:
+    0 24px 64px rgba(15,15,14,.18),
+    0 6px 16px rgba(15,15,14,.08);
+  padding: 28px;
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 28px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .25s var(--ease-out), transform .25s var(--ease-out), visibility .25s;
+  position: absolute; isolation: isolate;
+}
+.mega::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 25%);
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+.mega > *{ position: relative; z-index: 2; }
+.has-mega-wrap{ position: relative; }
+.has-mega-wrap:hover .mega,
+.has-mega-wrap:focus-within .mega{
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.mega h6{ font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--subtle); margin: 0 0 14px; font-family: var(--mono); font-weight: 500; }
+.mega-col ul{ list-style:none; padding:0; margin:0; display: flex; flex-direction: column; gap: 12px; }
+.mega-col a{
+  display: flex; flex-direction: column;
+  padding: 8px 12px; border-radius: var(--r-md);
+  transition: background .2s var(--ease-out);
+}
+.mega-col a:hover{ background: var(--mute); }
+.mega-col a strong{ font-weight: 500; color: var(--ink); font-size: 15px; }
+.mega-col a span{ color: var(--subtle); font-size: 13px; margin-top: 2px; }
+.mega-feature{
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--r-lg); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
+  background-image: linear-gradient(135deg, rgba(201,83,46,.18) 0%, rgba(15,15,14,0) 60%), url('https://cdn.sanity.io/images/w2xt1cyc/production/ac3ea56999e83964b7648256ac5fcf65af0b4f3e-1920x1080.png?w=900&h=600&fit=crop&auto=format');
+  background-size: cover; background-position: center;
+  min-height: 220px;
+  position: relative; overflow: hidden;
+}
+.mega-feature::after{
+  content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(15,15,14,.0) 40%, rgba(15,15,14,.7));
+}
+.mega-feature > *{ position: relative; z-index: 1; }
+.mega-feature .tag{ font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-soft); }
+.mega-feature .ttl{ font-size: 22px; font-weight: 500; line-height: 1.15; margin-top: 8px; letter-spacing: -0.015em; }
+.mega-feature .lnk{ font-size: 13px; opacity: .85; margin-top: 14px; }
+
+/* ──────────────────────────────────────────────────────────────────
+   HERO — tightened so CTAs sit above the fold on 800–900px viewports
+   ────────────────────────────────────────────────────────────────── */
+.hero{
+  padding: 116px 0 56px;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 1024px){
+  .hero{ padding: 124px 0 64px; }
+}
+.hero-grid{
+  display: grid; grid-template-columns: 1fr;
+  gap: 36px; align-items: end;
+}
+@media (min-width: 1024px){
+  .hero-grid{ grid-template-columns: 1.2fr 1fr; gap: 56px; }
+}
+.hero-meta{
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  margin-bottom: 20px;
+}
+.hero-rating{
+  display:inline-flex; align-items:center; gap:10px;
+  background: linear-gradient(180deg, rgba(247,245,238,.62), rgba(247,245,238,.42));
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(255,255,255,.65);
+  padding: 8px 14px; border-radius: var(--r-pill);
+  font-size: 13px;
+  box-shadow:
+    0 8px 24px rgba(15,15,14,.08);
+  position: relative; isolation: isolate;
+}
+.hero-rating::after{
+  content:""; position:absolute; inset:0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 32%);
+  mix-blend-mode: overlay; z-index: 1;
+}
+.hero-rating > *{ position: relative; z-index: 2; }
+.hero-rating strong{ font-weight: 600; }
+.hero-shopify{
+  display:inline-flex; align-items:center; gap:8px;
+  background: linear-gradient(180deg, rgba(15,15,14,.78), rgba(15,15,14,.62));
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  color: var(--paper);
+  border: 1px solid rgba(247,245,238,.20);
+  padding: 8px 14px; border-radius: var(--r-pill);
+  font-size: 12.5px; letter-spacing: .01em;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.18);
+  position: relative; isolation: isolate;
+}
+.hero-shopify::after{
+  content:""; position:absolute; inset:0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(247,245,238,.22) 0%, rgba(247,245,238,0) 32%);
+  z-index: 1;
+}
+.hero-shopify > *{ position: relative; z-index: 2; }
+.hero-shopify .dot{ width: 8px; height: 8px; border-radius:50%; background: #95BF47; }
+.hero-eyebrow{
+  margin: 20px 0 14px;
+  font-size: 14.5px; color: var(--subtle); letter-spacing: -0.005em;
+}
+.hero h1{ margin-bottom: 22px; }
+.hero .lede{ margin-bottom: 28px; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.42; }
+.hero-cta{ display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.hero-tertiary{ font-size: 14.5px; color: var(--subtle); border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color .2s var(--ease-out), border-color .2s var(--ease-out); }
+.hero-tertiary:hover{ color: var(--ink); border-color: var(--ink); }
+
+/* Asymmetric design-detail masonry */
+.hero-collage{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 60px;
+  gap: 12px;
+  position: relative;
+}
+.hero-collage .cell{
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--mute);
+  position: relative;
+  box-shadow: var(--shadow-1);
+  transition: transform .6s var(--ease-out);
+}
+.hero-collage .cell img{ width:100%; height:100%; object-fit: cover; transition: transform 6s linear; }
+.hero-collage .cell:hover img{ transform: scale(1.04); }
+.cell.c1{ grid-column: 1 / span 4; grid-row: 1 / span 4; }
+.cell.c2{ grid-column: 5 / span 2; grid-row: 1 / span 3; }
+.cell.c3{ grid-column: 5 / span 2; grid-row: 4 / span 3; }
+.cell.c4{ grid-column: 1 / span 2; grid-row: 5 / span 3; }
+.cell.c5{ grid-column: 3 / span 2; grid-row: 5 / span 3; }
+.hero-collage .badge{
+  position: absolute; bottom: 10px; left: 10px;
+  background: linear-gradient(180deg, rgba(247,245,238,.62), rgba(247,245,238,.42));
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid rgba(255,255,255,.55);
+  font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink); padding: 5px 10px; border-radius: var(--r-pill);
+  box-shadow:
+    0 4px 14px rgba(15,15,14,.10);
+  z-index: 3;
+}
+
+/* Logo marquee */
+.logos{
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+  background: var(--paper);
+  overflow: hidden;
+  position: relative;
+}
+.logos::before, .logos::after{
+  content:""; position:absolute; top:0; bottom:0; width: 80px; z-index: 2; pointer-events: none;
+}
+.logos::before{ left:0; background: linear-gradient(90deg, var(--paper), transparent); }
+.logos::after{ right:0; background: linear-gradient(-90deg, var(--paper), transparent); }
+.logos-track{
+  display: flex; gap: 64px; align-items: center;
+  animation: marquee 38s linear infinite;
+  width: max-content;
+}
+.logos:hover .logos-track{ animation-play-state: paused; }
+.logo-item{
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 12px;
+  color: var(--subtle);
+  transition: color .35s var(--ease-out), opacity .35s var(--ease-out);
+}
+.logo-item.logo-text{
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: 22px; letter-spacing: -0.01em;
+  opacity: .85;
+}
+.logo-item.logo-svg{ height: 30px; opacity: .7; }
+.logo-item.logo-svg svg{ height: 100%; width: auto; display: block; }
+.logos:hover .logo-item{ opacity: 0.42; }
+.logos:hover .logo-item:hover{ color: var(--ink); opacity: 1; }
+.logo-item .sep{ width: 6px; height: 6px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+@keyframes marquee{ from{ transform: translateX(0);} to{ transform: translateX(-50%);} }
+
+/* ──────────────────────────────────────────────────────────────────
+   SECTION SHELL
+   ────────────────────────────────────────────────────────────────── */
+section{ padding: 96px 0; }
+@media (min-width: 1024px){ section{ padding: 128px 0; } }
+.sec-head{ display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 980px; margin-bottom: 56px; }
+.sec-head .row{ display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.sec-head p.lede{ color: var(--ink-2); }
+
+/* ──────────────────────────────────────────────────────────────────
+   POSITIONING STRIP — manifesto (3-col header + 9-col body, per wireframe)
+   ────────────────────────────────────────────────────────────────── */
+.positioning{ padding: 96px 0; }
+@media (min-width: 1024px){ .positioning{ padding: 128px 0; } }
+.positioning-grid{
+  display: grid; grid-template-columns: 1fr; gap: 32px;
+}
+@media (min-width: 1024px){
+  .positioning-grid{ grid-template-columns: 3fr 9fr; gap: 48px; align-items: start; }
+}
+.positioning-eyebrow{ padding-top: 8px; }
+.positioning-body h2{ margin: 0 0 36px; max-width: 22ch; }
+.positioning-paras{
+  display: grid; grid-template-columns: 1fr; gap: 24px;
+  margin-bottom: 28px;
+}
+@media (min-width: 768px){
+  .positioning-paras{ grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+.positioning-paras p{
+  font-size: 16.5px; line-height: 1.55;
+  color: var(--ink-2); margin: 0; max-width: 44ch;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   SERVICES BENTO — 4-col asymmetric (per wireframe)
+   ────────────────────────────────────────────────────────────────── */
+.services-section{ padding-top: 0; }
+.services-bento{
+  display: grid; grid-template-columns: 1fr; gap: 14px;
+}
+@media (min-width: 768px){
+  .services-bento{
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+    gap: 16px;
+  }
+}
+.svc-tile{
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 22px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 16px;
+  text-decoration: none; color: var(--ink);
+  transition: transform .35s var(--ease-out), border-color .35s var(--ease-out), box-shadow .35s var(--ease-out);
+  position: relative;
+}
+.svc-tile:hover{ border-color: var(--ink); box-shadow: var(--shadow-2); }
+
+.svc-tile.featured{
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  padding: 32px;
+}
+@media (min-width: 768px){
+  .svc-tile.featured{ grid-column: span 2; grid-row: span 2; }
+}
+.svc-tile.medium{ padding: 24px; }
+@media (min-width: 768px){
+  .svc-tile.medium{ grid-column: span 2; }
+}
+.svc-tile.small{ /* default span 1 */ }
+@media (min-width: 768px){
+  .svc-tile.small{ grid-column: span 1; }
+}
+/* Brand Support — tall 1×2, warm accent-soft contrast (lighter than featured dark) */
+.svc-tile.tall{
+  background: var(--accent-soft);
+  border-color: rgba(201,83,46, 0.32);
+  padding: 28px;
+}
+@media (min-width: 768px){
+  .svc-tile.tall{ grid-column: span 1; grid-row: span 2; padding: 32px; }
+}
+.svc-tile.tall .svc-tag{ color: var(--accent-2); }
+.svc-tile.tall .svc-tile-title{
+  font-size: clamp(24px, 2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.svc-tile.tall .svc-tile-title .it{ font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent-2); }
+.svc-tile.tall p{
+  color: var(--ink-2);
+  font-size: 14.5px; line-height: 1.5;
+  max-width: 28ch;
+  margin-top: 12px;
+}
+.svc-tile.tall .svc-tile-link{
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+  opacity: 1;
+  font-weight: 500;
+}
+.svc-tile.tall:hover{ border-color: var(--accent-2); }
+
+.svc-tag{
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent);
+  display: inline-block;
+}
+.svc-marker{
+  font-family: var(--serif); color: var(--accent);
+  font-size: 16px; line-height: 1;
+  display: inline-block;
+}
+.svc-tile.featured .svc-marker{ color: var(--accent); }
+.svc-tile-title{
+  font-family: var(--sans); font-weight: 500;
+  margin: 12px 0 10px;
+  letter-spacing: -0.02em; line-height: 1.1;
+}
+.svc-tile.featured .svc-tile-title{
+  font-size: clamp(28px, 3vw, 44px);
+}
+.svc-tile.featured .svc-tile-title .it{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--accent);
+}
+.svc-tile.medium .svc-tile-title{ font-size: 22px; }
+.svc-tile-title-sm{
+  font-family: var(--sans); font-weight: 500;
+  font-size: 17px; line-height: 1.18;
+  margin: 10px 0 6px;
+  letter-spacing: -0.01em;
+}
+.svc-tile p{ margin: 0; color: var(--subtle); font-size: 13.5px; line-height: 1.5; }
+.svc-tile.featured p{ color: rgba(247,245,238,.78); font-size: 16px; max-width: 36ch; line-height: 1.5; margin-top: 8px; }
+.svc-tile.medium p{ font-size: 14.5px; }
+.svc-tile.small p{ font-size: 13px; }
+
+.svc-tile-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-weight: 500; font-size: 13px;
+  color: inherit; opacity: .85;
+  border-bottom: 1px solid currentColor; padding-bottom: 2px;
+  align-self: flex-start;
+  transition: opacity .25s var(--ease-out);
+}
+.svc-tile.featured .svc-tile-link{ font-size: 14px; opacity: 1; color: var(--paper); }
+.svc-tile-link .arr{ display: inline-block; transition: transform .25s var(--ease-out); }
+.svc-tile:hover .svc-tile-link{ opacity: 1; }
+.svc-tile:hover .svc-tile-link .arr{ transform: translateX(3px); }
+
+/* ──────────────────────────────────────────────────────────────────
+   POSITIONING — bento (legacy class kept for any other usage)
+   ────────────────────────────────────────────────────────────────── */
+.bento{
+  display: grid; grid-template-columns: 1fr; gap: 16px;
+}
+@media (min-width: 768px){ .bento{ grid-template-columns: repeat(6, 1fr); } }
+.tile{
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 32px;
+  display: flex; flex-direction: column; gap: 20px;
+  transition: transform .3s var(--ease-out), border-color .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+.tile:hover{ border-color: var(--ink); box-shadow: var(--shadow-2); }
+.tile.dark{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tile.dark .small{ color: rgba(247,245,238,.7); }
+.tile.accent{ background: var(--accent-soft); border-color: var(--accent-soft); }
+.tile h3{ font-weight: 500; }
+.tile.t1{ grid-column: span 6; }
+.tile.t2{ grid-column: span 6; }
+.tile.t3{ grid-column: span 6; }
+.tile.t4{ grid-column: span 6; }
+@media (min-width: 768px){
+  .tile.t1{ grid-column: span 4; }
+  .tile.t2{ grid-column: span 2; }
+  .tile.t3{ grid-column: span 3; }
+  .tile.t4{ grid-column: span 3; }
+}
+.tile .icon{
+  width: 44px; height:44px; border-radius: var(--r-md);
+  background: var(--mute); display: inline-flex; align-items:center; justify-content:center;
+  color: var(--ink);
+}
+.tile.dark .icon{ background: rgba(247,245,238,.1); color: var(--paper); }
+
+/* ──────────────────────────────────────────────────────────────────
+   FEATURED CASE STUDY — Sorella
+   ────────────────────────────────────────────────────────────────── */
+.feat{
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--r-xl);
+  padding: 32px; overflow: hidden; position: relative;
+}
+@media (min-width: 768px){ .feat{ padding: 48px; } }
+.feat-grid{
+  display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center;
+}
+@media (min-width: 1024px){ .feat-grid{ grid-template-columns: 1.1fr 1fr; gap: 64px; } }
+.feat-media{
+  display: grid; grid-template-columns: 2fr 1fr; grid-auto-rows: 140px; gap: 12px;
+}
+.feat-media .m{
+  border-radius: var(--r-lg); overflow:hidden; background: var(--ink-2);
+  position: relative;
+}
+.feat-media .m img{ width:100%; height:100%; object-fit: cover; }
+.feat-media .m1{ grid-column: 1; grid-row: 1 / span 2; }
+.feat-media .m2{ grid-column: 2; grid-row: 1; }
+.feat-media .m3{ grid-column: 2; grid-row: 2; }
+.feat .tag-row{ display: inline-flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+.feat .chip-dark{
+  background: linear-gradient(180deg, rgba(247,245,238,.18), rgba(247,245,238,.08));
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  color: var(--paper);
+  border: 1px solid rgba(247,245,238,.22);
+  font-size: 12px; letter-spacing: -0.005em;
+  padding: 6px 12px; border-radius: var(--r-pill);
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.16);
+  position: relative;
+}
+.feat h2{ color: var(--paper); margin-bottom: 22px; }
+.feat .narrative{ color: rgba(247,245,238,.78); max-width: 52ch; }
+.feat-kpis{
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px; margin: 36px 0;
+  padding-top: 28px; border-top: 1px solid rgba(247,245,238,.16);
+}
+@media (min-width: 768px){ .feat-kpis{ grid-template-columns: repeat(4, 1fr); } }
+.feat-kpis .kpi-num{ color: var(--paper); }
+.feat-kpis .kpi-lbl{ font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: rgba(247,245,238,.6); margin-top: 8px; }
+.feat-quote{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 20px; line-height: 1.4; color: var(--paper);
+  border-left: 2px solid var(--accent); padding-left: 18px; margin: 0 0 14px;
+}
+.feat-attrib{ font-size: 13px; color: rgba(247,245,238,.6); }
+.feat-cta{ display: flex; gap: 12px; margin-top: 28px; }
+.feat .btn-paper{ background: var(--paper); color: var(--ink); }
+.feat .btn-paper:hover{ background: #fff; }
+.feat .btn-outline{ background: transparent; color: var(--paper); border-color: rgba(247,245,238,.2); }
+.feat .btn-outline:hover{ background: rgba(247,245,238,.06); }
+
+/* ──────────────────────────────────────────────────────────────────
+   PROCESS — horizontal steps
+   ────────────────────────────────────────────────────────────────── */
+.proc-grid{
+  display: grid; grid-template-columns: 1fr; gap: 18px;
+}
+@media (min-width: 768px){ .proc-grid{ grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+.step{
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative; min-height: 220px;
+  transition: transform .3s var(--ease-out), border-color .3s var(--ease-out);
+}
+.step:hover{ border-color: var(--ink); }
+.step .num{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent);
+}
+.step h4{ font-weight: 500; }
+.step p{ color: var(--subtle); font-size: 14.5px; line-height: 1.5; margin: 0; }
+.step .dur{
+  margin-top: auto; font-family: var(--mono); font-size: 11.5px;
+  color: var(--subtle); letter-spacing: .04em;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   CASE STUDY GRID
+   ────────────────────────────────────────────────────────────────── */
+.cs-filter{
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+}
+.cs-filter .pill{
+  padding: 8px 14px; border-radius: var(--r-pill);
+  background: var(--paper-2); border: 1px solid var(--line);
+  font-size: 13px; color: var(--ink); cursor: pointer;
+  transition: background .2s var(--ease-out), color .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.cs-filter .pill.active{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.cs-filter .pill:hover:not(.active){ border-color: var(--ink); }
+
+.cs-grid{
+  display: grid; grid-template-columns: 1fr; gap: 20px;
+}
+@media (min-width: 768px){ .cs-grid{ grid-template-columns: repeat(6, 1fr); gap: 20px; } }
+.case{
+  border-radius: var(--r-xl); overflow: hidden; background: var(--mute);
+  position: relative; aspect-ratio: 4/5;
+  cursor: pointer;
+  transition: transform .4s var(--ease-out);
+}
+.case:hover{ }
+.case img{ width:100%; height:100%; object-fit: cover; transition: transform .8s var(--ease-out); }
+.case:hover img{ transform: scale(1.04); }
+.case .meta{
+  position: absolute; left: 18px; right: 18px; bottom: 18px;
+  background: rgba(247,245,238,.92); backdrop-filter: blur(10px);
+  border-radius: var(--r-md); padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.case .row1{ display: flex; align-items: center; justify-content: space-between; }
+.case .name{ font-weight: 500; font-size: 16px; letter-spacing: -0.005em; }
+.case .indu{ font-size: 12px; color: var(--subtle); font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+.case .out{ font-size: 13px; color: var(--ink-2); }
+/* Wireframe-aligned 6-col asymmetric: 1 featured 3x2 + mix of 2x1 and 1x1 */
+.cs-grid{ grid-auto-rows: 270px; }   /* 1.5x of original 180 */
+.case.k-feat{ grid-column: span 6; aspect-ratio: 16/9; }
+.case.k-2x1{  grid-column: span 6; aspect-ratio: 16/10; }
+.case.k-1x1{  grid-column: span 6; aspect-ratio: 4/5; }
+@media (min-width: 768px){
+  .case.k-feat{ grid-column: span 3; grid-row: span 2; aspect-ratio: auto; }
+  .case.k-2x1{  grid-column: span 2; grid-row: span 1; aspect-ratio: auto; }
+  .case.k-1x1{  grid-column: span 1; grid-row: span 1; aspect-ratio: auto; }
+}
+/* Legacy classes for safety */
+.case.k1, .case.k2, .case.k3, .case.k4{ grid-column: span 6; }
+
+/* ──────────────────────────────────────────────────────────────────
+   SHOPIFY SPOTLIGHT — Blueprint
+   ────────────────────────────────────────────────────────────────── */
+.shop{
+  background: var(--forest); color: var(--paper);
+  border-radius: var(--r-xl); padding: 48px 32px;
+  position: relative; overflow: hidden;
+}
+@media (min-width: 768px){ .shop{ padding: 72px 56px; } }
+/* .shop static blob removed — superseded by .cursor-glow system */
+.shop-grid{
+  display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center;
+  position: relative; z-index: 1;
+}
+@media (min-width: 1024px){ .shop-grid{ grid-template-columns: 1.1fr 1fr; gap: 72px; } }
+.shop .badge{
+  display: inline-flex; align-items:center; gap: 8px;
+  background: rgba(149,191,71,.18); color: #C7E58E;
+  padding: 6px 12px; border-radius: var(--r-pill);
+  font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em;
+  margin-bottom: 20px;
+}
+.shop .badge .dot{ width: 8px; height: 8px; border-radius: 50%; background: #95BF47; }
+.shop h2{ color: var(--paper); margin-bottom: 20px; }
+.shop p.lede{ color: rgba(247,245,238,.78); }
+.shop .deliverables{
+  list-style: none; padding: 0; margin: 28px 0 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
+}
+.shop .deliverables li{
+  font-size: 14.5px; color: rgba(247,245,238,.85);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.shop .deliverables li::before{
+  content: ""; width: 6px; height:6px; border-radius:50%;
+  background: #95BF47; margin-top: 8px; flex-shrink: 0;
+}
+.shop .price{
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 24px 0; border-top: 1px solid rgba(247,245,238,.16);
+  margin-top: 32px;
+}
+.shop .price .num{ font-size: 44px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
+.shop .price .desc{ color: rgba(247,245,238,.6); font-size: 14px; }
+.shop .cta-row{ display: flex; gap: 12px; flex-wrap: wrap; }
+.shop .btn-paper{ background: var(--paper); color: var(--ink); }
+.shop .btn-paper:hover{ background:#fff; }
+.shop .btn-outline{ background: transparent; color: var(--paper); border-color: rgba(247,245,238,.22); }
+.shop .btn-outline:hover{ background: rgba(247,245,238,.06); }
+.shop-card{
+  background: linear-gradient(180deg,
+    rgba(247,245,238,.16) 0%,
+    rgba(247,245,238,.06) 100%);
+  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  backdrop-filter: saturate(180%) blur(28px);
+  border: 1px solid rgba(247,245,238,.24);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  position: relative;
+  isolation: isolate;
+  box-shadow:
+    0 18px 48px rgba(0,0,0,.32);
+  transition:
+    transform .35s var(--ease-out),
+    box-shadow .35s var(--ease-out),
+    border-color .35s var(--ease-out);
+}
+.shop-card::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(247,245,238,.26) 0%, rgba(247,245,238,0) 30%);
+  z-index: 1;
+}
+.shop-card > *{ position: relative; z-index: 2; }
+.shop-card:hover{
+  border-color: rgba(247,245,238,.34);
+  box-shadow:
+    0 24px 64px rgba(0,0,0,.40);
+}
+.shop-card .h{ font-size: 13px; color: rgba(247,245,238,.6); font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 20px; }
+.shop-card .row{ display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px dashed rgba(247,245,238,.12); }
+.shop-card .row:last-child{ border-bottom: 0; }
+.shop-card .row .l{ color: rgba(247,245,238,.7); font-size: 14px; }
+.shop-card .row .r{ color: var(--paper); font-size: 14px; font-weight: 500; }
+.shop-card .row .r .it{ font-family: var(--serif); font-style: italic; color: #C7E58E; }
+
+/* ──────────────────────────────────────────────────────────────────
+   SHOPIFY EDITIONS SPOTLIGHT — platform-current capability cards
+   ────────────────────────────────────────────────────────────────── */
+.shop-partner{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  background: rgba(149,191,71,.10);
+  color: #4F7228;
+  border: 1px solid rgba(149,191,71,.40);
+  border-radius: var(--r-pill);
+  font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; font-weight: 500;
+}
+.shop-partner svg{ flex-shrink: 0; }
+
+.editions-grid{
+  display: grid; grid-template-columns: 1fr; gap: 18px;
+}
+@media (min-width: 768px){
+  .editions-grid{ grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+.edition{
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform .35s var(--ease-out), border-color .35s var(--ease-out), box-shadow .35s var(--ease-out);
+  position: relative;
+}
+.edition:hover{
+  border-color: var(--ink);
+  box-shadow: var(--shadow-2);
+}
+.edition-head{
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 4px;
+}
+.edition-tag{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--subtle); font-weight: 500;
+}
+.edition-tag .shop-dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #95BF47;
+  box-shadow: 0 0 0 4px rgba(149,191,71,.18);
+  display: inline-block;
+}
+.edition-icon{
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: rgba(149,191,71,.10);
+  color: #4F7228;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(149,191,71,.30);
+  transition: background .3s var(--ease-out), color .3s var(--ease-out), transform .35s var(--ease-out);
+}
+.edition:hover .edition-icon{
+  background: #95BF47;
+  color: var(--paper);
+  transform: rotate(-6deg) scale(1.05);
+}
+.edition h4{
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+.edition h4 .it{ font-family: var(--serif); font-style: italic; font-weight: 400; }
+.edition p{
+  color: var(--subtle);
+  font-size: 14.5px; line-height: 1.55;
+  margin: 0;
+}
+.edition .btn-link{ margin-top: auto; }
+
+/* ──────────────────────────────────────────────────────────────────
+   TESTIMONIALS
+   ────────────────────────────────────────────────────────────────── */
+.testi-grid{
+  display: grid; grid-template-columns: 1fr; gap: 20px;
+}
+@media (min-width: 768px){ .testi-grid{ grid-template-columns: repeat(3, 1fr); } }
+.testi{
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 28px;
+  display: flex; flex-direction: column; gap: 18px;
+  transition: transform .3s var(--ease-out), border-color .3s var(--ease-out);
+}
+.testi:hover{ border-color: var(--ink); }
+.testi .quote{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 19px; line-height: 1.45; color: var(--ink);
+}
+.testi .who{ display: flex; align-items: center; gap: 12px; margin-top: auto; }
+.testi .who .av{ width: 40px; height:40px; border-radius:50%; background: var(--mute); overflow: hidden; flex-shrink: 0; }
+.testi .who .av img{ width:100%; height:100%; object-fit: cover; }
+.testi .who .nm{ font-weight: 500; font-size: 14.5px; }
+.testi .who .ti{ font-size: 12.5px; color: var(--subtle); }
+.awards-bar{
+  margin-top: 56px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 14px 20px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--subtle);
+}
+.awards-bar .sep{ color: var(--line); }
+
+/* ──────────────────────────────────────────────────────────────────
+   INSIGHTS / BLOG FEED — editorial covers w/ overlay
+   ────────────────────────────────────────────────────────────────── */
+.ins-head-cta{ display: inline-flex; gap: 10px; flex-wrap: wrap; }
+.ins-grid{
+  display: grid; grid-template-columns: 1fr; gap: 24px;
+}
+@media (min-width: 768px){ .ins-grid{ grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+.ins{
+  position: relative;
+  display: block;
+  aspect-ratio: 3/4;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--ink-2);
+  cursor: pointer;
+  isolation: isolate;
+  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
+}
+.ins:hover{ box-shadow: var(--shadow-3); }
+
+.ins .img{
+  position: absolute; inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+.ins .img img{
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.2s var(--ease-out), filter .6s var(--ease-out);
+  filter: saturate(0.92) contrast(1.02);
+}
+.ins:hover .img img{
+  transform: scale(1.06);
+  filter: saturate(1) contrast(1.05);
+}
+
+/* Overlay layers — three stacked tints + gradient + grain for editorial feel */
+.ins .overlay{
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  /* Warm bottom-up gradient (always visible) — plus a soft top vignette */
+  background:
+    linear-gradient(180deg, rgba(15,15,14,.42) 0%, rgba(15,15,14,0) 22%, rgba(15,15,14,0) 45%, rgba(15,15,14,.78) 88%, rgba(15,15,14,.94) 100%),
+    radial-gradient(120% 80% at 50% 100%, rgba(201,83,46,.18), transparent 60%);
+  transition: opacity .5s var(--ease-out);
+  mix-blend-mode: multiply;
+}
+/* Accent wash that lifts on hover — deepens the overlay slightly */
+.ins .overlay::after{
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,83,46,.0) 0%, rgba(201,83,46,.0) 60%, rgba(201,83,46,.22) 100%);
+  opacity: 0;
+  transition: opacity .55s var(--ease-out);
+}
+.ins:hover .overlay::after{ opacity: 1; }
+
+/* Grain texture overlay — adds tactile feel */
+.ins .grain{
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+/* Top-left tag chip */
+.ins .tag-row{
+  position: absolute; top: 18px; left: 18px; right: 18px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  z-index: 4;
+}
+.ins .tag{
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(247,245,238,.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+  padding: 6px 12px; border-radius: var(--r-pill);
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
+  font-weight: 500;
+}
+.ins .tag.cat-strategy .swatch{ background: var(--accent); }
+.ins .tag.cat-shopify .swatch{ background: #95BF47; }
+.ins .tag.cat-growth .swatch{ background: var(--ink); }
+.ins .tag .swatch{ width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.ins .meta-time{
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(247,245,238,.86);
+  text-shadow: 0 1px 8px rgba(15,15,14,.5);
+}
+
+/* Bottom title overlay (always visible) */
+.ins .body{
+  position: absolute; left: 24px; right: 24px; bottom: 24px;
+  z-index: 4;
+  color: var(--paper);
+}
+.ins .body h4{
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(20px, 1.7vw, 24px);
+  line-height: 1.18; letter-spacing: -0.015em;
+  color: var(--paper);
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+.ins .body h4 .it{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.ins .body .read{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+  color: var(--paper);
+  border-bottom: 1px solid rgba(247,245,238,.5);
+  padding-bottom: 3px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .45s var(--ease-out), transform .45s var(--ease-out), border-color .25s var(--ease-out);
+}
+.ins .body .read .arr{
+  display: inline-block; transition: transform .35s var(--ease-out);
+}
+.ins:hover .body .read{
+  opacity: 1; transform: translateY(0);
+  border-color: var(--paper);
+}
+.ins:hover .body .read .arr{ transform: translateX(4px); }
+.ins:focus-visible{ outline: 3px solid var(--accent); outline-offset: 4px; }
+.ins:focus-visible .body .read{ opacity: 1; transform: translateY(0); }
+
+/* ──────────────────────────────────────────────────────────────────
+   FINAL CTA
+   ────────────────────────────────────────────────────────────────── */
+.final{
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--r-xl);
+  padding: 72px 32px; text-align: center;
+  position: relative; overflow: hidden;
+}
+@media (min-width: 768px){ .final{ padding: 120px 48px; } }
+/* .final static blobs removed — superseded by .cursor-glow.dual system */
+.final .inner{ position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+.final h2{ color: var(--paper); margin-bottom: 24px; }
+.final p{ color: rgba(247,245,238,.78); font-size: 18px; max-width: 56ch; margin: 0 auto 36px; }
+.final .row{ display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ──────────────────────────────────────────────────────────────────
+   FOOTER
+   ────────────────────────────────────────────────────────────────── */
+footer{
+  background: var(--paper);
+  padding: 72px 0 40px;
+  border-top: 1px solid var(--line);
+}
+.footer-grid{
+  display: grid; grid-template-columns: 1fr; gap: 40px;
+  margin-bottom: 56px;
+}
+@media (min-width: 768px){ .footer-grid{ grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 32px; } }
+.footer-brand p{ color: var(--subtle); font-size: 14.5px; max-width: 30ch; margin: 12px 0 24px; }
+.footer-newsletter{
+  display: flex; align-items: center; gap: 8px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 6px 6px 6px 18px;
+  max-width: 360px;
+}
+.footer-newsletter input{
+  flex: 1; background: transparent; border: 0; outline: 0;
+  font-family: var(--sans); font-size: 14px; color: var(--ink);
+  padding: 6px 0;
+  min-width: 0;
+}
+.footer-newsletter input::placeholder{ color: var(--subtle); }
+.footer-newsletter .btn{ padding: 10px 16px; font-size: 13px; }
+
+/* Oversized footer wordmark — actual SVG wordmark, per wireframe */
+.footer-wordmark{
+  display: block;
+  margin: 72px auto 36px;
+  padding: 0 8px;
+  color: var(--mute-2, #DCD2B5);
+  user-select: none;
+  overflow: hidden;
+}
+.footer-wordmark svg{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.footer-col h6{
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--subtle); margin: 0 0 18px; font-family: var(--mono); font-weight: 500;
+}
+.footer-col ul{ list-style: none; padding:0; margin:0; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a{ font-size: 14.5px; color: var(--ink); transition: color .2s var(--ease-out); }
+.footer-col a:hover{ color: var(--accent); }
+.footer-bottom{
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;
+  padding-top: 32px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--subtle);
+}
+.footer-bottom .legal{ display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* ──────────────────────────────────────────────────────────────────
+   STICKY BUBBLE
+   ────────────────────────────────────────────────────────────────── */
+.bubble{
+  position: fixed; right: 24px; bottom: 24px; z-index: 40;
+  background: linear-gradient(180deg,
+    rgba(15,15,14,.78) 0%,
+    rgba(15,15,14,.62) 100%);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+  color: var(--paper);
+  border: 1px solid rgba(247,245,238,.18);
+  border-radius: var(--r-pill);
+  padding: 14px 20px 14px 56px;
+  font-size: 14px; font-weight: 500;
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.36);
+  display: inline-flex; align-items: center; gap: 10px;
+  isolation: isolate;
+  transition: transform .25s var(--ease-out), background .25s var(--ease-out), box-shadow .25s var(--ease-out);
+}
+.bubble::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(247,245,238,.22) 0%, rgba(247,245,238,0) 30%);
+  z-index: 1;
+}
+.bubble > *{ position: relative; z-index: 2; }
+.bubble:hover{
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, rgba(15,15,14,.84), rgba(15,15,14,.70));
+  border-color: rgba(247,245,238,.28);
+  box-shadow:
+    0 18px 48px rgba(0,0,0,.42);
+}
+.bubble .ava{
+  position: absolute; left: 6px; top: 6px;
+  width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: var(--mute);
+}
+.bubble .ava img{ width:100%; height:100%; object-fit: cover; }
+.bubble .pulse{
+  position: absolute; right: 14px; top: 14px;
+  width: 8px; height:8px; border-radius:50%; background: #95BF47;
+}
+.bubble .pulse::after{
+  content:""; position:absolute; inset:-4px; border-radius:50%;
+  background: rgba(149,191,71,.4); animation: pulse 1.6s ease-out infinite;
+}
+@keyframes pulse{ 0%{ transform: scale(1); opacity:.7;} 100%{ transform: scale(2.4); opacity: 0;} }
+
+/* ──────────────────────────────────────────────────────────────────
+   MOTION SYSTEM
+   ────────────────────────────────────────────────────────────────── */
+
+/* Custom cursor — soft outlined ring, no dot, multiply-blended for refinement */
+.cursor-ring{
+  position: fixed; top: 0; left: 0;
+  width: 28px; height: 28px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  transition: width .35s var(--ease-out), height .35s var(--ease-out),
+              background .35s var(--ease-out), border-color .35s var(--ease-out),
+              opacity .25s var(--ease-out);
+  opacity: 0;
+  will-change: transform, width, height;
+}
+.cursor-ring.ready{ opacity: 1; }
+.cursor-ring.over{
+  width: 64px; height: 64px;
+  background: rgba(247,245,238,.96);
+  border-color: var(--ink);
+  }
+.cursor-ring.click{
+  width: 44px; height: 44px;
+}
+@media (max-width: 768px), (hover: none){
+  .cursor-ring{ display: none; }
+}
+html.has-cursor body{ cursor: none; }
+html.has-cursor body button,
+html.has-cursor body a{ cursor: none; }
+
+/* Magnetic hover — applied via JS to [data-magnet] elements */
+[data-magnet]{
+  transition: transform .35s var(--ease-out);
+  will-change: transform;
+}
+
+/* Kinetic H1 word reveal */
+.kinetic-line{ overflow: hidden; display: block; padding-bottom: 0.05em; }
+.kinetic-word{
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition: transform .9s var(--ease-out), opacity .9s var(--ease-out);
+  will-change: transform, opacity;
+}
+.kinetic-word.in{ transform: translateY(0); opacity: 1; }
+
+/* Nav hide-on-scroll-down */
+.nav-shell{ transition: transform .35s var(--ease-out), top .3s var(--ease-out); }
+.nav-shell.hide{ transform: translateY(-150%); }
+
+/* Hero collage parallax */
+.hero-collage .cell{ will-change: transform; }
+.hero-collage .cell[data-parallax]{
+  transition: transform .15s linear;
+}
+
+/* ── CURSOR-REACTIVE GRADIENT BACKGROUNDS ─────────────────────────
+   Two CSS vars (--gx, --gy) updated per-element via JS.
+   Defaults to centered glow when cursor isn't tracking the section. */
+.cursor-glow{
+  position: relative;
+  isolation: isolate;
+  --gx: 50%; --gy: 50%;
+  --glow-1: rgba(201,83,46, 0.32);   /* primary (warm rust default) */
+  --glow-2: rgba(149,191,71, 0.18);  /* secondary (soft green) */
+  --glow-size-1: 560px;
+  --glow-size-2: 420px;
+  --glow-fade-1: 58%;
+  --glow-fade-2: 60%;
+  overflow: hidden;
+}
+.cursor-glow > *{ position: relative; z-index: 2; }
+.cursor-glow::before{
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    var(--glow-size-1) circle at var(--gx) var(--gy),
+    var(--glow-1),
+    transparent var(--glow-fade-1)
+  );
+  pointer-events: none;
+  transition: background 140ms linear;
+}
+.cursor-glow.dual::after{
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    var(--glow-size-2) circle at calc(100% - var(--gx)) calc(100% - var(--gy)),
+    var(--glow-2),
+    transparent var(--glow-fade-2)
+  );
+  pointer-events: none;
+  transition: background 140ms linear;
+  mix-blend-mode: screen;
+}
+
+/* Per-section glow tuning */
+.feat.cursor-glow{
+  --glow-1: rgba(201,83,46, 0.34);
+  --glow-size-1: 600px;
+  --glow-fade-1: 55%;
+}
+.shop.cursor-glow{
+  --glow-1: rgba(149,191,71, 0.28);
+  --glow-2: rgba(247,245,238, 0.10);
+  --glow-size-1: 640px;
+  --glow-size-2: 480px;
+}
+.final.cursor-glow{
+  --glow-1: rgba(201,83,46, 0.34);
+  --glow-2: rgba(149,191,71, 0.16);
+  --glow-size-1: 700px;
+  --glow-size-2: 540px;
+  --glow-fade-1: 55%;
+  --glow-fade-2: 60%;
+}
+
+/* ── LIQUID GLASS ────────────────────────────────────────────────
+   Translucent surfaces that refract content (incl. cursor gradients)
+   below them. Specular top highlight, soft bevel, liquid hover lift. */
+
+.glass, .glass-dark{
+  position: relative;
+  isolation: isolate;
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+  transition:
+    background .35s var(--ease-out),
+    border-color .35s var(--ease-out),
+    box-shadow .35s var(--ease-out),
+    transform .25s var(--ease-out);
+}
+
+/* Light glass — over photography or pale gradients */
+.glass{
+  background:
+    linear-gradient(180deg,
+      rgba(247,245,238,.58) 0%,
+      rgba(247,245,238,.40) 100%);
+  border: 1px solid rgba(255,255,255,.65);
+  box-shadow:
+    0 8px 32px rgba(15,15,14,.10);
+  color: var(--ink);
+}
+.glass::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 30%);
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Dark glass — over ink, forest, deep cursor-glow gradients */
+.glass-dark{
+  background:
+    linear-gradient(180deg,
+      rgba(247,245,238,.16) 0%,
+      rgba(247,245,238,.06) 100%);
+  border: 1px solid rgba(247,245,238,.20);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.28);
+  color: var(--paper);
+}
+.glass-dark::after{
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(247,245,238,.24) 0%, rgba(247,245,238,0) 32%);
+  z-index: 1;
+}
+
+.glass > *, .glass-dark > *{ position: relative; z-index: 2; }
+
+/* Liquid hover lift — subtle scale + shadow expansion */
+.glass:hover{
+  background: linear-gradient(180deg, rgba(247,245,238,.66), rgba(247,245,238,.48));
+  border-color: rgba(255,255,255,.80);
+  box-shadow:
+    0 14px 44px rgba(15,15,14,.14);
+}
+.glass-dark:hover{
+  background: linear-gradient(180deg, rgba(247,245,238,.22), rgba(247,245,238,.10));
+  border-color: rgba(247,245,238,.32);
+  box-shadow:
+    0 14px 44px rgba(0,0,0,.34);
+}
+
+/* Liquid press — applied to .btn for tactile feedback */
+.btn:active{
+  transform: translateY(1px) scale(0.98);
+  transition-duration: .12s;
+}
+.glass:active, .glass-dark:active{
+  transform: translateY(0) scale(0.985);
+  transition-duration: .12s;
+}
+
+/* Reduced motion — drop the lift, keep the visual treatment */
+@media (prefers-reduced-motion: reduce){
+  .glass:hover, .glass-dark:hover, .btn:active, .glass:active, .glass-dark:active{ transform: none; }
+}
+
+/* Scroll reveal */
+.reveal{
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+}
+.reveal.in{ opacity: 1; transform: translateY(0); }
+
+/* Stagger children */
+.stagger > *{ opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+.stagger.in > *{ opacity: 1; transform: translateY(0); }
+.stagger.in > *:nth-child(1){ transition-delay: .05s; }
+.stagger.in > *:nth-child(2){ transition-delay: .15s; }
+.stagger.in > *:nth-child(3){ transition-delay: .25s; }
+.stagger.in > *:nth-child(4){ transition-delay: .35s; }
+.stagger.in > *:nth-child(5){ transition-delay: .45s; }
+.stagger.in > *:nth-child(6){ transition-delay: .55s; }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal, .stagger > *, .kinetic-word{ opacity: 1; transform: none; transition: none; }
+  .logos-track{ animation: none; }
+  .bubble .pulse::after{ animation: none; }
+  .cursor-ring{ display: none; }
+  html.has-cursor body{ cursor: auto; }
+  html.has-cursor body button, html.has-cursor body a{ cursor: pointer; }
+  *{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── CUSTOM CURSOR ─────────────────────────────────────────────── -->
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- ── NAV ───────────────────────────────────────────────────────── -->
+<div class="nav-shell">
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a class="brand" href="Homepage.html" aria-label="Commence Studio home">
+      <svg class="brandmark" viewBox="0 0 577.06 527.02" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M467.09,366.2H190.5a4.76,4.76,0,0,1-4.75-4.79V347.55a5.13,5.13,0,0,0,.1-1V122.84a5.22,5.22,0,0,0-8.91-3.7l-76.88,76.79a5.23,5.23,0,0,0-1.53,3.7V448.76a4.76,4.76,0,0,0,4.76,4.76H389.76a4.79,4.79,0,0,0,3.37-1.39l77.31-78A4.63,4.63,0,0,0,467.09,366.2Z"/><path d="M240.13,179.8H367.48a4.76,4.76,0,0,1,4.76,4.76v120.6a4.76,4.76,0,0,0,8.12,3.36l96.8-97a4.81,4.81,0,0,0,1.38-3.37V78.26a4.76,4.76,0,0,0-4.75-4.76H240.13a4.76,4.76,0,0,0-4.75,4.76v96.79A4.75,4.75,0,0,0,240.13,179.8Z"/></svg>
+      <span class="brand-text">Commence</span>
+    </a>
+    <div class="nav-links">
+      <div class="has-mega-wrap">
+        <a class="nav-link has-mega" href="Services.html">Services</a>
+        <div class="mega" role="menu">
+          <div class="mega-feature" aria-hidden="false">
+            <span class="tag">Featured</span>
+            <div>
+              <div class="ttl">Shopify Blueprint —<br>14-day strategic diagnostic.</div>
+              <div class="lnk">$3,500 fixed · See what we map →</div>
+            </div>
+          </div>
+          <div class="mega-col">
+            <h6>Strategy & Brand</h6>
+            <ul>
+              <li><a href="Services.html"><strong>Brand Strategy</strong><span>Positioning, audience, architecture</span></a></li>
+              <li><a href="Services.html"><strong>Brand Identity</strong><span>Visual + verbal system</span></a></li>
+              <li><a href="#"><strong>Naming & Messaging</strong><span>Voice, story, taglines</span></a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h6>Build & Grow</h6>
+            <ul>
+              <li><a href="Services.html"><strong>Shopify Plus</strong><span>Plus, Hydrogen, custom theme</span></a></li>
+              <li><a href="#"><strong>Web & Editorial</strong><span>WordPress, Elementor, content</span></a></li>
+              <li><a href="Services.html"><strong>Affiliate &amp; Influencer</strong><span>Partner programs, creator briefs</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <a class="nav-link" href="Homepage.html#work">Work</a>
+      <a class="nav-link" href="Process.html">Process</a>
+      <a class="nav-link" href="Homepage.html#insights">Insights</a>
+      <a class="nav-link" href="About.html">About</a>
+    </div>
+    <span class="nav-spacer"></span>
+    <a class="nav-cta" href="#contact">Book a free call <span aria-hidden="true">→</span></a>
+    <button class="nav-burger" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+</div>
+
+<!-- ── HERO ──────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta">
+          <span class="hero-rating">
+            <span class="stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+            </span>
+            <span><strong>5.0</strong> · 47 Clutch + Google reviews</span>
+          </span>
+          <span class="hero-shopify"><span class="dot"></span>Shopify Plus Partner</span>
+        </div>
+
+        <p class="hero-eyebrow">We've helped <strong style="color:var(--ink); font-weight:500;">350+ growth-stage brands</strong> build what comes next.</p>
+
+        <h1 id="kineticH1">
+          <span class="kinetic-line"><span class="kinetic-word">Unified</span> <span class="kinetic-word">commerce,</span></span>
+          <span class="kinetic-line"><span class="kinetic-word it">built</span> <span class="kinetic-word it">around</span> <span class="kinetic-word it">the</span> <span class="kinetic-word it">brand</span></span>
+          <span class="kinetic-line"><span class="kinetic-word">that</span> <span class="kinetic-word">earned</span> <span class="kinetic-word">it.</span></span>
+        </h1>
+
+        <p class="lede" style="margin-top:28px;">
+          Commence is a brand and commerce partner for growth-stage companies on Shopify. We rebuild fragmented systems into one connected customer experience — so your brand, B2B, DTC, and storefront stop working against each other.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-dark" href="#contact" data-magnet>Book a free call <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#process" data-magnet>How we work <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="hero-tertiary" href="#blueprint">Start a Shopify Blueprint →</a>
+        </div>
+      </div>
+
+      <!-- Hero asymmetric design-detail collage (NOT logos — craft visibility) -->
+      <div class="hero-collage" id="heroCollage" aria-hidden="true">
+        <div class="cell c1" data-parallax="0.04">
+          <img src="https://cdn.sanity.io/images/w2xt1cyc/production/497ca130c4ef3d210a7f26e3c78d99e3150e0d74-2100x1608.jpg?w=900&h=1100&fit=crop&auto=format" alt="">
+          <span class="badge">Shopify Plus</span>
+        </div>
+        <div class="cell c2" data-parallax="0.10">
+          <img src="https://cdn.sanity.io/images/w2xt1cyc/production/62ae8de4c1911bd38b1f40580c5338e4613c730f-1200x1503.jpg?w=600&h=600&fit=crop&auto=format" alt="">
+          <span class="badge">Editorial</span>
+        </div>
+        <div class="cell c3" data-parallax="0.07">
+          <img src="https://cdn.sanity.io/images/w2xt1cyc/production/2572a14f59141ca2857dc90fe2dc69d074e552e8-6000x4000.png?w=600&h=600&fit=crop&auto=format" alt="">
+          <span class="badge">Ecommerce</span>
+        </div>
+        <div class="cell c4" data-parallax="0.12">
+          <img src="https://cdn.sanity.io/images/w2xt1cyc/production/30f479627fb719a81c4abccd243a30f55f3bf307-2048x1368.jpg?w=600&h=600&fit=crop&auto=format" alt="">
+          <span class="badge">Packaging</span>
+        </div>
+        <div class="cell c5" data-parallax="0.05">
+          <img src="https://cdn.sanity.io/images/w2xt1cyc/production/86ecea83f53bd70d5a6cce1bd204e278f1481346-2828x1594.jpg?w=600&h=600&fit=crop&auto=format" alt="">
+          <span class="badge">Brand ID</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGO MARQUEE ──────────────────────────────────────────────── -->
+<div class="logos" aria-label="Selected client work">
+  <div class="logos-track">
+    <span class="logo-item logo-svg" aria-label="Patagonia"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.2 155.94" fill="currentColor"><g id="Sw5f3h"><path d="M39.57,138.57c3.88.67,7.55-.18,11,.55.68,1.48.39,2.79.43,4,0,1.5,0,3,0,4.5,0,1.25-.52,1.72-1.77,1.83-.64.05-1.29,0-1.93,0H3.54c-1,0-2.16.26-3.09-.48a30.31,30.31,0,0,1-.13-9.72A8.33,8.33,0,0,1,2,138.87c1.27-.1,2.54-.08,3.92-.11a15.56,15.56,0,0,0,.46-2,21.08,21.08,0,0,0,0-2.25q0-38.41,0-76.85c0-1.24.3-2.55-.5-3.89l-5.13,1c-.29-.35-.53-.51-.54-.67C.14,51.67.06,49.21,0,46.75a16.75,16.75,0,0,1,.22-2.09C3.56,43.39,36.39,35,39,34.75c.83,2.23-.06,4.64.6,7.11a11.35,11.35,0,0,0,1.4-.55c2.26-1.21,4.49-2.5,6.77-3.68,9.78-5.07,19.61-4.6,29.36,0C86.48,42,92.37,49.54,95.92,59a48.6,48.6,0,0,1,2.86,16.38,54.11,54.11,0,0,1-9,31.63,40.58,40.58,0,0,1-13.36,12.77C69,124.14,61,125.56,52.56,124.9a35.67,35.67,0,0,1-12.16-2.74,1.69,1.69,0,0,0-.64,0c-.1.14-.32.31-.32.48q-.06,7.06-.08,14.14A17.6,17.6,0,0,0,39.57,138.57Zm-.22-60.74V97.09c0,1.18,0,2.36.1,3.53a14.93,14.93,0,0,0,1.75,6.12,8.71,8.71,0,0,0,5.31,4.36,16.06,16.06,0,0,0,8.23.15,11.07,11.07,0,0,0,8-6.31,24.26,24.26,0,0,0,1.74-4.81,41.55,41.55,0,0,0,1.12-6.63,77.57,77.57,0,0,0-1.1-21.72,31.68,31.68,0,0,0-4.38-11A18.07,18.07,0,0,0,40.8,53.18a1.61,1.61,0,0,0-1.38,1.54c-.08.85-.07,1.71-.07,2.57Z"/><path d="M399.45,36.32c.27-.77.49-1.35.68-1.94.66-2,1.26-4.08,2-6.1a10.33,10.33,0,0,1,8.78-7.07,39.72,39.72,0,0,1,10.89-.06,7,7,0,0,1,1.52.59l-4,15a2.72,2.72,0,0,1-1-.25c-2-1.53-4.28-1.19-6.48-.67a3.1,3.1,0,0,0-1.69,4.88,16.42,16.42,0,0,0,2.07,2c2,1.79,4.09,3.46,6,5.37,6.79,6.89,9,15.33,8.06,24.77a29.84,29.84,0,0,1-3.24,11,30.78,30.78,0,0,1-11.49,11.85,55,55,0,0,1-9.49,4.67,154.23,154.23,0,0,1-18.43,5.52c-1,.25-2.06.54-3,.8-.14,1,.52.9,1,1,3.29.46,6.58.84,9.86,1.35a81.65,81.65,0,0,1,14.92,3.73,36.08,36.08,0,0,1,11.5,6.26,16.1,16.1,0,0,1,6,12.32,17.42,17.42,0,0,1-4.67,12.32,25,25,0,0,1-6.24,5,51.6,51.6,0,0,1-18.18,6,23.06,23.06,0,0,1-3.53.1c-3.65,0-7.29-.07-10.93,0a39.1,39.1,0,0,1-14.12-2.61,22.38,22.38,0,0,1-6.16-3.41,13.55,13.55,0,0,1-4.82-14.06,15,15,0,0,1,5.48-7.35,24.92,24.92,0,0,1,8-4l1.75-.52c0-.73-.4-.81-.82-.85a124.45,124.45,0,0,0-16-.68,29.57,29.57,0,0,0-3.51.34,2.07,2.07,0,0,1-2.36-1.22,14.83,14.83,0,0,1-.64-1.47q-1.31-3.28-2.59-6.57c-.64-1.64-.38-2.17,1.23-2.55s2.94-.61,4.39-1A71.43,71.43,0,0,0,361.29,105c2.84-1.22,5.65-2.52,8.66-3.87a5.25,5.25,0,0,0-2.68-1,42.35,42.35,0,0,1-15.53-6.67A29.56,29.56,0,0,1,342,82.21a26.83,26.83,0,0,1-2.64-10.52,34.68,34.68,0,0,1,4.15-18.88,33.27,33.27,0,0,1,15.34-14.14,48.63,48.63,0,0,1,15.7-4.32c6.6-.75,13,.14,19.5,1.06C395.7,35.66,397.39,36,399.45,36.32ZM369,58.32c.3,2.38.53,5.15,1,7.88a54,54,0,0,0,5.72,17.28,33.67,33.67,0,0,0,3.48,5,11.17,11.17,0,0,0,10.94,3.91,7.24,7.24,0,0,0,6.28-5.22,19.76,19.76,0,0,0,.71-6.66,61.8,61.8,0,0,0-3.28-17.6,45.05,45.05,0,0,0-4.16-9.36,20.92,20.92,0,0,0-5.47-6.23,11.14,11.14,0,0,0-9.48-1.68,6.24,6.24,0,0,0-4.62,4.09,15.3,15.3,0,0,0-.83,3.41C369.15,54.7,369.15,56.31,369,58.32Zm11,78.65a40.58,40.58,0,0,0,.88,4.7c1.38,4.53,5.92,6.45,10.65,4.22a4.88,4.88,0,0,0,2.86-4,12.34,12.34,0,0,0-3.17-10.4,27,27,0,0,0-6.7-4.93,1.36,1.36,0,0,0-1.95.49,11.92,11.92,0,0,0-1.08,2.32A34.53,34.53,0,0,0,380.05,137Z"/><path d="M531.51,44.88c12.93-3.55,25.82-6.94,38.82-10.45.57,2.39.26,4.54.31,6.65s0,4.28,0,6.34c.9.55,1.28-.16,1.74-.48,3.34-2.31,6.6-4.76,10-7a35.59,35.59,0,0,1,12.4-5.14,33.52,33.52,0,0,1,19.87,1.6A19.42,19.42,0,0,1,626,48.82c1.37,4,1.5,8.2,1.51,12.38,0,11,0,22.08,0,33.12,0,4.82,0,9.65,0,14.47,0,.84,0,1.69,0,2.55,1.8.73,3.56,0,5.4.57.94,1.45.44,3.2.48,4.85a18.57,18.57,0,0,1-.24,5.27,10,10,0,0,1-1.79.32q-20.74,0-41.48,0a14.88,14.88,0,0,1-1.81-.26,30.53,30.53,0,0,1,0-10c.93-.73,2-.36,3.08-.42s1.9,0,3,0a16.25,16.25,0,0,0,.28-2c0-15.44,0-30.87,0-46.31,0-4-2.11-6.74-6.31-7.67a17,17,0,0,0-10.95,1.39,26.45,26.45,0,0,0-6.11,4.12,2.93,2.93,0,0,0-1.13,2.52c0,.54,0,1.07,0,1.61q0,21.38,0,42.76c0,1.06.07,2.11.11,3.27,2.18.65,4.36,0,6.53.53.58,1.7.25,3.42.31,5.1s0,3.19,0,5a15.29,15.29,0,0,1-2.3.37c-4.08,0-8.15,0-12.22,0H534.89c-1,0-2.1-.07-3.33-.12-.38-3.46-.14-6.74-.19-10.16a17.38,17.38,0,0,1,2-.37c1.16-.07,2.32-.07,3.26-.1a3.11,3.11,0,0,0,.43-.4.5.5,0,0,0,.1-.28l.06-55.63a10.87,10.87,0,0,0-.05-1.28,3.16,3.16,0,0,0-.33-.76l-5.27,1.47A63.52,63.52,0,0,1,531.51,44.88Z"/><path d="M772.21,111.74c1.51,0,2.8,0,4.08,0a1.23,1.23,0,0,1,1.26,1.22c.06,2.68.06,5.36,0,8a1.38,1.38,0,0,1-1.44,1.42c-.53,0-1.07,0-1.6,0H744.62c-3.44,0-3.52-.07-4.24-3.39-.16-.73-.32-1.46-.47-2.2s-.23-1.23-.38-2.1a10.31,10.31,0,0,0-1.49.74,52.27,52.27,0,0,1-13.1,7.39,32.33,32.33,0,0,1-26.48-1.38,22.53,22.53,0,0,1-12.26-14.93c-2.45-9.44-1.36-18.56,3.8-26.92s12.8-12.47,22.41-13c7.48-.41,15-.44,22.49-.62,1.06,0,2.12,0,3.32,0a9,9,0,0,0,.45-1.94,28,28,0,0,0-.2-4.49A7.44,7.44,0,0,0,733,53.08a18.29,18.29,0,0,0-4.7-.92,29.14,29.14,0,0,0-10.16,1.25,19.09,19.09,0,0,0-6.62,3.85c-1.51,1.36-3,2.7-5.12,4.55-.86.18-2.33-.65-3.81-1.14-2.19-.74-4.51-1.26-6.62-2.71L707,30.69c.87-.54,1.46-.1,2,.07,2.16.62,4.3,1.29,6.45,2a5.79,5.79,0,0,1,1.78.69,1.63,1.63,0,0,1,.58,1.34,17,17,0,0,1-1,2.57c.57.58,1.08.33,1.57.15a52.15,52.15,0,0,1,10.56-2.7c8-1.15,16-1.12,23.89,1.18,6.39,1.87,11.65,5.36,15.1,11.21a25.75,25.75,0,0,1,3.4,10.63c.3,3.09.47,6.2.48,9.31,0,13.5,0,27,0,40.51A10.44,10.44,0,0,0,772.21,111.74ZM738.62,87.88h.09V85c0-2.14,0-4.28-.06-6.41a1.35,1.35,0,0,0-1.39-1.46,24.26,24.26,0,0,0-8.9.78,13.84,13.84,0,0,0-9.9,10.41,20.85,20.85,0,0,0,.87,12,9.21,9.21,0,0,0,8.93,6.63c5.14.18,8.48-2,9.7-6.6a16.79,16.79,0,0,0,.63-3.77C738.68,93.66,738.62,90.77,738.62,87.88Z"/><path d="M300.25,65.79a15.11,15.11,0,0,0-.77-8.61,6.77,6.77,0,0,0-4.38-4,19.21,19.21,0,0,0-5.32-1,39.32,39.32,0,0,0-7.66.67,19.75,19.75,0,0,0-10.9,6.39c-.73.78-1.42,1.59-2.14,2.4a7.08,7.08,0,0,1-3.76-.63c-1.32-.43-2.66-.82-4-1.27s-2.48-.57-3.43-1.45c.6-2.41,9.47-24.7,11.12-27.93,3.32.91,6.62,2,9.81,2.92,1,1.59-.38,2.85-.11,4.41a4.22,4.22,0,0,0,1.15-.1c5.95-2.39,12.2-3.21,18.54-3.5a47.49,47.49,0,0,1,16.5,2c10,3.14,16.08,9.78,17.87,20.23a52.91,52.91,0,0,1,.61,9q0,21.85,0,43.71v2.38c.73.12,1.33.26,1.94.3.85.07,1.71,0,2.56.09a1.37,1.37,0,0,1,1.27,1.24,57.22,57.22,0,0,1-.28,9.1,9.09,9.09,0,0,1-1.77.32q-15.75,0-31.5,0H305c-1.67-.09-2.11-.38-2.51-1.93-.33-1.23-.5-2.51-.76-3.77-.13-.6-.3-1.19-.41-1.65-.86-.36-1.2.14-1.6.44a51,51,0,0,1-13.11,7.38c-9,3.23-17.88,2.91-26.46-1.45-7.19-3.64-11.39-9.62-12.85-17.45a35.34,35.34,0,0,1,1.53-18.36,27.84,27.84,0,0,1,26.34-19.06L298,66C298.69,66,299.41,65.88,300.25,65.79Zm.25,22h0c0-3,0-6,0-9a1.46,1.46,0,0,0-1.55-1.66,24.14,24.14,0,0,0-8.6.71c-5.32,1.6-9,5.08-10.15,10.56a21.19,21.19,0,0,0,.92,12,9.27,9.27,0,0,0,9,6.54c5.28.13,8.51-2.13,9.73-7a26.06,26.06,0,0,0,.65-5.07C300.58,92.48,300.5,90.12,300.5,87.76Z"/><path d="M185.52,111.58l4.84.25a4.83,4.83,0,0,1,.47,1.3c0,2.57.08,5.14,0,7.71,0,1.13-.51,1.55-1.58,1.61-.53,0-1.07,0-1.6,0H158.11c-1,0-1.89-.08-3-.13-.79-2.51-1.54-4.92-2.27-7.26-.89-.33-1.28.31-1.75.68A45.17,45.17,0,0,1,138.27,123c-8.67,3-17.27,2.93-25.58-1.17-7.54-3.72-12-9.93-13.34-18.17a35.37,35.37,0,0,1,1.23-17.14c3.36-10.21,10.27-16.57,20.81-18.84a33.89,33.89,0,0,1,5.43-.56c7.38-.36,14.76-.67,22.14-1l2.73-.15a10.73,10.73,0,0,0,.34-1.8,17.88,17.88,0,0,0-.59-6,7.24,7.24,0,0,0-4.72-4.88,18.93,18.93,0,0,0-5.33-1,40.24,40.24,0,0,0-7.66.66,18,18,0,0,0-9.5,5.06c-1.36,1.36-2.66,2.77-4,4.14A36.91,36.91,0,0,1,109.63,58c.53-2.19,9-22.55,11.37-27.32,1.8-.13,3.42.79,5.11,1.31s3.56.66,5.33,1.68l-1.22,3.74a1.41,1.41,0,0,0,1.67.05A56.77,56.77,0,0,1,152.37,34a45.67,45.67,0,0,1,14.25,2.08c9.57,3.06,15.62,9.34,17.62,19.35a51.46,51.46,0,0,1,.74,9.91c0,14,0,28.06,0,42.09A7.93,7.93,0,0,0,185.52,111.58ZM151.9,77.25a23.58,23.58,0,0,0-9.78.58c-5.79,1.8-9.53,5.69-10.59,11.74a20.74,20.74,0,0,0,.83,9.84c1.46,4.58,4.56,7.17,9.37,7.49,5.15.34,8.34-2,9.51-6.31a22.24,22.24,0,0,0,.76-5.38c.1-5.46.05-10.92,0-16.39C152,78.4,152,78,151.9,77.25Z"/><path d="M430.12,79.39A42.88,42.88,0,0,1,456.35,39a57.73,57.73,0,0,1,18.29-4.58,64,64,0,0,1,21.06,1.4c12,2.85,22,8.8,29,19.2a42,42,0,0,1,6.82,19.84,47,47,0,0,1-1.7,18.43c-3.84,12.54-12.09,21.25-23.9,26.65a58.07,58.07,0,0,1-18.56,4.77,67.82,67.82,0,0,1-18.88-.77c-9.69-1.76-18.41-5.64-25.55-12.59a40.42,40.42,0,0,1-11.83-22.69C430.6,85.58,430.44,82.47,430.12,79.39Zm68.62,12a67.61,67.61,0,0,0-1.51-14.34,63.11,63.11,0,0,0-5.55-17,28.71,28.71,0,0,0-6-8.25A15.25,15.25,0,0,0,474,47.4a9.71,9.71,0,0,0-8.15,5,17.46,17.46,0,0,0-1.92,5.08,37.23,37.23,0,0,0-.73,8.29A86.72,86.72,0,0,0,466,87.3,53.45,53.45,0,0,0,471.3,101a25.46,25.46,0,0,0,5.85,7.17,15.75,15.75,0,0,0,6.88,3.28,10.6,10.6,0,0,0,12.08-5.73,27.47,27.47,0,0,0,1.85-5.1A31.89,31.89,0,0,0,498.74,91.4Z"/><path d="M244.56,36.83a16.57,16.57,0,0,1-.12,1.92c-.6,3.26-1.23,6.51-1.85,9.77-.31,1.66-.64,2-2.32,2-2.78,0-5.57,0-8.35,0-.95,0-1.9.07-2.81.11-.78,1.21-.48,2.42-.48,3.56q0,20.57,0,41.13c0,1.5,0,3,0,4.5-.17,4.31,2.21,7.42,7.22,7.54,2.16.06,4.29,0,6.27-1.39a26.08,26.08,0,0,1,2.26,5c.69,1.56,1.26,3.17,1.87,4.73-3.13,3.15-9.52,7.06-13.34,8.18a13.88,13.88,0,0,1-2.18.54c-1.7.23-3.4.46-5.11.52a68,68,0,0,1-13.15-.43,24.39,24.39,0,0,1-6.14-1.77c-5.39-2.39-8-6.83-9.28-12.32a39,39,0,0,1-.75-8.62V77.74c0-7.82,0-15.64,0-23.46,0-1.06,0-2.12-.08-3.34a10.53,10.53,0,0,0-1.88-.37c-1.61-.06-3.22,0-4.82,0-.62,0-1.24-.1-2-.16a61.53,61.53,0,0,1-.19-9.25c1-1.05,2.22-1.18,3.31-1.55a51.07,51.07,0,0,0,14.2-7.33,44.74,44.74,0,0,0,13.48-15.7c.33-.66.71-1.29,1-1.85a29.09,29.09,0,0,1,10.27,1.69c.29,2.2-.49,4.37-.53,6.59s-.35,4.48-.42,6.72-.06,4.46,0,6.84C234,36.87,239.1,36.44,244.56,36.83Z"/><path d="M639.66,122.37a38.08,38.08,0,0,1,.05-10.22c.91-.76,2-.38,3.06-.44s2.11-.07,3.14-.1c.3-2.59.39-54.1.11-57.52-.95-.6-1.83.09-2.73.23s-1.89.33-2.91.51c-.9-1.63-.43-3.37-.47-5a15.35,15.35,0,0,1,.21-4.74,4.62,4.62,0,0,1,.9-.52q18.59-5,37.19-9.92c.17,0,.4.08.73.16a6.13,6.13,0,0,1,.28,1.14c0,1,0,1.92,0,2.89q0,34.53,0,69.06c0,1.16,0,2.32.07,3.65l5.09.34c.79,2,.89,4.23.49,10.09a9.16,9.16,0,0,1-1.7.39c-1.07.07-2.14,0-3.21,0H639.66Z"/><path d="M657.3,34.05a30.79,30.79,0,0,1-4.8-.76,10.24,10.24,0,0,1-6.8-13.5,12.08,12.08,0,0,1,3.3-5c7.19-6.51,15.48-8.37,24.67-5.33,6.52,2.16,9,9.17,5.61,15.16a13.37,13.37,0,0,1-4.67,4.75C669.6,32.5,664.06,33.82,657.3,34.05Z"/><path d="M768.38,25c-5.65.14-11.6-4.73-11.49-12.47a11.66,11.66,0,1,1,23.31.63A11.64,11.64,0,0,1,768.38,25Zm10.19-11.88a10,10,0,0,0-10-10.32c-6.44,0-10.65,5.31-10.72,9.82a10.81,10.81,0,0,0,10.71,10.92A10.2,10.2,0,0,0,778.57,13.07Z"/><path d="M770.33,13.57c1.32,2,2.47,3.83,3.64,5.66-.77.65-1.44.67-2,0s-1-1.65-1.49-2.47l-2-3.28h-2.17c-.18.31-.36.48-.37.66-.06,1.17-.06,2.35-.12,3.52,0,.63-.13,1.24-.2,1.89l-1,.07c-.48-2.2-.56-9.17-.15-12.94a18.28,18.28,0,0,1,7.51.05c1.61.36,2.08,1.74,2.33,3.15a3,3,0,0,1-2,3C771.82,13.09,771.21,13.26,770.33,13.57Zm-4.41-6.06c.06,1.75-.24,3.1.34,4.57a17.72,17.72,0,0,0,4.77,0,1.79,1.79,0,0,0,1.65-2,2.35,2.35,0,0,0-2.27-2.57C769.06,7.42,767.7,7.51,765.92,7.51Z"/></g></svg></span>
+    <span class="logo-item logo-text">Death Wish Coffee<span class="sep"></span></span>
+    <span class="logo-item logo-text">Barnacle Foods<span class="sep"></span></span>
+    <span class="logo-item logo-svg" aria-label="Clear Capital"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 765.32 158.23" fill="currentColor"><path d="M127.67.63H2.79A2.8,2.8,0,0,0,0,3.42V128.3a2.81,2.81,0,0,0,2.79,2.8h0a6.11,6.11,0,0,0,3.05-1.42c.84-.58,109.18-82.45,109.18-82.45h14.07L66.67,131.1h61a2.81,2.81,0,0,0,2.8-2.8V3.42A2.81,2.81,0,0,0,127.67.63ZM0,110.85V74.71L94.28,47.23H109.5Z"/><path d="M167.1,67.63c0-7.26,0-19,2.9-26.12,2.33-5.81,8.7-14.81,24.38-14.81,2.9,0,14.94.16,21.48,9.58,4.93,7.11,4.93,15.1,4.93,23.21l-12.91-.13V54.29c0-1.47-.16-10.17-6.25-14.23a13.48,13.48,0,0,0-7.54-2.18,12.47,12.47,0,0,0-11.47,7.83c-2.89,7-2.6,19.88-2.46,26.84V84.61c-.29,13.2-.14,22.77,2,28,.87,2.17,4.21,8,11.45,8,1.47,0,6.54-.44,9.87-3.91,3.93-4.35,4.21-12.18,4.37-17.41h12.91c-.14,8.12-.44,15.22-5.23,22.2-3,4.64-8.71,10.3-21.47,10.3a26.48,26.48,0,0,1-16.83-5.36c-9.73-7.27-10.45-18.3-10.16-39.91Zm69-39.62h12.75V130.45H236.11Zm26.95,58.34c0-7,0-16.55,4.07-22.93,2.75-4.21,8.21-8.85,19.67-8.85,2,0,12.13.3,17.94,7.1,5.51,6.54,5.37,17.71,5.37,25.26v9.28H275.54c0,4.21.14,8.28.28,12.47.3,3.93.24,7.41,3.43,10.16a10.2,10.2,0,0,0,7.26,2.47c4.21,0,6-1.17,7.2-2.32,3.05-2.9,3.63-10,3.92-13.64h12.48c-.29,4.64-.58,9.28-2.32,13.64-2.19,5.65-7.64,12-21.13,12-2.33,0-14,0-19.69-9.15-4.06-6.24-3.91-15.66-3.91-22.63Zm34.43-.74a64,64,0,0,0-.29-10.44c-.15-1.31-.44-5.81-3.78-8.7A9.13,9.13,0,0,0,287,64.3a13.1,13.1,0,0,0-6,1.16c-2.6,1.31-3.71,4.06-4.44,6.81-.87,3.49-.87,9.71-1,13.34Zm88,44.84V55.29H397.1V67.91c.57-4,1.15-7.4,4.2-10.29,4.07-3.91,9.28-3.77,14.22-3.77V65.59c-4.36.16-8.69.16-12.48,3-4.5,3.63-4.64,9.73-4.79,14.94v46.87Zm48-62.82c0-7.26,0-19,2.91-26.12,2.32-5.81,8.7-14.81,24.37-14.81,2.91,0,15,.16,21.49,9.58,4.92,7.11,4.92,15.1,4.92,23.21l-12.91-.13V54.29c0-1.47-.15-10.17-6.24-14.23a13.48,13.48,0,0,0-7.54-2.18A12.46,12.46,0,0,0,449,45.71c-2.9,7-2.62,19.88-2.46,26.84V84.61c-.3,13.2-.16,22.77,2,28,.87,2.17,4.2,8,11.46,8,1.45,0,6.54-.44,9.87-3.91,3.92-4.35,4.2-12.18,4.35-17.41h12.91c-.14,8.12-.43,15.22-5.22,22.2-3,4.64-8.7,10.3-21.47,10.3a26.47,26.47,0,0,1-16.83-5.36c-9.73-7.27-10.45-18.3-10.17-39.91Zm125.2-12.34H571v7.26c2.45-2.9,6.37-7.84,15.66-7.84,2.18,0,9.87,0,14.36,6.1,4.93,6.24,4.65,17.41,4.49,24.67V98.39c-.14,11.46-.57,18.14-2.74,23.07-1.75,3.92-5.81,9.72-16.26,9.72-8.7,0-13.36-5.36-15.51-7.55v34H558.66Zm34,31.49c0-4.36,0-13.21-2.18-17.42a9.53,9.53,0,0,0-8.56-4.78,10.18,10.18,0,0,0-9.72,7C571,74.88,571,83.44,571,87.22v10c.13,7.1.28,13.5.86,16a10.34,10.34,0,0,0,10.3,7.83,8.79,8.79,0,0,0,5.81-1.88c4.2-3.18,4.64-9.42,4.64-19.58Zm28.63-51.85H634V46.64H621.24Zm0,20.36H634v75.16H621.24Zm35.24,10.46h-8.4V55.29h8.84V34.83h12.33V55.29H681.6V65.75H669.25v44.82c-.13,6.25.16,9,7.27,8.71h5.08v11.17c-9.15.44-13.35.59-17.86-1.6a12,12,0,0,1-4.64-4.35c-2.47-4.06-2.62-8.41-2.62-12.75ZM752.57,28h12.75V130.45H752.57ZM358.42,55.29v4.3c-2.61-3.57-9-5.06-12.12-5.06-11,0-16.24,5.63-18.9,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.13,17,3.78,23.19,5.42,9.13,16.66,8.29,18.9,8.29a18.46,18.46,0,0,0,8.8-1.87,14.44,14.44,0,0,0,3.41-2.21v3.25H369.2V55.29Zm-1.8,37.58v18c0,7.92-4.46,10.37-9.64,10.37-1.35,0-5.38.06-7.92-2.35-2.94-2.72-2.9-6.12-3.16-10-.13-4.11-.27-8.09-.27-12.22V85.67a126,126,0,0,1,.93-13.09,9.5,9.5,0,0,1,9.6-7.83c6,0,10.46,3.31,10.46,10.51ZM532.07,55.29v4.3c-2.61-3.57-9-5.06-12.11-5.06-11,0-16.25,5.63-18.9,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.12,17,3.77,23.19,5.44,9.13,16.68,8.29,18.91,8.29a18.46,18.46,0,0,0,8.8-1.87,14.73,14.73,0,0,0,3.42-2.21v3.25h10.81V55.29Zm-1.78,37.58v18c0,7.92-4.47,10.37-9.66,10.37-1.33,0-5.38.06-7.91-2.35-3-2.72-2.89-6.12-3.16-10-.13-4.11-.27-8.09-.27-12.22V85.67a123.29,123.29,0,0,1,.94-13.09,9.49,9.49,0,0,1,9.58-7.83c6,0,10.48,3.31,10.48,10.51ZM726,55.29v4.3c-2.61-3.57-9-5.06-12.11-5.06-11,0-16.24,5.63-18.89,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.14,17,3.76,23.19,5.43,9.13,16.68,8.29,18.91,8.29a18.48,18.48,0,0,0,8.8-1.87,14.73,14.73,0,0,0,3.42-2.21v3.25h10.81V55.29Zm-1.78,37.58v18c0,7.92-4.47,10.37-9.66,10.37-1.34,0-5.37.06-7.91-2.35-2.95-2.72-2.89-6.12-3.17-10-.12-4.11-.25-8.09-.25-12.22V85.67a118.23,118.23,0,0,1,.93-13.09,9.5,9.5,0,0,1,9.59-7.83c6,0,10.47,3.31,10.47,10.51Z"/></svg></span>
+    <span class="logo-item logo-text">Coffeebar<span class="sep"></span></span>
+    <span class="logo-item logo-text">Class Valuation<span class="sep"></span></span>
+    <span class="logo-item logo-svg" aria-label="Covered"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 778.29 152.58" fill="currentColor"><path d="M12.59,107.38,53.45,66.52l40.86,40.86,12.54-12.53L70.06,58.22a31.75,31.75,0,1,0-33.21,0L.05,95ZM53.45,17a14,14,0,1,1-14,14A14,14,0,0,1,53.45,17Z"/><polygon points="0.05 140.59 12.59 153.13 53.45 112.27 94.31 153.13 106.85 140.59 53.45 87.36 0.05 140.59"/><path d="M241.81,112.59a43.14,43.14,0,0,1-14.16,10.1,41.75,41.75,0,0,1-16.28,3.42c-7.82,0-14-1.8-19.21-5.21a32.81,32.81,0,0,1-11.89-14.17h0A50.53,50.53,0,0,1,176,85.57a47.09,47.09,0,0,1,4.4-20.84A34.1,34.1,0,0,1,193,50.57c5.37-3.42,12.05-5.21,20.19-5.21a42.21,42.21,0,0,1,15,2.76,30.11,30.11,0,0,1,11.39,7.33l3.58,3.75,10.58-16.94L251.25,40a47.9,47.9,0,0,0-17.09-10.41A60.71,60.71,0,0,0,213,26c-12.53,0-23.6,2.61-32.72,8.14a51.58,51.58,0,0,0-20.35,21.82,64.16,64.16,0,0,0-6.67,29.47,66.13,66.13,0,0,0,6.51,29.46A52.73,52.73,0,0,0,179.46,137c8.79,5.7,19.53,8.31,31.91,8.31a54.35,54.35,0,0,0,23.6-5A60.22,60.22,0,0,0,253,127.57l2.12-2.28-9.61-16.93Z"/><path d="M332.81,55l-2.27,3.42L332.81,55c-6.83-4.56-15.14-6.84-24.42-6.84-9.44,0-17.74,2.12-24.58,6.68a40.72,40.72,0,0,0-15.14,17.91,60.1,60.1,0,0,0-4.88,24.42,59.29,59.29,0,0,0,4.88,24.25,39.6,39.6,0,0,0,15.14,17.91c6.84,4.56,15.14,6.68,24.58,6.68,9.28,0,17.59-2.28,24.42-6.84a41.56,41.56,0,0,0,15-18.07A59,59,0,0,0,352.68,97,58.23,58.23,0,0,0,347.79,73,41.56,41.56,0,0,0,332.81,55Zm-2.6,42.17A50.71,50.71,0,0,1,328.74,110a26.59,26.59,0,0,1-4.39,9.44,16.44,16.44,0,0,1-6.68,5.54,20.53,20.53,0,0,1-9.28,2,20,20,0,0,1-9.27-2,17.79,17.79,0,0,1-6.52-5.54,26.59,26.59,0,0,1-4.39-9.44,50.71,50.71,0,0,1-1.47-12.86,48.44,48.44,0,0,1,1.47-12.7A26.51,26.51,0,0,1,292.6,75a19.31,19.31,0,0,1,6.52-5.7,20.51,20.51,0,0,1,9.27-2,20.06,20.06,0,0,1,9.28,2,18.29,18.29,0,0,1,6.68,5.7,26.51,26.51,0,0,1,4.39,9.44A48.44,48.44,0,0,1,330.21,97.13Z"/><polygon points="402.49 111.45 380.51 51.05 357.23 51.05 393.21 144.34 411.45 144.34 447.43 51.05 424.31 51.05 402.49 111.45"/><path d="M519.87,115.2a43.88,43.88,0,0,1-11.07,8.63,24.68,24.68,0,0,1-12.21,2.93,21.44,21.44,0,0,1-9.61-2,18.41,18.41,0,0,1-6.67-5.69,26.82,26.82,0,0,1-4.4-9.45,51.08,51.08,0,0,1-1.46-12.86h56.16l.66-3.42a51.93,51.93,0,0,0,1.14-10.25,37.18,37.18,0,0,0-4.56-18.73,30.85,30.85,0,0,0-13-12.37A39.94,39.94,0,0,0,496.59,48c-9.28,0-17.58,2.12-24.42,6.68A40.7,40.7,0,0,0,457,72.54,60,60,0,0,0,452.15,97a59,59,0,0,0,4.88,24.1A40.32,40.32,0,0,0,472,139c6.83,4.55,15.14,6.67,24.42,6.67A43.05,43.05,0,0,0,516,141.25a53.2,53.2,0,0,0,15.31-11.89l2-2.28-9.61-16ZM483.4,71.08h0a17.18,17.18,0,0,1,5.54-3.26,23.56,23.56,0,0,1,7.16-1.14,15.7,15.7,0,0,1,10.42,3.75,11,11,0,0,1,2.93,4.23,12.55,12.55,0,0,1,.81,3.75H478A20.34,20.34,0,0,1,483.4,71.08Z"/><path d="M577.5,51.87a46.76,46.76,0,0,0-10.91,6.84L565,51.06H546.73v92h22.14V79.54a48.73,48.73,0,0,1,12.7-7.65,34.14,34.14,0,0,1,12.86-2.28h4.07V48.29h-4.07A43.24,43.24,0,0,0,577.5,51.87Z"/><path d="M673.06,115.2A43.71,43.71,0,0,1,662,123.83a24.68,24.68,0,0,1-12.21,2.93,21.37,21.37,0,0,1-9.6-2,18.44,18.44,0,0,1-6.68-5.69,26.64,26.64,0,0,1-4.39-9.45,50.6,50.6,0,0,1-1.47-12.86h56.17l.65-3.42a51.93,51.93,0,0,0,1.14-10.25A37.18,37.18,0,0,0,681,64.4,30.82,30.82,0,0,0,668,52,40,40,0,0,0,649.78,48c-9.28,0-17.58,2.12-24.42,6.68a40.7,40.7,0,0,0-15.14,17.9A60.14,60.14,0,0,0,605.34,97a59.16,59.16,0,0,0,4.88,24.1,40.38,40.38,0,0,0,15,17.91c6.84,4.55,15.14,6.67,24.42,6.67a43.09,43.09,0,0,0,19.54-4.39,53.3,53.3,0,0,0,15.3-11.89l1.95-2.28-9.6-16ZM636.6,71.08h0a17.13,17.13,0,0,1,5.53-3.26,23.67,23.67,0,0,1,7.16-1.14,15.7,15.7,0,0,1,10.42,3.75,10.9,10.9,0,0,1,2.93,4.23,12.55,12.55,0,0,1,.82,3.75H631.22A20.48,20.48,0,0,1,636.6,71.08Z"/><path d="M756.09,9.22V49.43a52,52,0,0,0-11.56-1.31,54,54,0,0,0-18.88,3.1,43.46,43.46,0,0,0-15.14,9.6,40.55,40.55,0,0,0-9.77,16.12,67,67,0,0,0-3.09,21.49c0,9.6,1.46,17.91,4.72,25.07a37.72,37.72,0,0,0,13.84,16.61,36.61,36.61,0,0,0,20.34,5.69A40.45,40.45,0,0,0,751.21,143a42,42,0,0,0,8-4.24l1,4.07h18.07V9.22Zm0,110.86a44.79,44.79,0,0,1-8.63,4.89,26,26,0,0,1-10.09,1.79,14.14,14.14,0,0,1-6.51-1.47,16.18,16.18,0,0,1-5.54-4.72h0a21.57,21.57,0,0,1-3.91-8.47A55.22,55.22,0,0,1,720,98.43a54.61,54.61,0,0,1,1.63-13.51,27.22,27.22,0,0,1,4.72-9.77,17.65,17.65,0,0,1,7.49-5.86A28.79,28.79,0,0,1,745,67.17a37.55,37.55,0,0,1,10.91,1.47v51.44Z"/></svg></span>
+    <span class="logo-item logo-svg" aria-label="Marriott"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 765.96 152.58" fill="currentColor"><path d="M734.47,125.88c-7.82-4.09-9-15.64-8.86-43.73l.18-43.06-14.84,0,3.33-8h11.51V10.71L753.34.51v29.9l12.63,0-3.33,8.83h-9.29l-.05,74.51c.61,6,2.63,9.54,5.51,12.11H734.47"/><path d="M41.68,52.62c2.81,7.67,9.15,15.59,4.64,24.49-2.2,9-10.73,16.33-19.75,17.79-9.38.85-18.39-.73-25.35-6.46-5-26.07,5.61-50.21,26.21-64.58L41.68,52.62"/><path d="M78.06,132.07c-4.69,15.78-51.3,5.42-65.93-20.48C31.33,113.73,53,96.73,53.32,77.35l24.74,54.72"/><path d="M97.13,130c2.14-.95,6.43-3.08,7.49-7.65L54.48,13.62c-3.35-.43-5.79-.73-10,2.31L97.13,130"/><path d="M119.67,106.42C141,74.12,123,21.12,77.09,13.68Z"/><path d="M518.76,34.43c5-4.24,13.93-4.34,19.68-1.61a16.64,16.64,0,0,1,6.26,4.94L533.6,55a21.3,21.3,0,0,0-4.24-2.52,14,14,0,0,0-14.64,2v50.37c-.08,8.71,1.44,16.66,5.95,20.8H495.44c-5.25-4-6.55-10.5-7.06-16.15l-.2-67c.22-5.42-1.17-7.82-3.34-10.85l26.15.1c2.12,1.52,2.22,4.15,3.33,6.16l4.44-3.53"/><path d="M550.66,51c-.21-6.36,1.21-14-3-19.48H572a9.34,9.34,0,0,1,3,5.15c1.3,1.71,1.2,4.13,1.81,6.16l.2,71.36c1,4.25,2.63,8.53,5.76,11.86l-26,0c-8.47-8.2-5.7-21.7-6.36-35.63L550.66,51"/><path d="M614.25,102.16c1.2,4.44,3.53,9.89,8.88,10.5,3.13.1,5.45-2.53,7.27-4.75,5.66-11.1,4.85-23.22,4.85-35.83-1.83-9.39.4-22.2-9.7-28-3.52-1.3-6.26,1.12-8.48,3.34-3.93,5.95-4.38,12.77-4.64,20.34-1.31,12.11.11,22.16,1.82,34.37M589,51.69c2.63-7.27,10.8-10.9,16.76-14.84C614.86,33.52,624.84,25.24,635,32c8.48,5.55,16,11.8,21.3,20.39,1.31,3.33,1.92,7.06,2.82,10.59,0,4.75,1,8.28.91,13a118.51,118.51,0,0,1,0,14.84c-.3,8.58-4.33,16.25-11.1,22.21-10.09,9-22.81,19.18-36.54,12.21-12.31-5.75-26.85-17.16-25.94-32.8-.5-11.1-1-20.69.51-31.49.6-3.13.29-6.56,2-9.29"/><path d="M678,125.88c-7.82-4.09-9-15.64-8.86-43.73l.18-43.06-14.84,0,3.33-8h11.51V10.71L696.91.51v29.9l12.62,0-3.33,8.83h-9.29l0,74.51c.61,6,2.64,9.54,5.51,12.11H678"/><path d="M426.1,42.56c-.17-5.44-1.17-7.83-3.33-10.85l26.14.1c2.12,1.51,2.22,4.13,3.33,6.16l4.44-3.54c5-4.24,13.93-4.34,19.68-1.62a16.87,16.87,0,0,1,6.26,4.95L471.52,55a21.61,21.61,0,0,0-4.24-2.53,13.92,13.92,0,0,0-14.63,2v50.36c-.08,8.71,1.43,16.66,6,20.8H433.37c-5.26-4-6.75-10.05-7.07-16.16l-.2-67"/><path d="M228.36,69.05l-9.55,19.54c-6.49,11.53-15.6,25.68-29.56,29.19-5.41,1.89-10.18.19-15.4-.18L157,145.16a13.14,13.14,0,0,0,4.78,3.16c29.63,11.31,41.57-.85,70.76-66.8l27.57,58.73h36.71l-17.34-39.63,9.82-20.49,27.11,59.23,35.14.23L290.07,4.45,261.74,18.53,283.93,69l-9.72,19.83L233.53,1,203.7,16.16l24.66,52.89"/><path d="M387.54,73.85c-.2-3.79-2.93-4.2-4.85-4.2-6.25.91-11.64,6.15-14.64,11.51a27.78,27.78,0,0,0-3.52,13c0,4.51-.31,7.87,1.51,11.3,1,2.22,3.23,3.23,5.35,3.83a14.12,14.12,0,0,0,10.9-2.42c7.37-4.13,6-12.41,6.15-19.78l-.9-13.27m-46.33,19A29.46,29.46,0,0,1,356.35,69c9-5.55,19.48-7.77,28.77-12.62,1.61-1.31,3.63-2.92,3.73-5a5.42,5.42,0,0,0-3.54-5.55c-14.13-3-25.84,5.85-36.13,14.63,1.32-6.46,2.32-13.53,5.35-19.59,1.52-1.61,2.42-3.83,4.44-5,10-4.94,22.51-6.35,33.72-5.55a24.65,24.65,0,0,1,20.79,15.55c1.61,3.93,1.51,8.37,1.82,12.41l.1,54.71c.1,4.75,2.32,9.18,5.14,13H394.4c-3.13-2.82-4.67-6.36-5.55-10.8-7.32,6.46-22.59,16-31.7,9.69-9.43-4.24-18.06-18.48-15.94-31.9"/></svg></span>
+    <span class="logo-item logo-svg" aria-label="MessageDesk"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 767.11 131.44" fill="currentColor"><path d="M77.12,22.67C73,36.7,69,50.75,64.85,64.76c-4.1,13.83-8,27.75-12.21,41.54a12.72,12.72,0,0,1-6.87.08c-2.58-6.41-4.3-13.17-6.39-19.8C37.22,79.77,35.06,73,33,66.13c-2.07-6.67-4-13.37-6.15-20S23,32.74,20.12,25.19c-.12,2.26-.24,3.4-.24,4.54q0,30.23,0,60.43a14.6,14.6,0,0,0,1.4,7.26,7.72,7.72,0,0,0,5.28,4.2c1.62.36,3.25.67,4.92,1,1.24,1.66.65,3.43.48,5.38a13.07,13.07,0,0,1-2.5.51q-13,.06-26,0a21.14,21.14,0,0,1-2.36-.29c-1.48-1.71-1.16-3.45-.73-5.46,1.67-.37,3.25-.82,4.86-1A7.62,7.62,0,0,0,11,97.48a11.91,11.91,0,0,0,1.8-6.15c0-1.33,0-2.67,0-4V22.41c0-1.33,0-2.67,0-4-.27-4.64-2.42-7-6.94-7.7-.66-.1-1.33-.07-2-.17a13.89,13.89,0,0,1-1.59-.48C1.34,8.42,1.63,6.7,2,4.93A6.72,6.72,0,0,1,3.53,4.4c5.92-.34,28.16-.11,31.61.31,1.46,2,1.83,4.49,2.56,6.82,3.23,10.31,6.31,20.67,9.45,31q3.18,10.5,6.39,21c.58,1.9,1.25,3.77,1.85,5.58,1,.17,1.21-.45,1.39-1.1Q65.36,38.06,74,8.11c.32-1.1.81-2.15,1.31-3.46,3.65-.67,7.3-.23,10.93-.31s7.33,0,11,0l10.58,0c1.46,1.16,1.28,2.38,1.24,3.51-.06,1.67-.71,2.38-2.38,2.65-1.15.19-2.35.15-3.47.41a6.17,6.17,0,0,0-5.11,5.44,27.92,27.92,0,0,0-.17,4q0,35.21,0,70.41a31.41,31.41,0,0,0,.11,3.5c.45,4.14,2.63,6.52,6.77,7.5,1.27.3,2.53.63,3.9,1a12.75,12.75,0,0,1,.34,2.06c0,1-.12,2-.21,3.17a15.71,15.71,0,0,1-2.88.56q-18,.06-36,0a24.2,24.2,0,0,1-2.76-.31c-1.53-1.81-1.08-3.56-.7-5.46,1.77-.4,3.35-.85,5-1.11a6.4,6.4,0,0,0,5.1-4.28,15.1,15.1,0,0,0,1.23-6.32c-.08-3.32,0-6.66,0-10V22.66Z"/><path d="M481.34,108.24c-.55-2.17-.74-3.78.1-5.43a20.92,20.92,0,0,1,5.25-1.3,6,6,0,0,0,5.22-5.79c.14-1.49.15-3,.15-4.48V19.91c0-1.5,0-3-.14-4.49a6,6,0,0,0-4.67-5.75c-1.89-.57-3.84-.88-5.64-1.28a3,3,0,0,1,0-3.68,11,11,0,0,1,2.11-.36c14.14,0,28.29-.1,42.44.05,9.91.11,18.38,4,25.74,10.52,8.43,7.41,13.42,16.81,15.76,27.67a52.91,52.91,0,0,1,.17,20.79,63,63,0,0,1-8.6,22.68,49.18,49.18,0,0,1-18.65,17.6,40.67,40.67,0,0,1-18.65,4.85c-12.48.15-25,0-37.44,0C483.51,108.54,482.54,108.36,481.34,108.24ZM512.08,12V90.71a19.84,19.84,0,0,0,0,3,26.69,26.69,0,0,0,1,4.33,5.89,5.89,0,0,0,4.73,4,16.12,16.12,0,0,0,12-2.06c4-2.38,6.62-6,8.84-9.94,5.85-10.46,7.1-22,7.89-33.63-.86-5.41-.62-10.94-1.88-16.31a51.07,51.07,0,0,0-8-18.65c-3.31-4.58-7.5-8.07-13.13-9.3C520,11.31,516.34,11.64,512.08,12Z"/><path d="M400.19,39.27c1.89,1.39,3.83,2.66,5.58,4.16,5.92,5.09,9,11.5,8.22,19.37-.45,4.83-2.83,8.85-6.16,12.25a30.59,30.59,0,0,1-16,8.59,30.27,30.27,0,0,1-13.36.22,17,17,0,0,0-4-.34,7.41,7.41,0,0,0-5.66,2.75,2.36,2.36,0,0,0-.15,2.78,4.18,4.18,0,0,0,3.11,2.27,26.75,26.75,0,0,0,4.47.33c6.17,0,12.33.11,18.49,0a59.57,59.57,0,0,1,10.93.88,26.93,26.93,0,0,1,5.7,1.73c7,2.8,10.06,9.57,8.2,17.22a20.46,20.46,0,0,1-8.4,12,35.56,35.56,0,0,1-12.69,5.66c-5.82,1.39-11.73,2.51-17.75,2.31A59.14,59.14,0,0,1,364,128.77a20.13,20.13,0,0,1-7.43-4c-4.81-4.34-4.19-10.86,1.39-14.24a39.61,39.61,0,0,1,4-1.94l1.59-.7c-.15-1.54-1.34-1.72-2.05-2.3C355.76,100.92,355.09,93,360,87A21.08,21.08,0,0,1,367.71,81c-1.49-1.47-2.81-2.69-4-4A24.63,24.63,0,0,1,357,60.79,20.73,20.73,0,0,1,365.3,43a29.13,29.13,0,0,1,18-6.52,38.6,38.6,0,0,1,10.15.7c2.45-2,5-4.15,7.58-6.21a36.63,36.63,0,0,1,9.83-5.84c3.38-1.26,6.55-.89,9.28,1.65a8.1,8.1,0,0,1,2,8.67c-1.27,3.23-3.51,5.18-7.09,5.37a6.13,6.13,0,0,1-3.8-1c-.7-.46-1.35-1-2-1.43C405.83,36.21,404,36.37,400.19,39.27Zm-12.65,70.41h0c-4.14,0-8.29,0-12.44,0a14.66,14.66,0,0,0-3,.1c-2.39.51-4.34,1.75-5.08,4.21-.79,2.62.05,4.81,2.64,6.33a26.7,26.7,0,0,0,6.3,2.87,50.34,50.34,0,0,0,19.25,1,35.14,35.14,0,0,0,8.11-2.23,12.27,12.27,0,0,0,4.12-2.68,5.21,5.21,0,0,0-1.67-8.61,12.55,12.55,0,0,0-5.32-1C396.17,109.71,391.86,109.68,387.54,109.68Zm7.24-48.31c0-2,.12-4,0-6a24.29,24.29,0,0,0-2.87-9.94c-2-3.74-8.4-3.9-10.72-.76a17.77,17.77,0,0,0-3.1,6.7,44.53,44.53,0,0,0-.86,13.85A46,46,0,0,0,379,74c.82,2.84,3.08,4.21,6,4.51,4.34.45,7.32-1.53,8.67-5.8A30.65,30.65,0,0,0,394.78,61.37Z"/><path d="M349.73,102.1c.53,3.49.47,3.68-1.6,4.8a23,23,0,0,1-14,2.67,11,11,0,0,1-8.26-5c-.52-.8-1-1.63-1.5-2.5-1.65,1.23-3.08,2.37-4.57,3.4a25,25,0,0,1-18.1,4.07c-8.35-1.16-13.2-7.45-13.84-14.82-.78-9,2.38-16.24,9.67-21.72a40.13,40.13,0,0,1,10-5.5,64,64,0,0,0,12.11-5.84,13.19,13.19,0,0,0,5.63-6.79c1.29-3.68,1.06-7.2-1.78-10.22a6.1,6.1,0,0,0-4.38-2.09c-.83,0-1.67,0-2.5,0-3.85-.07-6.21,2-7.56,5.4A29.76,29.76,0,0,0,308,52.23a8.69,8.69,0,0,1-3.4,5.36c-4,2.78-7.69,2.07-10.86-.94A8.33,8.33,0,0,1,293,46.09a22.61,22.61,0,0,1,9.49-7.1,31.39,31.39,0,0,1,11.14-2.48c4.65-.09,9.27-.21,13.89.93a17.4,17.4,0,0,1,13.59,16.91c0,12,0,24,0,35.94,0,1.5-.1,3,0,4.49a21.2,21.2,0,0,0,.85,4.38c.72,2.31,2,3.18,4.44,3.21A32.28,32.28,0,0,0,349.73,102.1Zm-27.9-33.38a23,23,0,0,0-11.69,6.21,13.76,13.76,0,0,0-3.91,7.9,43,43,0,0,0-.09,7.94,10.46,10.46,0,0,0,2.58,5.84,7.9,7.9,0,0,0,8.53,2.55c3.42-1.28,4.79-3.28,4.81-7.19q0-9.72,0-19.43C322.05,71.41,321.92,70.28,321.83,68.72Z"/><path d="M594.14,74.9c-.75,4.9,1.27,8.4,3.58,11.65A14.45,14.45,0,0,0,607,92.8a19.25,19.25,0,0,0,16.69-4.48,34.44,34.44,0,0,0,2.71-2.94c1.83-2,2.44-2.07,5.87-.86a10.76,10.76,0,0,1-.23,1.84A36.15,36.15,0,0,1,623.75,101c-10.72,11.18-25.93,11.27-36.64,3a25.91,25.91,0,0,1-8.25-11.7,44.07,44.07,0,0,1-2.39-23.5,62.67,62.67,0,0,1,2.72-11.1,38.38,38.38,0,0,1,5.87-10.38c5.83-7.38,13.4-11.26,23-10.82a21.27,21.27,0,0,1,16.06,7.93,30.6,30.6,0,0,1,7,16.8c.17,1.81.37,3.61.54,5.23-.63,1.53-2,1.52-3,1.74-4.23.9-8.48,1.68-12.72,2.51Zm-.58-7.79c.42.18.74.45,1,.4,4.73-.8,9.5-1.45,14.16-2.56a6.7,6.7,0,0,0,5-6.71,20.65,20.65,0,0,0-3.49-11.74,6.65,6.65,0,0,0-9.63-1.63,11.12,11.12,0,0,0-2.45,2.44A20.29,20.29,0,0,0,595,54c-1.09,3.85-1.2,7.84-1.75,11.77A3.59,3.59,0,0,0,593.56,67.11Z"/><path d="M126.13,75.07c-.64,5.16,1.54,9.06,4.51,12.49a15.11,15.11,0,0,0,15.16,5.31,19.28,19.28,0,0,0,12.56-7.35A4.17,4.17,0,0,1,164,84.17c.19.45.48.79.41,1C162.13,93.3,158,100.07,151,105a26.45,26.45,0,0,1-38.78-9.86A40.9,40.9,0,0,1,108,78.4,50.55,50.55,0,0,1,112,56c2.77-6.55,6.86-12.18,13.13-15.88a25.39,25.39,0,0,1,20.64-2.73,21.55,21.55,0,0,1,12.11,9.12,32.09,32.09,0,0,1,5.3,14.36c.14,1.32.48,2.62.54,3.94a11.38,11.38,0,0,1-.54,2.63C151,70.52,138.66,72,126.13,75.07Zm-.34-7.75a6.15,6.15,0,0,0,1.75.19c4.25-.73,8.53-1.34,12.71-2.36a7.3,7.3,0,0,0,5.58-7.83,30.65,30.65,0,0,0-2.38-9.1,9,9,0,0,0-1.74-2.41,6.5,6.5,0,0,0-8.55-1.23,9.22,9.22,0,0,0-2.88,2.67A27.41,27.41,0,0,0,127.41,53c-1.45,4.26-1.74,8.75-2.08,13.21C125.31,66.5,125.57,66.81,125.79,67.32Z"/><path d="M476.75,67.1A10.46,10.46,0,0,1,472,68.67q-15.41,3-30.8,6a9,9,0,0,0-1.71.7C440,84,445,90.75,452.31,92.73a14.79,14.79,0,0,0,4.91.47A30.16,30.16,0,0,0,463.06,92a16,16,0,0,0,8.78-6.23c1.84-2.55,2.33-2.55,6-1.28a7,7,0,0,1,0,1.89,34.63,34.63,0,0,1-12.09,17.91c-13.17,10.18-31.66,5.49-38.91-7.59a40,40,0,0,1-5.09-19,53.06,53.06,0,0,1,3.1-19.56A35.24,35.24,0,0,1,435.38,42.6c7.19-5.88,15.33-7.78,24.31-5C465.72,39.44,470,43.5,473,49a32.83,32.83,0,0,1,4.09,16.75A6.74,6.74,0,0,1,476.75,67.1Zm-37.44.1a6.17,6.17,0,0,0,1.66.31c4.24-.74,8.51-1.35,12.69-2.35,4.36-1,6.41-4.55,5.59-9-.38-2.11-.91-4.2-1.47-6.27A10.35,10.35,0,0,0,455,45.24a5.43,5.43,0,0,0-3.52-1.64,7.46,7.46,0,0,0-6.32,2.22,15.93,15.93,0,0,0-3.62,5.88,37.53,37.53,0,0,0-2.37,11.62C439.1,64.61,439.25,65.9,439.31,67.2Z"/><path d="M692.15,7.26V4.41c.36-.3.58-.62.87-.7a25.85,25.85,0,0,1,3.86-.94C704.29,1.82,711.7.94,719.39,0A12.12,12.12,0,0,1,720,2.3c.1,1.49,0,3,0,4.49V91.14c0,1.33,0,2.66,0,4a6.9,6.9,0,0,0,4.79,6.87c.92.34,1.86.62,2.79.93a6.54,6.54,0,0,1,0,5.1,7.23,7.23,0,0,1-1.8.47q-15.74.06-31.47,0a9.71,9.71,0,0,1-1.89-.37,6.41,6.41,0,0,1-.12-5.19c1.17-.32,2.44-.6,3.66-1a6.71,6.71,0,0,0,4.6-6,31.18,31.18,0,0,0,.07-3.49q0-36.93,0-73.86c0-1,0-2,0-3-.19-3.47-1.6-6.06-5.17-7.1C694.41,8.19,693.36,7.71,692.15,7.26Z"/><path d="M254.37,109.76c-7.18-.06-13.27-1.38-18.62-5.23a16.83,16.83,0,0,1-6-7.18c-1.53-3.66-.54-6.88,1.84-9.73,1.88-2.25,5.75-3,8.78-1.78A6.73,6.73,0,0,1,245,92.28c0,1,0,2,.1,3a9.38,9.38,0,0,0,6.8,8.34,11.37,11.37,0,0,0,10.47-1.37A7.79,7.79,0,0,0,266,96.51a10.87,10.87,0,0,0-5.37-11.46,42.35,42.35,0,0,0-5.79-2.91c-3.05-1.32-6.17-2.49-9.24-3.76-.92-.37-1.8-.85-2.7-1.28C235.17,73.43,231.63,67,231,58.83c-.7-8.66,3.59-15.74,11.83-19.57,9-4.19,18-3.9,26.89.64a25.49,25.49,0,0,1,6.58,5.29,8.15,8.15,0,0,1,2.1,6.44,7.65,7.65,0,0,1-5.44,7,8.7,8.7,0,0,1-9.36-3.12,10.29,10.29,0,0,1-1.78-4.6,21.82,21.82,0,0,0-1.13-4.32A5.44,5.44,0,0,0,256.24,43a17.53,17.53,0,0,0-6.42,0c-4,1-5.9,3.32-6.48,7.33A6.66,6.66,0,0,0,246,56.48a24,24,0,0,0,5.06,3.14c3.77,1.75,7.63,3.3,11.46,4.91a43,43,0,0,1,9.22,4.93,20,20,0,0,1,8.35,15.7c.73,12.17-7.22,20.08-15.71,22.84a37.86,37.86,0,0,1-5.27,1.47A37.93,37.93,0,0,1,254.37,109.76Z"/><path d="M197.71,109.76c-7.48-.07-13.59-1.36-18.91-5.24-3-2.19-5.43-4.82-6.33-8.65-1.49-6.43,3.72-11.82,10.11-10.32a7,7,0,0,1,5.48,6.33c.21,1.81.36,3.63.67,5.41a7.6,7.6,0,0,0,4.11,5.39c4.59,2.48,9.45,2.37,13.89-1.46,3.12-2.68,3.57-8.63.92-12.35a14.64,14.64,0,0,0-6.11-5c-4-1.74-8-3.36-11.91-5.14-2.27-1-4.48-2.17-6.65-3.39-8-4.51-13.07-20-5-30a20.75,20.75,0,0,1,7.36-5.85c9.73-4.59,19.37-4.29,28.63,1.22A23.42,23.42,0,0,1,219.88,46a7.42,7.42,0,0,1,.65,8.84,7.46,7.46,0,0,1-7.43,4c-4-.15-7.07-2.69-8.11-6.86-.44-1.76-.76-3.56-1.26-5.31a5.22,5.22,0,0,0-2.49-3c-3.53-2.1-9.65-1.32-12.56,1.61a7.42,7.42,0,0,0-.29,10.35,15,15,0,0,0,5.25,3.74c4,1.72,8,3.4,11.93,5.09a43.51,43.51,0,0,1,9.23,4.92,19.2,19.2,0,0,1,8.28,15.71,29,29,0,0,1-.37,6.46,20.55,20.55,0,0,1-8.63,13A27.24,27.24,0,0,1,197.71,109.76Z"/><path d="M662,109.72a29.16,29.16,0,0,1-19.33-6.25c-3.63-2.87-5.56-6.55-5-11.3a8.49,8.49,0,0,1,5.41-6.59,8.7,8.7,0,0,1,9,2.86,7.5,7.5,0,0,1,1,3.78,39.81,39.81,0,0,0,1,5.85,7.58,7.58,0,0,0,4.59,5c3.53,1.53,7.14,1.94,10.59,0,7.27-4,6.47-11.87,1.73-16.34a18.18,18.18,0,0,0-5-3.14c-3.93-1.79-8-3.36-11.94-5a28.22,28.22,0,0,1-9.13-6,17.37,17.37,0,0,1-5.27-11c-.22-2.44-.81-4.81-.34-7.4,1.12-6.21,4.59-10.58,9.75-13.78,10.41-6.47,24.35-5,33.54,2.82A14.15,14.15,0,0,1,686,47.52a8,8,0,0,1-3,10.44c-3.57,2.27-9.32.87-11.32-2.94a34,34,0,0,1-1.75-5.16,24.56,24.56,0,0,0-1.27-3.74,5.77,5.77,0,0,0-5.15-3.39,30.56,30.56,0,0,0-4.49.06,8,8,0,0,0-6.76,10.63,8.39,8.39,0,0,0,1.92,2.85c1.83,2,4.31,3.08,6.76,4.13,3,1.3,6.17,2.48,9.2,3.84a66.18,66.18,0,0,1,8.47,4.22c6.13,3.9,9.85,9.36,9.64,16.91a37.84,37.84,0,0,1-.72,7.9c-1.41,5.85-5.41,9.81-10.43,12.77A26.39,26.39,0,0,1,662,109.72Z"/><path d="M737.6,63.08c.92,1.37,1.61,2.5,2.39,3.56q11.67,15.9,23.35,31.76c.59.8,1.13,1.66,1.78,2.41a6.79,6.79,0,0,1,1.32,7.16,5.94,5.94,0,0,1-1.7.53c-4.83,0-9.66,0-14.49.08a4.67,4.67,0,0,1-4.16-2.26l-4.92-6.92L724.68,76.24c-.39-.54-.79-1.07-1.15-1.63-1.22-1.93-1.22-2.55.26-4.46C729.4,62.92,735,55.66,740.7,48.53a78.12,78.12,0,0,1,6.92-7.18,18.06,18.06,0,0,1,7.68-4.5A9.31,9.31,0,0,1,765.58,40c2,2.81,2.38,8.9-1.13,11.92A6.63,6.63,0,0,1,760,53.88a47.68,47.68,0,0,1-6-.2c-6.73-.91-11.65,1.74-15.16,7.36C738.5,61.59,738.16,62.15,737.6,63.08Z"/></svg></span>
+    <span class="logo-item logo-text">Dermaplane Pro<span class="sep"></span></span>
+    <span class="logo-item logo-text">Sorella<span class="sep"></span></span>
+    <!-- duplicated for seamless loop -->
+    <span class="logo-item logo-svg" aria-label="Patagonia"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.2 155.94" fill="currentColor"><g id="Sw5f3h"><path d="M39.57,138.57c3.88.67,7.55-.18,11,.55.68,1.48.39,2.79.43,4,0,1.5,0,3,0,4.5,0,1.25-.52,1.72-1.77,1.83-.64.05-1.29,0-1.93,0H3.54c-1,0-2.16.26-3.09-.48a30.31,30.31,0,0,1-.13-9.72A8.33,8.33,0,0,1,2,138.87c1.27-.1,2.54-.08,3.92-.11a15.56,15.56,0,0,0,.46-2,21.08,21.08,0,0,0,0-2.25q0-38.41,0-76.85c0-1.24.3-2.55-.5-3.89l-5.13,1c-.29-.35-.53-.51-.54-.67C.14,51.67.06,49.21,0,46.75a16.75,16.75,0,0,1,.22-2.09C3.56,43.39,36.39,35,39,34.75c.83,2.23-.06,4.64.6,7.11a11.35,11.35,0,0,0,1.4-.55c2.26-1.21,4.49-2.5,6.77-3.68,9.78-5.07,19.61-4.6,29.36,0C86.48,42,92.37,49.54,95.92,59a48.6,48.6,0,0,1,2.86,16.38,54.11,54.11,0,0,1-9,31.63,40.58,40.58,0,0,1-13.36,12.77C69,124.14,61,125.56,52.56,124.9a35.67,35.67,0,0,1-12.16-2.74,1.69,1.69,0,0,0-.64,0c-.1.14-.32.31-.32.48q-.06,7.06-.08,14.14A17.6,17.6,0,0,0,39.57,138.57Zm-.22-60.74V97.09c0,1.18,0,2.36.1,3.53a14.93,14.93,0,0,0,1.75,6.12,8.71,8.71,0,0,0,5.31,4.36,16.06,16.06,0,0,0,8.23.15,11.07,11.07,0,0,0,8-6.31,24.26,24.26,0,0,0,1.74-4.81,41.55,41.55,0,0,0,1.12-6.63,77.57,77.57,0,0,0-1.1-21.72,31.68,31.68,0,0,0-4.38-11A18.07,18.07,0,0,0,40.8,53.18a1.61,1.61,0,0,0-1.38,1.54c-.08.85-.07,1.71-.07,2.57Z"/><path d="M399.45,36.32c.27-.77.49-1.35.68-1.94.66-2,1.26-4.08,2-6.1a10.33,10.33,0,0,1,8.78-7.07,39.72,39.72,0,0,1,10.89-.06,7,7,0,0,1,1.52.59l-4,15a2.72,2.72,0,0,1-1-.25c-2-1.53-4.28-1.19-6.48-.67a3.1,3.1,0,0,0-1.69,4.88,16.42,16.42,0,0,0,2.07,2c2,1.79,4.09,3.46,6,5.37,6.79,6.89,9,15.33,8.06,24.77a29.84,29.84,0,0,1-3.24,11,30.78,30.78,0,0,1-11.49,11.85,55,55,0,0,1-9.49,4.67,154.23,154.23,0,0,1-18.43,5.52c-1,.25-2.06.54-3,.8-.14,1,.52.9,1,1,3.29.46,6.58.84,9.86,1.35a81.65,81.65,0,0,1,14.92,3.73,36.08,36.08,0,0,1,11.5,6.26,16.1,16.1,0,0,1,6,12.32,17.42,17.42,0,0,1-4.67,12.32,25,25,0,0,1-6.24,5,51.6,51.6,0,0,1-18.18,6,23.06,23.06,0,0,1-3.53.1c-3.65,0-7.29-.07-10.93,0a39.1,39.1,0,0,1-14.12-2.61,22.38,22.38,0,0,1-6.16-3.41,13.55,13.55,0,0,1-4.82-14.06,15,15,0,0,1,5.48-7.35,24.92,24.92,0,0,1,8-4l1.75-.52c0-.73-.4-.81-.82-.85a124.45,124.45,0,0,0-16-.68,29.57,29.57,0,0,0-3.51.34,2.07,2.07,0,0,1-2.36-1.22,14.83,14.83,0,0,1-.64-1.47q-1.31-3.28-2.59-6.57c-.64-1.64-.38-2.17,1.23-2.55s2.94-.61,4.39-1A71.43,71.43,0,0,0,361.29,105c2.84-1.22,5.65-2.52,8.66-3.87a5.25,5.25,0,0,0-2.68-1,42.35,42.35,0,0,1-15.53-6.67A29.56,29.56,0,0,1,342,82.21a26.83,26.83,0,0,1-2.64-10.52,34.68,34.68,0,0,1,4.15-18.88,33.27,33.27,0,0,1,15.34-14.14,48.63,48.63,0,0,1,15.7-4.32c6.6-.75,13,.14,19.5,1.06C395.7,35.66,397.39,36,399.45,36.32ZM369,58.32c.3,2.38.53,5.15,1,7.88a54,54,0,0,0,5.72,17.28,33.67,33.67,0,0,0,3.48,5,11.17,11.17,0,0,0,10.94,3.91,7.24,7.24,0,0,0,6.28-5.22,19.76,19.76,0,0,0,.71-6.66,61.8,61.8,0,0,0-3.28-17.6,45.05,45.05,0,0,0-4.16-9.36,20.92,20.92,0,0,0-5.47-6.23,11.14,11.14,0,0,0-9.48-1.68,6.24,6.24,0,0,0-4.62,4.09,15.3,15.3,0,0,0-.83,3.41C369.15,54.7,369.15,56.31,369,58.32Zm11,78.65a40.58,40.58,0,0,0,.88,4.7c1.38,4.53,5.92,6.45,10.65,4.22a4.88,4.88,0,0,0,2.86-4,12.34,12.34,0,0,0-3.17-10.4,27,27,0,0,0-6.7-4.93,1.36,1.36,0,0,0-1.95.49,11.92,11.92,0,0,0-1.08,2.32A34.53,34.53,0,0,0,380.05,137Z"/><path d="M531.51,44.88c12.93-3.55,25.82-6.94,38.82-10.45.57,2.39.26,4.54.31,6.65s0,4.28,0,6.34c.9.55,1.28-.16,1.74-.48,3.34-2.31,6.6-4.76,10-7a35.59,35.59,0,0,1,12.4-5.14,33.52,33.52,0,0,1,19.87,1.6A19.42,19.42,0,0,1,626,48.82c1.37,4,1.5,8.2,1.51,12.38,0,11,0,22.08,0,33.12,0,4.82,0,9.65,0,14.47,0,.84,0,1.69,0,2.55,1.8.73,3.56,0,5.4.57.94,1.45.44,3.2.48,4.85a18.57,18.57,0,0,1-.24,5.27,10,10,0,0,1-1.79.32q-20.74,0-41.48,0a14.88,14.88,0,0,1-1.81-.26,30.53,30.53,0,0,1,0-10c.93-.73,2-.36,3.08-.42s1.9,0,3,0a16.25,16.25,0,0,0,.28-2c0-15.44,0-30.87,0-46.31,0-4-2.11-6.74-6.31-7.67a17,17,0,0,0-10.95,1.39,26.45,26.45,0,0,0-6.11,4.12,2.93,2.93,0,0,0-1.13,2.52c0,.54,0,1.07,0,1.61q0,21.38,0,42.76c0,1.06.07,2.11.11,3.27,2.18.65,4.36,0,6.53.53.58,1.7.25,3.42.31,5.1s0,3.19,0,5a15.29,15.29,0,0,1-2.3.37c-4.08,0-8.15,0-12.22,0H534.89c-1,0-2.1-.07-3.33-.12-.38-3.46-.14-6.74-.19-10.16a17.38,17.38,0,0,1,2-.37c1.16-.07,2.32-.07,3.26-.1a3.11,3.11,0,0,0,.43-.4.5.5,0,0,0,.1-.28l.06-55.63a10.87,10.87,0,0,0-.05-1.28,3.16,3.16,0,0,0-.33-.76l-5.27,1.47A63.52,63.52,0,0,1,531.51,44.88Z"/><path d="M772.21,111.74c1.51,0,2.8,0,4.08,0a1.23,1.23,0,0,1,1.26,1.22c.06,2.68.06,5.36,0,8a1.38,1.38,0,0,1-1.44,1.42c-.53,0-1.07,0-1.6,0H744.62c-3.44,0-3.52-.07-4.24-3.39-.16-.73-.32-1.46-.47-2.2s-.23-1.23-.38-2.1a10.31,10.31,0,0,0-1.49.74,52.27,52.27,0,0,1-13.1,7.39,32.33,32.33,0,0,1-26.48-1.38,22.53,22.53,0,0,1-12.26-14.93c-2.45-9.44-1.36-18.56,3.8-26.92s12.8-12.47,22.41-13c7.48-.41,15-.44,22.49-.62,1.06,0,2.12,0,3.32,0a9,9,0,0,0,.45-1.94,28,28,0,0,0-.2-4.49A7.44,7.44,0,0,0,733,53.08a18.29,18.29,0,0,0-4.7-.92,29.14,29.14,0,0,0-10.16,1.25,19.09,19.09,0,0,0-6.62,3.85c-1.51,1.36-3,2.7-5.12,4.55-.86.18-2.33-.65-3.81-1.14-2.19-.74-4.51-1.26-6.62-2.71L707,30.69c.87-.54,1.46-.1,2,.07,2.16.62,4.3,1.29,6.45,2a5.79,5.79,0,0,1,1.78.69,1.63,1.63,0,0,1,.58,1.34,17,17,0,0,1-1,2.57c.57.58,1.08.33,1.57.15a52.15,52.15,0,0,1,10.56-2.7c8-1.15,16-1.12,23.89,1.18,6.39,1.87,11.65,5.36,15.1,11.21a25.75,25.75,0,0,1,3.4,10.63c.3,3.09.47,6.2.48,9.31,0,13.5,0,27,0,40.51A10.44,10.44,0,0,0,772.21,111.74ZM738.62,87.88h.09V85c0-2.14,0-4.28-.06-6.41a1.35,1.35,0,0,0-1.39-1.46,24.26,24.26,0,0,0-8.9.78,13.84,13.84,0,0,0-9.9,10.41,20.85,20.85,0,0,0,.87,12,9.21,9.21,0,0,0,8.93,6.63c5.14.18,8.48-2,9.7-6.6a16.79,16.79,0,0,0,.63-3.77C738.68,93.66,738.62,90.77,738.62,87.88Z"/><path d="M300.25,65.79a15.11,15.11,0,0,0-.77-8.61,6.77,6.77,0,0,0-4.38-4,19.21,19.21,0,0,0-5.32-1,39.32,39.32,0,0,0-7.66.67,19.75,19.75,0,0,0-10.9,6.39c-.73.78-1.42,1.59-2.14,2.4a7.08,7.08,0,0,1-3.76-.63c-1.32-.43-2.66-.82-4-1.27s-2.48-.57-3.43-1.45c.6-2.41,9.47-24.7,11.12-27.93,3.32.91,6.62,2,9.81,2.92,1,1.59-.38,2.85-.11,4.41a4.22,4.22,0,0,0,1.15-.1c5.95-2.39,12.2-3.21,18.54-3.5a47.49,47.49,0,0,1,16.5,2c10,3.14,16.08,9.78,17.87,20.23a52.91,52.91,0,0,1,.61,9q0,21.85,0,43.71v2.38c.73.12,1.33.26,1.94.3.85.07,1.71,0,2.56.09a1.37,1.37,0,0,1,1.27,1.24,57.22,57.22,0,0,1-.28,9.1,9.09,9.09,0,0,1-1.77.32q-15.75,0-31.5,0H305c-1.67-.09-2.11-.38-2.51-1.93-.33-1.23-.5-2.51-.76-3.77-.13-.6-.3-1.19-.41-1.65-.86-.36-1.2.14-1.6.44a51,51,0,0,1-13.11,7.38c-9,3.23-17.88,2.91-26.46-1.45-7.19-3.64-11.39-9.62-12.85-17.45a35.34,35.34,0,0,1,1.53-18.36,27.84,27.84,0,0,1,26.34-19.06L298,66C298.69,66,299.41,65.88,300.25,65.79Zm.25,22h0c0-3,0-6,0-9a1.46,1.46,0,0,0-1.55-1.66,24.14,24.14,0,0,0-8.6.71c-5.32,1.6-9,5.08-10.15,10.56a21.19,21.19,0,0,0,.92,12,9.27,9.27,0,0,0,9,6.54c5.28.13,8.51-2.13,9.73-7a26.06,26.06,0,0,0,.65-5.07C300.58,92.48,300.5,90.12,300.5,87.76Z"/><path d="M185.52,111.58l4.84.25a4.83,4.83,0,0,1,.47,1.3c0,2.57.08,5.14,0,7.71,0,1.13-.51,1.55-1.58,1.61-.53,0-1.07,0-1.6,0H158.11c-1,0-1.89-.08-3-.13-.79-2.51-1.54-4.92-2.27-7.26-.89-.33-1.28.31-1.75.68A45.17,45.17,0,0,1,138.27,123c-8.67,3-17.27,2.93-25.58-1.17-7.54-3.72-12-9.93-13.34-18.17a35.37,35.37,0,0,1,1.23-17.14c3.36-10.21,10.27-16.57,20.81-18.84a33.89,33.89,0,0,1,5.43-.56c7.38-.36,14.76-.67,22.14-1l2.73-.15a10.73,10.73,0,0,0,.34-1.8,17.88,17.88,0,0,0-.59-6,7.24,7.24,0,0,0-4.72-4.88,18.93,18.93,0,0,0-5.33-1,40.24,40.24,0,0,0-7.66.66,18,18,0,0,0-9.5,5.06c-1.36,1.36-2.66,2.77-4,4.14A36.91,36.91,0,0,1,109.63,58c.53-2.19,9-22.55,11.37-27.32,1.8-.13,3.42.79,5.11,1.31s3.56.66,5.33,1.68l-1.22,3.74a1.41,1.41,0,0,0,1.67.05A56.77,56.77,0,0,1,152.37,34a45.67,45.67,0,0,1,14.25,2.08c9.57,3.06,15.62,9.34,17.62,19.35a51.46,51.46,0,0,1,.74,9.91c0,14,0,28.06,0,42.09A7.93,7.93,0,0,0,185.52,111.58ZM151.9,77.25a23.58,23.58,0,0,0-9.78.58c-5.79,1.8-9.53,5.69-10.59,11.74a20.74,20.74,0,0,0,.83,9.84c1.46,4.58,4.56,7.17,9.37,7.49,5.15.34,8.34-2,9.51-6.31a22.24,22.24,0,0,0,.76-5.38c.1-5.46.05-10.92,0-16.39C152,78.4,152,78,151.9,77.25Z"/><path d="M430.12,79.39A42.88,42.88,0,0,1,456.35,39a57.73,57.73,0,0,1,18.29-4.58,64,64,0,0,1,21.06,1.4c12,2.85,22,8.8,29,19.2a42,42,0,0,1,6.82,19.84,47,47,0,0,1-1.7,18.43c-3.84,12.54-12.09,21.25-23.9,26.65a58.07,58.07,0,0,1-18.56,4.77,67.82,67.82,0,0,1-18.88-.77c-9.69-1.76-18.41-5.64-25.55-12.59a40.42,40.42,0,0,1-11.83-22.69C430.6,85.58,430.44,82.47,430.12,79.39Zm68.62,12a67.61,67.61,0,0,0-1.51-14.34,63.11,63.11,0,0,0-5.55-17,28.71,28.71,0,0,0-6-8.25A15.25,15.25,0,0,0,474,47.4a9.71,9.71,0,0,0-8.15,5,17.46,17.46,0,0,0-1.92,5.08,37.23,37.23,0,0,0-.73,8.29A86.72,86.72,0,0,0,466,87.3,53.45,53.45,0,0,0,471.3,101a25.46,25.46,0,0,0,5.85,7.17,15.75,15.75,0,0,0,6.88,3.28,10.6,10.6,0,0,0,12.08-5.73,27.47,27.47,0,0,0,1.85-5.1A31.89,31.89,0,0,0,498.74,91.4Z"/><path d="M244.56,36.83a16.57,16.57,0,0,1-.12,1.92c-.6,3.26-1.23,6.51-1.85,9.77-.31,1.66-.64,2-2.32,2-2.78,0-5.57,0-8.35,0-.95,0-1.9.07-2.81.11-.78,1.21-.48,2.42-.48,3.56q0,20.57,0,41.13c0,1.5,0,3,0,4.5-.17,4.31,2.21,7.42,7.22,7.54,2.16.06,4.29,0,6.27-1.39a26.08,26.08,0,0,1,2.26,5c.69,1.56,1.26,3.17,1.87,4.73-3.13,3.15-9.52,7.06-13.34,8.18a13.88,13.88,0,0,1-2.18.54c-1.7.23-3.4.46-5.11.52a68,68,0,0,1-13.15-.43,24.39,24.39,0,0,1-6.14-1.77c-5.39-2.39-8-6.83-9.28-12.32a39,39,0,0,1-.75-8.62V77.74c0-7.82,0-15.64,0-23.46,0-1.06,0-2.12-.08-3.34a10.53,10.53,0,0,0-1.88-.37c-1.61-.06-3.22,0-4.82,0-.62,0-1.24-.1-2-.16a61.53,61.53,0,0,1-.19-9.25c1-1.05,2.22-1.18,3.31-1.55a51.07,51.07,0,0,0,14.2-7.33,44.74,44.74,0,0,0,13.48-15.7c.33-.66.71-1.29,1-1.85a29.09,29.09,0,0,1,10.27,1.69c.29,2.2-.49,4.37-.53,6.59s-.35,4.48-.42,6.72-.06,4.46,0,6.84C234,36.87,239.1,36.44,244.56,36.83Z"/><path d="M639.66,122.37a38.08,38.08,0,0,1,.05-10.22c.91-.76,2-.38,3.06-.44s2.11-.07,3.14-.1c.3-2.59.39-54.1.11-57.52-.95-.6-1.83.09-2.73.23s-1.89.33-2.91.51c-.9-1.63-.43-3.37-.47-5a15.35,15.35,0,0,1,.21-4.74,4.62,4.62,0,0,1,.9-.52q18.59-5,37.19-9.92c.17,0,.4.08.73.16a6.13,6.13,0,0,1,.28,1.14c0,1,0,1.92,0,2.89q0,34.53,0,69.06c0,1.16,0,2.32.07,3.65l5.09.34c.79,2,.89,4.23.49,10.09a9.16,9.16,0,0,1-1.7.39c-1.07.07-2.14,0-3.21,0H639.66Z"/><path d="M657.3,34.05a30.79,30.79,0,0,1-4.8-.76,10.24,10.24,0,0,1-6.8-13.5,12.08,12.08,0,0,1,3.3-5c7.19-6.51,15.48-8.37,24.67-5.33,6.52,2.16,9,9.17,5.61,15.16a13.37,13.37,0,0,1-4.67,4.75C669.6,32.5,664.06,33.82,657.3,34.05Z"/><path d="M768.38,25c-5.65.14-11.6-4.73-11.49-12.47a11.66,11.66,0,1,1,23.31.63A11.64,11.64,0,0,1,768.38,25Zm10.19-11.88a10,10,0,0,0-10-10.32c-6.44,0-10.65,5.31-10.72,9.82a10.81,10.81,0,0,0,10.71,10.92A10.2,10.2,0,0,0,778.57,13.07Z"/><path d="M770.33,13.57c1.32,2,2.47,3.83,3.64,5.66-.77.65-1.44.67-2,0s-1-1.65-1.49-2.47l-2-3.28h-2.17c-.18.31-.36.48-.37.66-.06,1.17-.06,2.35-.12,3.52,0,.63-.13,1.24-.2,1.89l-1,.07c-.48-2.2-.56-9.17-.15-12.94a18.28,18.28,0,0,1,7.51.05c1.61.36,2.08,1.74,2.33,3.15a3,3,0,0,1-2,3C771.82,13.09,771.21,13.26,770.33,13.57Zm-4.41-6.06c.06,1.75-.24,3.1.34,4.57a17.72,17.72,0,0,0,4.77,0,1.79,1.79,0,0,0,1.65-2,2.35,2.35,0,0,0-2.27-2.57C769.06,7.42,767.7,7.51,765.92,7.51Z"/></g></svg></span>
+    <span class="logo-item logo-text">Death Wish Coffee<span class="sep"></span></span>
+    <span class="logo-item logo-text">Barnacle Foods<span class="sep"></span></span>
+    <span class="logo-item logo-svg" aria-label="Clear Capital"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 765.32 158.23" fill="currentColor"><path d="M127.67.63H2.79A2.8,2.8,0,0,0,0,3.42V128.3a2.81,2.81,0,0,0,2.79,2.8h0a6.11,6.11,0,0,0,3.05-1.42c.84-.58,109.18-82.45,109.18-82.45h14.07L66.67,131.1h61a2.81,2.81,0,0,0,2.8-2.8V3.42A2.81,2.81,0,0,0,127.67.63ZM0,110.85V74.71L94.28,47.23H109.5Z"/><path d="M167.1,67.63c0-7.26,0-19,2.9-26.12,2.33-5.81,8.7-14.81,24.38-14.81,2.9,0,14.94.16,21.48,9.58,4.93,7.11,4.93,15.1,4.93,23.21l-12.91-.13V54.29c0-1.47-.16-10.17-6.25-14.23a13.48,13.48,0,0,0-7.54-2.18,12.47,12.47,0,0,0-11.47,7.83c-2.89,7-2.6,19.88-2.46,26.84V84.61c-.29,13.2-.14,22.77,2,28,.87,2.17,4.21,8,11.45,8,1.47,0,6.54-.44,9.87-3.91,3.93-4.35,4.21-12.18,4.37-17.41h12.91c-.14,8.12-.44,15.22-5.23,22.2-3,4.64-8.71,10.3-21.47,10.3a26.48,26.48,0,0,1-16.83-5.36c-9.73-7.27-10.45-18.3-10.16-39.91Zm69-39.62h12.75V130.45H236.11Zm26.95,58.34c0-7,0-16.55,4.07-22.93,2.75-4.21,8.21-8.85,19.67-8.85,2,0,12.13.3,17.94,7.1,5.51,6.54,5.37,17.71,5.37,25.26v9.28H275.54c0,4.21.14,8.28.28,12.47.3,3.93.24,7.41,3.43,10.16a10.2,10.2,0,0,0,7.26,2.47c4.21,0,6-1.17,7.2-2.32,3.05-2.9,3.63-10,3.92-13.64h12.48c-.29,4.64-.58,9.28-2.32,13.64-2.19,5.65-7.64,12-21.13,12-2.33,0-14,0-19.69-9.15-4.06-6.24-3.91-15.66-3.91-22.63Zm34.43-.74a64,64,0,0,0-.29-10.44c-.15-1.31-.44-5.81-3.78-8.7A9.13,9.13,0,0,0,287,64.3a13.1,13.1,0,0,0-6,1.16c-2.6,1.31-3.71,4.06-4.44,6.81-.87,3.49-.87,9.71-1,13.34Zm88,44.84V55.29H397.1V67.91c.57-4,1.15-7.4,4.2-10.29,4.07-3.91,9.28-3.77,14.22-3.77V65.59c-4.36.16-8.69.16-12.48,3-4.5,3.63-4.64,9.73-4.79,14.94v46.87Zm48-62.82c0-7.26,0-19,2.91-26.12,2.32-5.81,8.7-14.81,24.37-14.81,2.91,0,15,.16,21.49,9.58,4.92,7.11,4.92,15.1,4.92,23.21l-12.91-.13V54.29c0-1.47-.15-10.17-6.24-14.23a13.48,13.48,0,0,0-7.54-2.18A12.46,12.46,0,0,0,449,45.71c-2.9,7-2.62,19.88-2.46,26.84V84.61c-.3,13.2-.16,22.77,2,28,.87,2.17,4.2,8,11.46,8,1.45,0,6.54-.44,9.87-3.91,3.92-4.35,4.2-12.18,4.35-17.41h12.91c-.14,8.12-.43,15.22-5.22,22.2-3,4.64-8.7,10.3-21.47,10.3a26.47,26.47,0,0,1-16.83-5.36c-9.73-7.27-10.45-18.3-10.17-39.91Zm125.2-12.34H571v7.26c2.45-2.9,6.37-7.84,15.66-7.84,2.18,0,9.87,0,14.36,6.1,4.93,6.24,4.65,17.41,4.49,24.67V98.39c-.14,11.46-.57,18.14-2.74,23.07-1.75,3.92-5.81,9.72-16.26,9.72-8.7,0-13.36-5.36-15.51-7.55v34H558.66Zm34,31.49c0-4.36,0-13.21-2.18-17.42a9.53,9.53,0,0,0-8.56-4.78,10.18,10.18,0,0,0-9.72,7C571,74.88,571,83.44,571,87.22v10c.13,7.1.28,13.5.86,16a10.34,10.34,0,0,0,10.3,7.83,8.79,8.79,0,0,0,5.81-1.88c4.2-3.18,4.64-9.42,4.64-19.58Zm28.63-51.85H634V46.64H621.24Zm0,20.36H634v75.16H621.24Zm35.24,10.46h-8.4V55.29h8.84V34.83h12.33V55.29H681.6V65.75H669.25v44.82c-.13,6.25.16,9,7.27,8.71h5.08v11.17c-9.15.44-13.35.59-17.86-1.6a12,12,0,0,1-4.64-4.35c-2.47-4.06-2.62-8.41-2.62-12.75ZM752.57,28h12.75V130.45H752.57ZM358.42,55.29v4.3c-2.61-3.57-9-5.06-12.12-5.06-11,0-16.24,5.63-18.9,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.13,17,3.78,23.19,5.42,9.13,16.66,8.29,18.9,8.29a18.46,18.46,0,0,0,8.8-1.87,14.44,14.44,0,0,0,3.41-2.21v3.25H369.2V55.29Zm-1.8,37.58v18c0,7.92-4.46,10.37-9.64,10.37-1.35,0-5.38.06-7.92-2.35-2.94-2.72-2.9-6.12-3.16-10-.13-4.11-.27-8.09-.27-12.22V85.67a126,126,0,0,1,.93-13.09,9.5,9.5,0,0,1,9.6-7.83c6,0,10.46,3.31,10.46,10.51ZM532.07,55.29v4.3c-2.61-3.57-9-5.06-12.11-5.06-11,0-16.25,5.63-18.9,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.12,17,3.77,23.19,5.44,9.13,16.68,8.29,18.91,8.29a18.46,18.46,0,0,0,8.8-1.87,14.73,14.73,0,0,0,3.42-2.21v3.25h10.81V55.29Zm-1.78,37.58v18c0,7.92-4.47,10.37-9.66,10.37-1.33,0-5.38.06-7.91-2.35-3-2.72-2.89-6.12-3.16-10-.13-4.11-.27-8.09-.27-12.22V85.67a123.29,123.29,0,0,1,.94-13.09,9.49,9.49,0,0,1,9.58-7.83c6,0,10.48,3.31,10.48,10.51ZM726,55.29v4.3c-2.61-3.57-9-5.06-12.11-5.06-11,0-16.24,5.63-18.89,9.84-3.91,6.38-3.91,16-3.91,22.92v12.6c0,7-.14,17,3.76,23.19,5.43,9.13,16.68,8.29,18.91,8.29a18.48,18.48,0,0,0,8.8-1.87,14.73,14.73,0,0,0,3.42-2.21v3.25h10.81V55.29Zm-1.78,37.58v18c0,7.92-4.47,10.37-9.66,10.37-1.34,0-5.37.06-7.91-2.35-2.95-2.72-2.89-6.12-3.17-10-.12-4.11-.25-8.09-.25-12.22V85.67a118.23,118.23,0,0,1,.93-13.09,9.5,9.5,0,0,1,9.59-7.83c6,0,10.47,3.31,10.47,10.51Z"/></svg></span>
+    <span class="logo-item logo-text">Coffeebar<span class="sep"></span></span>
+    <span class="logo-item logo-text">Class Valuation<span class="sep"></span></span>
+    <span class="logo-item logo-svg" aria-label="Covered"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 778.29 152.58" fill="currentColor"><path d="M12.59,107.38,53.45,66.52l40.86,40.86,12.54-12.53L70.06,58.22a31.75,31.75,0,1,0-33.21,0L.05,95ZM53.45,17a14,14,0,1,1-14,14A14,14,0,0,1,53.45,17Z"/><polygon points="0.05 140.59 12.59 153.13 53.45 112.27 94.31 153.13 106.85 140.59 53.45 87.36 0.05 140.59"/><path d="M241.81,112.59a43.14,43.14,0,0,1-14.16,10.1,41.75,41.75,0,0,1-16.28,3.42c-7.82,0-14-1.8-19.21-5.21a32.81,32.81,0,0,1-11.89-14.17h0A50.53,50.53,0,0,1,176,85.57a47.09,47.09,0,0,1,4.4-20.84A34.1,34.1,0,0,1,193,50.57c5.37-3.42,12.05-5.21,20.19-5.21a42.21,42.21,0,0,1,15,2.76,30.11,30.11,0,0,1,11.39,7.33l3.58,3.75,10.58-16.94L251.25,40a47.9,47.9,0,0,0-17.09-10.41A60.71,60.71,0,0,0,213,26c-12.53,0-23.6,2.61-32.72,8.14a51.58,51.58,0,0,0-20.35,21.82,64.16,64.16,0,0,0-6.67,29.47,66.13,66.13,0,0,0,6.51,29.46A52.73,52.73,0,0,0,179.46,137c8.79,5.7,19.53,8.31,31.91,8.31a54.35,54.35,0,0,0,23.6-5A60.22,60.22,0,0,0,253,127.57l2.12-2.28-9.61-16.93Z"/><path d="M332.81,55l-2.27,3.42L332.81,55c-6.83-4.56-15.14-6.84-24.42-6.84-9.44,0-17.74,2.12-24.58,6.68a40.72,40.72,0,0,0-15.14,17.91,60.1,60.1,0,0,0-4.88,24.42,59.29,59.29,0,0,0,4.88,24.25,39.6,39.6,0,0,0,15.14,17.91c6.84,4.56,15.14,6.68,24.58,6.68,9.28,0,17.59-2.28,24.42-6.84a41.56,41.56,0,0,0,15-18.07A59,59,0,0,0,352.68,97,58.23,58.23,0,0,0,347.79,73,41.56,41.56,0,0,0,332.81,55Zm-2.6,42.17A50.71,50.71,0,0,1,328.74,110a26.59,26.59,0,0,1-4.39,9.44,16.44,16.44,0,0,1-6.68,5.54,20.53,20.53,0,0,1-9.28,2,20,20,0,0,1-9.27-2,17.79,17.79,0,0,1-6.52-5.54,26.59,26.59,0,0,1-4.39-9.44,50.71,50.71,0,0,1-1.47-12.86,48.44,48.44,0,0,1,1.47-12.7A26.51,26.51,0,0,1,292.6,75a19.31,19.31,0,0,1,6.52-5.7,20.51,20.51,0,0,1,9.27-2,20.06,20.06,0,0,1,9.28,2,18.29,18.29,0,0,1,6.68,5.7,26.51,26.51,0,0,1,4.39,9.44A48.44,48.44,0,0,1,330.21,97.13Z"/><polygon points="402.49 111.45 380.51 51.05 357.23 51.05 393.21 144.34 411.45 144.34 447.43 51.05 424.31 51.05 402.49 111.45"/><path d="M519.87,115.2a43.88,43.88,0,0,1-11.07,8.63,24.68,24.68,0,0,1-12.21,2.93,21.44,21.44,0,0,1-9.61-2,18.41,18.41,0,0,1-6.67-5.69,26.82,26.82,0,0,1-4.4-9.45,51.08,51.08,0,0,1-1.46-12.86h56.16l.66-3.42a51.93,51.93,0,0,0,1.14-10.25,37.18,37.18,0,0,0-4.56-18.73,30.85,30.85,0,0,0-13-12.37A39.94,39.94,0,0,0,496.59,48c-9.28,0-17.58,2.12-24.42,6.68A40.7,40.7,0,0,0,457,72.54,60,60,0,0,0,452.15,97a59,59,0,0,0,4.88,24.1A40.32,40.32,0,0,0,472,139c6.83,4.55,15.14,6.67,24.42,6.67A43.05,43.05,0,0,0,516,141.25a53.2,53.2,0,0,0,15.31-11.89l2-2.28-9.61-16ZM483.4,71.08h0a17.18,17.18,0,0,1,5.54-3.26,23.56,23.56,0,0,1,7.16-1.14,15.7,15.7,0,0,1,10.42,3.75,11,11,0,0,1,2.93,4.23,12.55,12.55,0,0,1,.81,3.75H478A20.34,20.34,0,0,1,483.4,71.08Z"/><path d="M577.5,51.87a46.76,46.76,0,0,0-10.91,6.84L565,51.06H546.73v92h22.14V79.54a48.73,48.73,0,0,1,12.7-7.65,34.14,34.14,0,0,1,12.86-2.28h4.07V48.29h-4.07A43.24,43.24,0,0,0,577.5,51.87Z"/><path d="M673.06,115.2A43.71,43.71,0,0,1,662,123.83a24.68,24.68,0,0,1-12.21,2.93,21.37,21.37,0,0,1-9.6-2,18.44,18.44,0,0,1-6.68-5.69,26.64,26.64,0,0,1-4.39-9.45,50.6,50.6,0,0,1-1.47-12.86h56.17l.65-3.42a51.93,51.93,0,0,0,1.14-10.25A37.18,37.18,0,0,0,681,64.4,30.82,30.82,0,0,0,668,52,40,40,0,0,0,649.78,48c-9.28,0-17.58,2.12-24.42,6.68a40.7,40.7,0,0,0-15.14,17.9A60.14,60.14,0,0,0,605.34,97a59.16,59.16,0,0,0,4.88,24.1,40.38,40.38,0,0,0,15,17.91c6.84,4.55,15.14,6.67,24.42,6.67a43.09,43.09,0,0,0,19.54-4.39,53.3,53.3,0,0,0,15.3-11.89l1.95-2.28-9.6-16ZM636.6,71.08h0a17.13,17.13,0,0,1,5.53-3.26,23.67,23.67,0,0,1,7.16-1.14,15.7,15.7,0,0,1,10.42,3.75,10.9,10.9,0,0,1,2.93,4.23,12.55,12.55,0,0,1,.82,3.75H631.22A20.48,20.48,0,0,1,636.6,71.08Z"/><path d="M756.09,9.22V49.43a52,52,0,0,0-11.56-1.31,54,54,0,0,0-18.88,3.1,43.46,43.46,0,0,0-15.14,9.6,40.55,40.55,0,0,0-9.77,16.12,67,67,0,0,0-3.09,21.49c0,9.6,1.46,17.91,4.72,25.07a37.72,37.72,0,0,0,13.84,16.61,36.61,36.61,0,0,0,20.34,5.69A40.45,40.45,0,0,0,751.21,143a42,42,0,0,0,8-4.24l1,4.07h18.07V9.22Zm0,110.86a44.79,44.79,0,0,1-8.63,4.89,26,26,0,0,1-10.09,1.79,14.14,14.14,0,0,1-6.51-1.47,16.18,16.18,0,0,1-5.54-4.72h0a21.57,21.57,0,0,1-3.91-8.47A55.22,55.22,0,0,1,720,98.43a54.61,54.61,0,0,1,1.63-13.51,27.22,27.22,0,0,1,4.72-9.77,17.65,17.65,0,0,1,7.49-5.86A28.79,28.79,0,0,1,745,67.17a37.55,37.55,0,0,1,10.91,1.47v51.44Z"/></svg></span>
+    <span class="logo-item logo-svg" aria-label="Marriott"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 765.96 152.58" fill="currentColor"><path d="M734.47,125.88c-7.82-4.09-9-15.64-8.86-43.73l.18-43.06-14.84,0,3.33-8h11.51V10.71L753.34.51v29.9l12.63,0-3.33,8.83h-9.29l-.05,74.51c.61,6,2.63,9.54,5.51,12.11H734.47"/><path d="M41.68,52.62c2.81,7.67,9.15,15.59,4.64,24.49-2.2,9-10.73,16.33-19.75,17.79-9.38.85-18.39-.73-25.35-6.46-5-26.07,5.61-50.21,26.21-64.58L41.68,52.62"/><path d="M78.06,132.07c-4.69,15.78-51.3,5.42-65.93-20.48C31.33,113.73,53,96.73,53.32,77.35l24.74,54.72"/><path d="M97.13,130c2.14-.95,6.43-3.08,7.49-7.65L54.48,13.62c-3.35-.43-5.79-.73-10,2.31L97.13,130"/><path d="M119.67,106.42C141,74.12,123,21.12,77.09,13.68Z"/><path d="M518.76,34.43c5-4.24,13.93-4.34,19.68-1.61a16.64,16.64,0,0,1,6.26,4.94L533.6,55a21.3,21.3,0,0,0-4.24-2.52,14,14,0,0,0-14.64,2v50.37c-.08,8.71,1.44,16.66,5.95,20.8H495.44c-5.25-4-6.55-10.5-7.06-16.15l-.2-67c.22-5.42-1.17-7.82-3.34-10.85l26.15.1c2.12,1.52,2.22,4.15,3.33,6.16l4.44-3.53"/><path d="M550.66,51c-.21-6.36,1.21-14-3-19.48H572a9.34,9.34,0,0,1,3,5.15c1.3,1.71,1.2,4.13,1.81,6.16l.2,71.36c1,4.25,2.63,8.53,5.76,11.86l-26,0c-8.47-8.2-5.7-21.7-6.36-35.63L550.66,51"/><path d="M614.25,102.16c1.2,4.44,3.53,9.89,8.88,10.5,3.13.1,5.45-2.53,7.27-4.75,5.66-11.1,4.85-23.22,4.85-35.83-1.83-9.39.4-22.2-9.7-28-3.52-1.3-6.26,1.12-8.48,3.34-3.93,5.95-4.38,12.77-4.64,20.34-1.31,12.11.11,22.16,1.82,34.37M589,51.69c2.63-7.27,10.8-10.9,16.76-14.84C614.86,33.52,624.84,25.24,635,32c8.48,5.55,16,11.8,21.3,20.39,1.31,3.33,1.92,7.06,2.82,10.59,0,4.75,1,8.28.91,13a118.51,118.51,0,0,1,0,14.84c-.3,8.58-4.33,16.25-11.1,22.21-10.09,9-22.81,19.18-36.54,12.21-12.31-5.75-26.85-17.16-25.94-32.8-.5-11.1-1-20.69.51-31.49.6-3.13.29-6.56,2-9.29"/><path d="M678,125.88c-7.82-4.09-9-15.64-8.86-43.73l.18-43.06-14.84,0,3.33-8h11.51V10.71L696.91.51v29.9l12.62,0-3.33,8.83h-9.29l0,74.51c.61,6,2.64,9.54,5.51,12.11H678"/><path d="M426.1,42.56c-.17-5.44-1.17-7.83-3.33-10.85l26.14.1c2.12,1.51,2.22,4.13,3.33,6.16l4.44-3.54c5-4.24,13.93-4.34,19.68-1.62a16.87,16.87,0,0,1,6.26,4.95L471.52,55a21.61,21.61,0,0,0-4.24-2.53,13.92,13.92,0,0,0-14.63,2v50.36c-.08,8.71,1.43,16.66,6,20.8H433.37c-5.26-4-6.75-10.05-7.07-16.16l-.2-67"/><path d="M228.36,69.05l-9.55,19.54c-6.49,11.53-15.6,25.68-29.56,29.19-5.41,1.89-10.18.19-15.4-.18L157,145.16a13.14,13.14,0,0,0,4.78,3.16c29.63,11.31,41.57-.85,70.76-66.8l27.57,58.73h36.71l-17.34-39.63,9.82-20.49,27.11,59.23,35.14.23L290.07,4.45,261.74,18.53,283.93,69l-9.72,19.83L233.53,1,203.7,16.16l24.66,52.89"/><path d="M387.54,73.85c-.2-3.79-2.93-4.2-4.85-4.2-6.25.91-11.64,6.15-14.64,11.51a27.78,27.78,0,0,0-3.52,13c0,4.51-.31,7.87,1.51,11.3,1,2.22,3.23,3.23,5.35,3.83a14.12,14.12,0,0,0,10.9-2.42c7.37-4.13,6-12.41,6.15-19.78l-.9-13.27m-46.33,19A29.46,29.46,0,0,1,356.35,69c9-5.55,19.48-7.77,28.77-12.62,1.61-1.31,3.63-2.92,3.73-5a5.42,5.42,0,0,0-3.54-5.55c-14.13-3-25.84,5.85-36.13,14.63,1.32-6.46,2.32-13.53,5.35-19.59,1.52-1.61,2.42-3.83,4.44-5,10-4.94,22.51-6.35,33.72-5.55a24.65,24.65,0,0,1,20.79,15.55c1.61,3.93,1.51,8.37,1.82,12.41l.1,54.71c.1,4.75,2.32,9.18,5.14,13H394.4c-3.13-2.82-4.67-6.36-5.55-10.8-7.32,6.46-22.59,16-31.7,9.69-9.43-4.24-18.06-18.48-15.94-31.9"/></svg></span>
+    <span class="logo-item logo-svg" aria-label="MessageDesk"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 767.11 131.44" fill="currentColor"><path d="M77.12,22.67C73,36.7,69,50.75,64.85,64.76c-4.1,13.83-8,27.75-12.21,41.54a12.72,12.72,0,0,1-6.87.08c-2.58-6.41-4.3-13.17-6.39-19.8C37.22,79.77,35.06,73,33,66.13c-2.07-6.67-4-13.37-6.15-20S23,32.74,20.12,25.19c-.12,2.26-.24,3.4-.24,4.54q0,30.23,0,60.43a14.6,14.6,0,0,0,1.4,7.26,7.72,7.72,0,0,0,5.28,4.2c1.62.36,3.25.67,4.92,1,1.24,1.66.65,3.43.48,5.38a13.07,13.07,0,0,1-2.5.51q-13,.06-26,0a21.14,21.14,0,0,1-2.36-.29c-1.48-1.71-1.16-3.45-.73-5.46,1.67-.37,3.25-.82,4.86-1A7.62,7.62,0,0,0,11,97.48a11.91,11.91,0,0,0,1.8-6.15c0-1.33,0-2.67,0-4V22.41c0-1.33,0-2.67,0-4-.27-4.64-2.42-7-6.94-7.7-.66-.1-1.33-.07-2-.17a13.89,13.89,0,0,1-1.59-.48C1.34,8.42,1.63,6.7,2,4.93A6.72,6.72,0,0,1,3.53,4.4c5.92-.34,28.16-.11,31.61.31,1.46,2,1.83,4.49,2.56,6.82,3.23,10.31,6.31,20.67,9.45,31q3.18,10.5,6.39,21c.58,1.9,1.25,3.77,1.85,5.58,1,.17,1.21-.45,1.39-1.1Q65.36,38.06,74,8.11c.32-1.1.81-2.15,1.31-3.46,3.65-.67,7.3-.23,10.93-.31s7.33,0,11,0l10.58,0c1.46,1.16,1.28,2.38,1.24,3.51-.06,1.67-.71,2.38-2.38,2.65-1.15.19-2.35.15-3.47.41a6.17,6.17,0,0,0-5.11,5.44,27.92,27.92,0,0,0-.17,4q0,35.21,0,70.41a31.41,31.41,0,0,0,.11,3.5c.45,4.14,2.63,6.52,6.77,7.5,1.27.3,2.53.63,3.9,1a12.75,12.75,0,0,1,.34,2.06c0,1-.12,2-.21,3.17a15.71,15.71,0,0,1-2.88.56q-18,.06-36,0a24.2,24.2,0,0,1-2.76-.31c-1.53-1.81-1.08-3.56-.7-5.46,1.77-.4,3.35-.85,5-1.11a6.4,6.4,0,0,0,5.1-4.28,15.1,15.1,0,0,0,1.23-6.32c-.08-3.32,0-6.66,0-10V22.66Z"/><path d="M481.34,108.24c-.55-2.17-.74-3.78.1-5.43a20.92,20.92,0,0,1,5.25-1.3,6,6,0,0,0,5.22-5.79c.14-1.49.15-3,.15-4.48V19.91c0-1.5,0-3-.14-4.49a6,6,0,0,0-4.67-5.75c-1.89-.57-3.84-.88-5.64-1.28a3,3,0,0,1,0-3.68,11,11,0,0,1,2.11-.36c14.14,0,28.29-.1,42.44.05,9.91.11,18.38,4,25.74,10.52,8.43,7.41,13.42,16.81,15.76,27.67a52.91,52.91,0,0,1,.17,20.79,63,63,0,0,1-8.6,22.68,49.18,49.18,0,0,1-18.65,17.6,40.67,40.67,0,0,1-18.65,4.85c-12.48.15-25,0-37.44,0C483.51,108.54,482.54,108.36,481.34,108.24ZM512.08,12V90.71a19.84,19.84,0,0,0,0,3,26.69,26.69,0,0,0,1,4.33,5.89,5.89,0,0,0,4.73,4,16.12,16.12,0,0,0,12-2.06c4-2.38,6.62-6,8.84-9.94,5.85-10.46,7.1-22,7.89-33.63-.86-5.41-.62-10.94-1.88-16.31a51.07,51.07,0,0,0-8-18.65c-3.31-4.58-7.5-8.07-13.13-9.3C520,11.31,516.34,11.64,512.08,12Z"/><path d="M400.19,39.27c1.89,1.39,3.83,2.66,5.58,4.16,5.92,5.09,9,11.5,8.22,19.37-.45,4.83-2.83,8.85-6.16,12.25a30.59,30.59,0,0,1-16,8.59,30.27,30.27,0,0,1-13.36.22,17,17,0,0,0-4-.34,7.41,7.41,0,0,0-5.66,2.75,2.36,2.36,0,0,0-.15,2.78,4.18,4.18,0,0,0,3.11,2.27,26.75,26.75,0,0,0,4.47.33c6.17,0,12.33.11,18.49,0a59.57,59.57,0,0,1,10.93.88,26.93,26.93,0,0,1,5.7,1.73c7,2.8,10.06,9.57,8.2,17.22a20.46,20.46,0,0,1-8.4,12,35.56,35.56,0,0,1-12.69,5.66c-5.82,1.39-11.73,2.51-17.75,2.31A59.14,59.14,0,0,1,364,128.77a20.13,20.13,0,0,1-7.43-4c-4.81-4.34-4.19-10.86,1.39-14.24a39.61,39.61,0,0,1,4-1.94l1.59-.7c-.15-1.54-1.34-1.72-2.05-2.3C355.76,100.92,355.09,93,360,87A21.08,21.08,0,0,1,367.71,81c-1.49-1.47-2.81-2.69-4-4A24.63,24.63,0,0,1,357,60.79,20.73,20.73,0,0,1,365.3,43a29.13,29.13,0,0,1,18-6.52,38.6,38.6,0,0,1,10.15.7c2.45-2,5-4.15,7.58-6.21a36.63,36.63,0,0,1,9.83-5.84c3.38-1.26,6.55-.89,9.28,1.65a8.1,8.1,0,0,1,2,8.67c-1.27,3.23-3.51,5.18-7.09,5.37a6.13,6.13,0,0,1-3.8-1c-.7-.46-1.35-1-2-1.43C405.83,36.21,404,36.37,400.19,39.27Zm-12.65,70.41h0c-4.14,0-8.29,0-12.44,0a14.66,14.66,0,0,0-3,.1c-2.39.51-4.34,1.75-5.08,4.21-.79,2.62.05,4.81,2.64,6.33a26.7,26.7,0,0,0,6.3,2.87,50.34,50.34,0,0,0,19.25,1,35.14,35.14,0,0,0,8.11-2.23,12.27,12.27,0,0,0,4.12-2.68,5.21,5.21,0,0,0-1.67-8.61,12.55,12.55,0,0,0-5.32-1C396.17,109.71,391.86,109.68,387.54,109.68Zm7.24-48.31c0-2,.12-4,0-6a24.29,24.29,0,0,0-2.87-9.94c-2-3.74-8.4-3.9-10.72-.76a17.77,17.77,0,0,0-3.1,6.7,44.53,44.53,0,0,0-.86,13.85A46,46,0,0,0,379,74c.82,2.84,3.08,4.21,6,4.51,4.34.45,7.32-1.53,8.67-5.8A30.65,30.65,0,0,0,394.78,61.37Z"/><path d="M349.73,102.1c.53,3.49.47,3.68-1.6,4.8a23,23,0,0,1-14,2.67,11,11,0,0,1-8.26-5c-.52-.8-1-1.63-1.5-2.5-1.65,1.23-3.08,2.37-4.57,3.4a25,25,0,0,1-18.1,4.07c-8.35-1.16-13.2-7.45-13.84-14.82-.78-9,2.38-16.24,9.67-21.72a40.13,40.13,0,0,1,10-5.5,64,64,0,0,0,12.11-5.84,13.19,13.19,0,0,0,5.63-6.79c1.29-3.68,1.06-7.2-1.78-10.22a6.1,6.1,0,0,0-4.38-2.09c-.83,0-1.67,0-2.5,0-3.85-.07-6.21,2-7.56,5.4A29.76,29.76,0,0,0,308,52.23a8.69,8.69,0,0,1-3.4,5.36c-4,2.78-7.69,2.07-10.86-.94A8.33,8.33,0,0,1,293,46.09a22.61,22.61,0,0,1,9.49-7.1,31.39,31.39,0,0,1,11.14-2.48c4.65-.09,9.27-.21,13.89.93a17.4,17.4,0,0,1,13.59,16.91c0,12,0,24,0,35.94,0,1.5-.1,3,0,4.49a21.2,21.2,0,0,0,.85,4.38c.72,2.31,2,3.18,4.44,3.21A32.28,32.28,0,0,0,349.73,102.1Zm-27.9-33.38a23,23,0,0,0-11.69,6.21,13.76,13.76,0,0,0-3.91,7.9,43,43,0,0,0-.09,7.94,10.46,10.46,0,0,0,2.58,5.84,7.9,7.9,0,0,0,8.53,2.55c3.42-1.28,4.79-3.28,4.81-7.19q0-9.72,0-19.43C322.05,71.41,321.92,70.28,321.83,68.72Z"/><path d="M594.14,74.9c-.75,4.9,1.27,8.4,3.58,11.65A14.45,14.45,0,0,0,607,92.8a19.25,19.25,0,0,0,16.69-4.48,34.44,34.44,0,0,0,2.71-2.94c1.83-2,2.44-2.07,5.87-.86a10.76,10.76,0,0,1-.23,1.84A36.15,36.15,0,0,1,623.75,101c-10.72,11.18-25.93,11.27-36.64,3a25.91,25.91,0,0,1-8.25-11.7,44.07,44.07,0,0,1-2.39-23.5,62.67,62.67,0,0,1,2.72-11.1,38.38,38.38,0,0,1,5.87-10.38c5.83-7.38,13.4-11.26,23-10.82a21.27,21.27,0,0,1,16.06,7.93,30.6,30.6,0,0,1,7,16.8c.17,1.81.37,3.61.54,5.23-.63,1.53-2,1.52-3,1.74-4.23.9-8.48,1.68-12.72,2.51Zm-.58-7.79c.42.18.74.45,1,.4,4.73-.8,9.5-1.45,14.16-2.56a6.7,6.7,0,0,0,5-6.71,20.65,20.65,0,0,0-3.49-11.74,6.65,6.65,0,0,0-9.63-1.63,11.12,11.12,0,0,0-2.45,2.44A20.29,20.29,0,0,0,595,54c-1.09,3.85-1.2,7.84-1.75,11.77A3.59,3.59,0,0,0,593.56,67.11Z"/><path d="M126.13,75.07c-.64,5.16,1.54,9.06,4.51,12.49a15.11,15.11,0,0,0,15.16,5.31,19.28,19.28,0,0,0,12.56-7.35A4.17,4.17,0,0,1,164,84.17c.19.45.48.79.41,1C162.13,93.3,158,100.07,151,105a26.45,26.45,0,0,1-38.78-9.86A40.9,40.9,0,0,1,108,78.4,50.55,50.55,0,0,1,112,56c2.77-6.55,6.86-12.18,13.13-15.88a25.39,25.39,0,0,1,20.64-2.73,21.55,21.55,0,0,1,12.11,9.12,32.09,32.09,0,0,1,5.3,14.36c.14,1.32.48,2.62.54,3.94a11.38,11.38,0,0,1-.54,2.63C151,70.52,138.66,72,126.13,75.07Zm-.34-7.75a6.15,6.15,0,0,0,1.75.19c4.25-.73,8.53-1.34,12.71-2.36a7.3,7.3,0,0,0,5.58-7.83,30.65,30.65,0,0,0-2.38-9.1,9,9,0,0,0-1.74-2.41,6.5,6.5,0,0,0-8.55-1.23,9.22,9.22,0,0,0-2.88,2.67A27.41,27.41,0,0,0,127.41,53c-1.45,4.26-1.74,8.75-2.08,13.21C125.31,66.5,125.57,66.81,125.79,67.32Z"/><path d="M476.75,67.1A10.46,10.46,0,0,1,472,68.67q-15.41,3-30.8,6a9,9,0,0,0-1.71.7C440,84,445,90.75,452.31,92.73a14.79,14.79,0,0,0,4.91.47A30.16,30.16,0,0,0,463.06,92a16,16,0,0,0,8.78-6.23c1.84-2.55,2.33-2.55,6-1.28a7,7,0,0,1,0,1.89,34.63,34.63,0,0,1-12.09,17.91c-13.17,10.18-31.66,5.49-38.91-7.59a40,40,0,0,1-5.09-19,53.06,53.06,0,0,1,3.1-19.56A35.24,35.24,0,0,1,435.38,42.6c7.19-5.88,15.33-7.78,24.31-5C465.72,39.44,470,43.5,473,49a32.83,32.83,0,0,1,4.09,16.75A6.74,6.74,0,0,1,476.75,67.1Zm-37.44.1a6.17,6.17,0,0,0,1.66.31c4.24-.74,8.51-1.35,12.69-2.35,4.36-1,6.41-4.55,5.59-9-.38-2.11-.91-4.2-1.47-6.27A10.35,10.35,0,0,0,455,45.24a5.43,5.43,0,0,0-3.52-1.64,7.46,7.46,0,0,0-6.32,2.22,15.93,15.93,0,0,0-3.62,5.88,37.53,37.53,0,0,0-2.37,11.62C439.1,64.61,439.25,65.9,439.31,67.2Z"/><path d="M692.15,7.26V4.41c.36-.3.58-.62.87-.7a25.85,25.85,0,0,1,3.86-.94C704.29,1.82,711.7.94,719.39,0A12.12,12.12,0,0,1,720,2.3c.1,1.49,0,3,0,4.49V91.14c0,1.33,0,2.66,0,4a6.9,6.9,0,0,0,4.79,6.87c.92.34,1.86.62,2.79.93a6.54,6.54,0,0,1,0,5.1,7.23,7.23,0,0,1-1.8.47q-15.74.06-31.47,0a9.71,9.71,0,0,1-1.89-.37,6.41,6.41,0,0,1-.12-5.19c1.17-.32,2.44-.6,3.66-1a6.71,6.71,0,0,0,4.6-6,31.18,31.18,0,0,0,.07-3.49q0-36.93,0-73.86c0-1,0-2,0-3-.19-3.47-1.6-6.06-5.17-7.1C694.41,8.19,693.36,7.71,692.15,7.26Z"/><path d="M254.37,109.76c-7.18-.06-13.27-1.38-18.62-5.23a16.83,16.83,0,0,1-6-7.18c-1.53-3.66-.54-6.88,1.84-9.73,1.88-2.25,5.75-3,8.78-1.78A6.73,6.73,0,0,1,245,92.28c0,1,0,2,.1,3a9.38,9.38,0,0,0,6.8,8.34,11.37,11.37,0,0,0,10.47-1.37A7.79,7.79,0,0,0,266,96.51a10.87,10.87,0,0,0-5.37-11.46,42.35,42.35,0,0,0-5.79-2.91c-3.05-1.32-6.17-2.49-9.24-3.76-.92-.37-1.8-.85-2.7-1.28C235.17,73.43,231.63,67,231,58.83c-.7-8.66,3.59-15.74,11.83-19.57,9-4.19,18-3.9,26.89.64a25.49,25.49,0,0,1,6.58,5.29,8.15,8.15,0,0,1,2.1,6.44,7.65,7.65,0,0,1-5.44,7,8.7,8.7,0,0,1-9.36-3.12,10.29,10.29,0,0,1-1.78-4.6,21.82,21.82,0,0,0-1.13-4.32A5.44,5.44,0,0,0,256.24,43a17.53,17.53,0,0,0-6.42,0c-4,1-5.9,3.32-6.48,7.33A6.66,6.66,0,0,0,246,56.48a24,24,0,0,0,5.06,3.14c3.77,1.75,7.63,3.3,11.46,4.91a43,43,0,0,1,9.22,4.93,20,20,0,0,1,8.35,15.7c.73,12.17-7.22,20.08-15.71,22.84a37.86,37.86,0,0,1-5.27,1.47A37.93,37.93,0,0,1,254.37,109.76Z"/><path d="M197.71,109.76c-7.48-.07-13.59-1.36-18.91-5.24-3-2.19-5.43-4.82-6.33-8.65-1.49-6.43,3.72-11.82,10.11-10.32a7,7,0,0,1,5.48,6.33c.21,1.81.36,3.63.67,5.41a7.6,7.6,0,0,0,4.11,5.39c4.59,2.48,9.45,2.37,13.89-1.46,3.12-2.68,3.57-8.63.92-12.35a14.64,14.64,0,0,0-6.11-5c-4-1.74-8-3.36-11.91-5.14-2.27-1-4.48-2.17-6.65-3.39-8-4.51-13.07-20-5-30a20.75,20.75,0,0,1,7.36-5.85c9.73-4.59,19.37-4.29,28.63,1.22A23.42,23.42,0,0,1,219.88,46a7.42,7.42,0,0,1,.65,8.84,7.46,7.46,0,0,1-7.43,4c-4-.15-7.07-2.69-8.11-6.86-.44-1.76-.76-3.56-1.26-5.31a5.22,5.22,0,0,0-2.49-3c-3.53-2.1-9.65-1.32-12.56,1.61a7.42,7.42,0,0,0-.29,10.35,15,15,0,0,0,5.25,3.74c4,1.72,8,3.4,11.93,5.09a43.51,43.51,0,0,1,9.23,4.92,19.2,19.2,0,0,1,8.28,15.71,29,29,0,0,1-.37,6.46,20.55,20.55,0,0,1-8.63,13A27.24,27.24,0,0,1,197.71,109.76Z"/><path d="M662,109.72a29.16,29.16,0,0,1-19.33-6.25c-3.63-2.87-5.56-6.55-5-11.3a8.49,8.49,0,0,1,5.41-6.59,8.7,8.7,0,0,1,9,2.86,7.5,7.5,0,0,1,1,3.78,39.81,39.81,0,0,0,1,5.85,7.58,7.58,0,0,0,4.59,5c3.53,1.53,7.14,1.94,10.59,0,7.27-4,6.47-11.87,1.73-16.34a18.18,18.18,0,0,0-5-3.14c-3.93-1.79-8-3.36-11.94-5a28.22,28.22,0,0,1-9.13-6,17.37,17.37,0,0,1-5.27-11c-.22-2.44-.81-4.81-.34-7.4,1.12-6.21,4.59-10.58,9.75-13.78,10.41-6.47,24.35-5,33.54,2.82A14.15,14.15,0,0,1,686,47.52a8,8,0,0,1-3,10.44c-3.57,2.27-9.32.87-11.32-2.94a34,34,0,0,1-1.75-5.16,24.56,24.56,0,0,0-1.27-3.74,5.77,5.77,0,0,0-5.15-3.39,30.56,30.56,0,0,0-4.49.06,8,8,0,0,0-6.76,10.63,8.39,8.39,0,0,0,1.92,2.85c1.83,2,4.31,3.08,6.76,4.13,3,1.3,6.17,2.48,9.2,3.84a66.18,66.18,0,0,1,8.47,4.22c6.13,3.9,9.85,9.36,9.64,16.91a37.84,37.84,0,0,1-.72,7.9c-1.41,5.85-5.41,9.81-10.43,12.77A26.39,26.39,0,0,1,662,109.72Z"/><path d="M737.6,63.08c.92,1.37,1.61,2.5,2.39,3.56q11.67,15.9,23.35,31.76c.59.8,1.13,1.66,1.78,2.41a6.79,6.79,0,0,1,1.32,7.16,5.94,5.94,0,0,1-1.7.53c-4.83,0-9.66,0-14.49.08a4.67,4.67,0,0,1-4.16-2.26l-4.92-6.92L724.68,76.24c-.39-.54-.79-1.07-1.15-1.63-1.22-1.93-1.22-2.55.26-4.46C729.4,62.92,735,55.66,740.7,48.53a78.12,78.12,0,0,1,6.92-7.18,18.06,18.06,0,0,1,7.68-4.5A9.31,9.31,0,0,1,765.58,40c2,2.81,2.38,8.9-1.13,11.92A6.63,6.63,0,0,1,760,53.88a47.68,47.68,0,0,1-6-.2c-6.73-.91-11.65,1.74-15.16,7.36C738.5,61.59,738.16,62.15,737.6,63.08Z"/></svg></span>
+    <span class="logo-item logo-text">Dermaplane Pro<span class="sep"></span></span>
+    <span class="logo-item logo-text">Sorella<span class="sep"></span></span>
+  </div>
+</div>
+
+<!-- ── POSITIONING STRIP — manifesto ─────────────────────────────── -->
+<section id="positioning" class="positioning">
+  <div class="container">
+    <div class="positioning-grid reveal">
+      <div class="positioning-eyebrow">
+        <span class="eyebrow"><span class="dot"></span>What we do</span>
+      </div>
+      <div class="positioning-body">
+        <h2 class="h2">Brand and commerce,<br>
+<span class="it">rebuilt as one system.</span></h2>
+        <div class="positioning-paras">
+          <p>Most growth-stage brands hit a wall that isn't a marketing problem. It's a systems problem. B2B lives in one tool, DTC in another, the brand story drifts across channels, and the tech stack has become a tax on growth.</p>
+          <p>Commence is how we fix the plumbing. Studio is how we sharpen the story. Together, they become one engine: a brand architecture that scales, and a commerce system that sells around the clock.</p>
+        </div>
+        <a class="btn-link" href="#process" data-magnet>See our approach <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES BENTO — 4-col asymmetric, Unified Commerce featured ── -->
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Services</span>
+      <div class="row">
+        <h2 class="h2">Everything a growth-stage brand needs, <span class="it">under one roof.</span></h2>
+        <a class="btn btn-ghost" href="#" data-magnet>Explore all services <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="services-bento stagger">
+      <!-- Featured 2×2: Unified Commerce -->
+      <a class="svc-tile featured" href="Service Detail.html" data-magnet>
+        <div>
+          <span class="svc-tag">Featured service</span>
+          <h3 class="svc-tile-title">Unified <span class="it">Commerce</span></h3>
+          <p>One catalog. One checkout. One customer record. B2B and DTC, connected on Shopify.</p>
+        </div>
+        <span class="svc-tile-link">Explore Unified Commerce <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <!-- 2×1: Shopify Development -->
+      <a class="svc-tile medium" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-marker" aria-hidden="true">◆</span>
+          <h3 class="svc-tile-title">Shopify Development</h3>
+          <p>Plus builds, migrations, CRO, B2B native.</p>
+        </div>
+        <span class="svc-tile-link">Explore <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <!-- 1×1: Brand Strategy -->
+      <a class="svc-tile small" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-marker" aria-hidden="true">◆</span>
+          <h4 class="svc-tile-title-sm">Brand Strategy</h4>
+          <p>Positioning, pillars, naming, story.</p>
+        </div>
+        <span class="svc-tile-link">Explore <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <!-- 1×2 tall: Brand Support — Content & Creative retainer / ongoing partnership -->
+      <a class="svc-tile tall" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-tag">Ongoing partnership</span>
+          <h3 class="svc-tile-title">Brand <span class="it">Support</span></h3>
+          <p>Content &amp; creative on retainer. Photo, illustration, packaging, and editorial &mdash; the design partner that ships with you every week, not the agency you re-onboard every quarter.</p>
+        </div>
+        <span class="svc-tile-link">Explore Brand Support <span class="arr" aria-hidden="true">&rarr;</span></span>
+      </a>
+      <!-- 1×1: Brand Identity -->
+      <a class="svc-tile small" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-marker" aria-hidden="true">◆</span>
+          <h4 class="svc-tile-title-sm">Brand Identity</h4>
+          <p>Logos, systems, guidelines teams use.</p>
+        </div>
+        <span class="svc-tile-link">Explore <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <!-- 1×1: Growth Marketing -->
+      <a class="svc-tile small" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-marker" aria-hidden="true">◆</span>
+          <h4 class="svc-tile-title-sm">Growth Marketing</h4>
+          <p>SEO, lifecycle, CRO. Compounding.</p>
+        </div>
+        <span class="svc-tile-link">Explore <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <!-- 1×1: WordPress / Editorial -->
+      <a class="svc-tile small" href="Services.html" data-magnet>
+        <div>
+          <span class="svc-marker" aria-hidden="true">◆</span>
+          <h4 class="svc-tile-title-sm">WordPress / Editorial</h4>
+          <p>Publisher-grade for B2B content.</p>
+        </div>
+        <span class="svc-tile-link">Explore <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED CASE STUDY: SORELLA ──────────────────────────────── -->
+<section id="work" style="padding-top: 0;">
+  <div class="container">
+    <div class="sec-head reveal" style="margin-bottom: 32px;">
+      <span class="eyebrow"><span class="dot"></span>Featured case study</span>
+    </div>
+
+    <div class="feat reveal cursor-glow">
+      <div class="feat-grid">
+        <div class="feat-media">
+          <div class="m m1"><img style="object-fit: contain" src="https://cdn.sanity.io/images/w2xt1cyc/production/6bd1527d88b55f22a7ecd4a18213bffaa3d12623-2385x2294.png?w=900&h=1100&fit=crop&auto=format" alt="Sorella product hero"></div>
+          <div class="m m2"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/4932f397e5d15d84d2d1985e1891b8746c2ec4af-1536x1920.jpg?w=600&h=600&fit=crop&auto=format" alt="Sorella packaging detail"></div>
+          <div class="m m3"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/6bd1527d88b55f22a7ecd4a18213bffaa3d12623-2385x2294.png?w=900&h=1100&fit=crop&auto=format" alt="Sorella store"></div>
+        </div>
+        <div>
+          <div class="tag-row">
+            <span class="chip-dark">Sorella Apothecary</span>
+            <span class="chip-dark">Beauty</span>
+            <span class="chip-dark">Brand · Shopify Plus · Unified Commerce</span>
+          </div>
+          <h2 class="h2">A beauty brand where the shelf and the screen <span class="it">finally tell the same story.</span></h2>
+          <p class="narrative">
+            Sorella came to us with a loved product and a site that made it hard to buy. We rebuilt the brand architecture, launched the storefront on Shopify Plus, and connected wholesale, DTC, and subscription into one system.
+          </p>
+          <div class="feat-kpis">
+            <div>
+              <div class="kpi kpi-num">+142%</div>
+              <div class="kpi-lbl">CVR lift</div>
+            </div>
+            <div>
+              <div class="kpi kpi-num">+68%</div>
+              <div class="kpi-lbl">AOV</div>
+            </div>
+            <div>
+              <div class="kpi kpi-num">0.9s</div>
+              <div class="kpi-lbl">LCP</div>
+            </div>
+            <div>
+              <div class="kpi kpi-num">9.6</div>
+              <div class="kpi-lbl">NPS / 10</div>
+            </div>
+          </div>
+          <blockquote class="feat-quote">"They rebuilt the whole engine while we kept selling. The brand finally matches what the product has always been."</blockquote>
+          <div class="feat-attrib">— Founder, Sorella</div>
+          <div class="feat-cta">
+            <a class="btn btn-paper" href="#" data-magnet>Read the case study <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn-outline" href="#" data-magnet>Explore Unified Commerce <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ───────────────────────────────────────────────────── -->
+<section id="process">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>How we work</span>
+      <div class="row">
+        <h2 class="h2">A clear path from<br>
+<span class="it">what's broken</span> to <span class="it">what sells.</span></h2>
+        <a class="btn btn-accent" href="#blueprint" data-magnet>Start a Shopify Blueprint <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="proc-grid stagger">
+      <div class="step">
+        <span class="num">01 · Diagnose</span>
+        <h4 class="h4">Shopify Blueprint or brand audit.</h4>
+        <p>We map the system as it is, not as it feels — with quantitative and qualitative evidence.</p>
+        <span class="dur">2–4 weeks</span>
+      </div>
+      <div class="step">
+        <span class="num">02 · Architect</span>
+        <h4 class="h4">Brand and commerce strategy, on paper.</h4>
+        <p>Positioning, technical roadmap, and a financial case for the work — with numbers attached.</p>
+        <span class="dur">3–6 weeks</span>
+      </div>
+      <div class="step">
+        <span class="num">03 · Build</span>
+        <h4 class="h4">Shopify Plus, brand, content, growth.</h4>
+        <p>Parallel tracks, single team, single source of truth — built against the same north star metric.</p>
+        <span class="dur">8–16 weeks</span>
+      </div>
+      <div class="step">
+        <span class="num">04 · Grow</span>
+        <h4 class="h4">Ongoing CRO, lifecycle, partner support.</h4>
+        <p>Monthly retainer with shared KPIs and quarterly reviews. The system keeps improving.</p>
+        <span class="dur">Ongoing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CASE STUDY GRID ───────────────────────────────────────────── -->
+<section style="background: var(--mute); border-radius: 0;">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Recent work</span>
+      <div class="row">
+        <h2 class="h2"><span class="it">Different industries,</span> same principle: brand and commerce, rebuilt as one.</h2>
+        <a class="btn btn-ghost" href="#" data-magnet>See all case studies <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="cs-filter reveal">
+      <button class="pill active">All</button>
+      <button class="pill">Beauty &amp; Wellness</button>
+      <button class="pill">Food &amp; Beverage</button>
+      <button class="pill">B2B Tech</button>
+      <button class="pill">FinTech</button>
+      <button class="pill">Shopify Plus</button>
+      <button class="pill">Brand</button>
+      <button class="pill">Unified Commerce</button>
+    </div>
+
+    <div class="cs-grid stagger">
+      <a class="case k-feat" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/6bd1527d88b55f22a7ecd4a18213bffaa3d12623-2385x2294.png?w=900&h=1100&fit=crop&auto=format" alt="Dermaplane Pro">
+        <div class="meta">
+          <div class="row1"><span class="name">Dermaplane Pro</span><span class="indu">Beauty</span></div>
+          <div class="out">Unified Commerce · Brand + Shopify Plus · +63% conversion</div>
+        </div>
+      </a>
+      <a class="case k-2x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/86ecea83f53bd70d5a6cce1bd204e278f1481346-2828x1594.jpg?w=900&h=600&fit=crop&auto=format" alt="Clear Capital">
+        <div class="meta">
+          <div class="row1"><span class="name">Clear Capital</span><span class="indu">B2B Tech</span></div>
+          <div class="out">Brand + Web · 4 product launches</div>
+        </div>
+      </a>
+      <a class="case k-1x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/ac3ea56999e83964b7648256ac5fcf65af0b4f3e-1920x1080.png?w=1100&h=700&fit=crop&auto=format" alt="Death Wish Coffee">
+        <div class="meta">
+          <div class="row1"><span class="name">Death Wish</span><span class="indu">Coffee</span></div>
+        </div>
+      </a>
+      <a class="case k-2x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/1d50d7d2f6ad8b7ec8e51db6121fa272cfadf795-3000x2000.jpg?w=900&h=600&fit=crop&auto=format" alt="Barnacle Foods">
+        <div class="meta">
+          <div class="row1"><span class="name">Barnacle Foods</span><span class="indu">F&amp;B</span></div>
+          <div class="out">Packaging + storefront · 3.2× organic</div>
+        </div>
+      </a>
+      <a class="case k-1x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/d9952545ed259eb73eaebf50a313f938372a0721-1016x1404.jpg?w=600&h=600&fit=crop&auto=format" alt="Class Valuation">
+        <div class="meta">
+          <div class="row1"><span class="name">Class Val</span><span class="indu">Real Estate</span></div>
+        </div>
+      </a>
+      <a class="case k-2x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/e572bc523a36c218074c56bc6e9bcaf53cf14c16-2598x1096.jpg?w=900&h=600&fit=crop&auto=format" alt="Coffeebar">
+        <div class="meta">
+          <div class="row1"><span class="name">Coffeebar</span><span class="indu">Hospitality</span></div>
+          <div class="out">Brand evolution · 11 locations</div>
+        </div>
+      </a>
+      <a class="case k-2x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/83f5611277436b24e9dca3fc875c948d87baa42c-1080x1080.jpg?w=900&h=600&fit=crop&auto=format" alt="Covered Insurance">
+        <div class="meta">
+          <div class="row1"><span class="name">Covered Insurance</span><span class="indu">FinTech</span></div>
+          <div class="out">Brand + storefront · Lead engine rebuild</div>
+        </div>
+      </a>
+      <a class="case k-2x1" href="#">
+        <img src="https://cdn.sanity.io/images/w2xt1cyc/production/30f479627fb719a81c4abccd243a30f55f3bf307-2048x1368.jpg?w=600&h=600&fit=crop&auto=format" alt="Pure Ground">
+        <div class="meta">
+          <div class="row1"><span class="name">Pure Ground</span><span class="indu">B2B Food</span></div>
+          <div class="out">B2B native · DTC connected · Klaviyo lifecycle</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SHOPIFY EDITIONS SPOTLIGHT ────────────────────────────────── -->
+<section id="shopify-editions">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Built on the newest Shopify</span>
+      <div class="row">
+        <h2 class="h2">We ship what ships. <span class="it">The latest features, in production.</span></h2>
+        <span class="shop-partner">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 9.4 4l3 1.5-1 7 6-3.5L19 6.5 22 4l-2.5-2L12 2zm0 4-4 2v2l-4 1 1.5 11h13L20 11l-4-1V8l-4-2z"/></svg>
+          Shopify Plus Partner
+        </span>
+      </div>
+    </div>
+
+    <div class="editions-grid stagger">
+      <article class="edition">
+        <div class="edition-head">
+          <span class="edition-tag"><span class="shop-dot" aria-hidden="true"></span>Edition · Winter '26</span>
+          <span class="edition-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+        </div>
+        <h4 class="h4">Shoppable ChatGPT + <span class="it">AI Discovery</span></h4>
+        <p>Your catalog, answering natural-language questions at scale. We structure products and content so the answer is always yours.</p>
+        <a class="btn-link" href="#" data-magnet>See in action <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="edition">
+        <div class="edition-head">
+          <span class="edition-tag"><span class="shop-dot" aria-hidden="true"></span>Edition · Summer '25</span>
+          <span class="edition-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="9" height="11" rx="1"/><rect x="12" y="4" width="9" height="16" rx="1"/><path d="M3 12h9M12 9h9"/></svg>
+          </span>
+        </div>
+        <h4 class="h4">B2B native <span class="it">+ DTC,</span> one store</h4>
+        <p>One theme, one admin, two customer experiences. Price lists, net terms, company profiles — all connected to DTC data.</p>
+        <a class="btn-link" href="#" data-magnet>See in action <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="edition">
+        <div class="edition-head">
+          <span class="edition-tag"><span class="shop-dot" aria-hidden="true"></span>Ongoing</span>
+          <span class="edition-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          </span>
+        </div>
+        <h4 class="h4">Shop Markets <span class="it">+ cross-border</span></h4>
+        <p>One storefront, many markets. Currency, language, duty, and fulfillment handled at the platform layer.</p>
+        <a class="btn-link" href="#" data-magnet>See in action <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── SHOPIFY BLUEPRINT SPOTLIGHT ───────────────────────────────── -->
+<section id="blueprint">
+  <div class="container">
+    <div class="shop reveal cursor-glow dual">
+      <div class="shop-grid">
+        <div>
+          <span class="badge"><span class="dot"></span>Shopify Blueprint</span>
+          <h2 class="h2">A 30-day diagnostic that tells you <span class="it">exactly what to fix</span> — with numbers attached.</h2>
+          <p class="lede" style="margin-top: 24px;">
+            Before you invest in a re-platform, a redesign, or a new agency — get a full system audit, a prioritized roadmap, and a financial case. Fixed scope. Fixed price.
+          </p>
+          <ul class="deliverables">
+            <li>Storefront performance + CRO audit</li>
+            <li>Brand architecture review</li>
+            <li>Technical & app stack assessment</li>
+            <li>SEO & lifecycle gap analysis</li>
+            <li>90-day prioritized roadmap</li>
+            <li>Financial case + ROI model</li>
+          </ul>
+          <div class="price">
+            <span class="num">$3,500</span>
+            <span class="desc">Fixed price · 14 business days · 100% credited toward implementation</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-paper" href="#contact" data-magnet>Start a Blueprint <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn-outline" href="#" data-magnet>See what we map <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div>
+          <div class="shop-card">
+            <div class="h">Sample Blueprint deliverable</div>
+            <div class="row"><span class="l">Storefront LCP</span><span class="r">2.8s → <span class="it">0.9s</span></span></div>
+            <div class="row"><span class="l">PDP conversion</span><span class="r">1.4% → <span class="it">3.4%</span></span></div>
+            <div class="row"><span class="l">Avg order value</span><span class="r">$48 → <span class="it">$81</span></span></div>
+            <div class="row"><span class="l">Subscription LTV</span><span class="r">+$118 / customer</span></div>
+            <div class="row"><span class="l">App stack savings</span><span class="r">−$1,840 / mo</span></div>
+            <div class="row"><span class="l">Implementation</span><span class="r"><span class="it">90-day roadmap</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>What clients say</span>
+      <div class="row">
+        <h2 class="h2"><span class="it">Five stars, repeatedly.</span></h2>
+        <span class="small" style="font-size: 14px;">40+ five-star reviews · Clutch · Shopify · Google</span>
+      </div>
+    </div>
+    <div class="testi-grid stagger">
+      <div class="testi">
+        <span class="stars" aria-label="5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+        </span>
+        <p class="quote">"They rebuilt the whole engine while we kept selling."</p>
+        <div class="who">
+          <div class="av"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/854e1fbb2064a2a7719b07b3b7471e52602451d4-1080x1350.jpg?w=600&h=750&fit=crop&auto=format" alt=""></div>
+          <div>
+            <div class="nm">Founder</div>
+            <div class="ti">Sorella</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <span class="stars" aria-label="5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+        </span>
+        <p class="quote">"Our site used to be a liability. Now it's the strongest salesperson we have."</p>
+        <div class="who">
+          <div class="av"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/bf4b3e4f2097c6fc7da3565ac1b9da4bc387a071-1920x1277.jpg?w=600&h=750&fit=crop&auto=format" alt=""></div>
+          <div>
+            <div class="nm">CMO</div>
+            <div class="ti">Dermaplane Pro</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <span class="stars" aria-label="5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.94L22 9.97l-5.5 4.85L18.18 22 12 18.27 5.82 22l1.68-7.18L2 9.97l7.05-1.03L12 2z"/></svg>
+        </span>
+        <p class="quote">"Finally — a partner that treats brand and systems as the same problem."</p>
+        <div class="who">
+          <div class="av"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/bb475e8348fd93c6c686d775ffab7fb39ca20a5b-2580x1356.jpg?w=600&h=750&fit=crop&auto=format" alt=""></div>
+          <div>
+            <div class="nm">VP Commerce</div>
+            <div class="ti">Clear Capital</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Awards bar -->
+    <div class="awards-bar reveal">
+      <span>SHOPIFY PLUS PARTNER</span>
+      <span class="sep">·</span>
+      <span>CLUTCH TOP AGENCY 2025</span>
+      <span class="sep">·</span>
+      <span>AWWWARDS HM</span>
+      <span class="sep">·</span>
+      <span>DESIGN RUSH</span>
+      <span class="sep">·</span>
+      <span>GOOGLE 5.0</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSIGHTS ──────────────────────────────────────────────────── -->
+<section id="insights">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Insights</span>
+      <div class="row">
+        <h2 class="h2">Sharp thinking, <span class="it">short reads.</span></h2>
+        <span class="ins-head-cta">
+          <a class="btn btn-ghost" href="#" data-magnet>All insights <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-dark" href="#" data-magnet>Subscribe to the Brief <span class="arrow" aria-hidden="true">→</span></a>
+        </span>
+      </div>
+    </div>
+
+    <div class="ins-grid stagger">
+      <a class="ins" href="#" aria-label="Read: Why most Woo to Shopify migrations fail">
+        <div class="img"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/708fc20ce6df60ec7a5e3dc76a5d5e40c68743f6-1080x1920.jpg?w=900&h=1200&fit=crop&auto=format" alt=""></div>
+        <div class="overlay"></div>
+        <div class="grain"></div>
+        <div class="tag-row">
+          <span class="tag cat-shopify"><span class="swatch"></span>Commerce</span>
+          <span class="meta-time">4 min read · Apr 9, 2026</span>
+        </div>
+        <div class="body">
+          <h4>Why most Woo → Shopify migrations fail <span class="it">(and the 3 questions that stop it).</span></h4>
+          <span class="read">Read article <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="ins" href="#" aria-label="Read: Brand architecture for companies that grew faster than their logo">
+        <div class="img"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/66808611b459b87f5b60306b2a70539d8eebd034-2160x3840.png?w=900&h=1200&fit=crop&auto=format" alt=""></div>
+        <div class="overlay"></div>
+        <div class="grain"></div>
+        <div class="tag-row">
+          <span class="tag cat-strategy"><span class="swatch"></span>Brand</span>
+          <span class="meta-time">6 min read · Apr 2, 2026</span>
+        </div>
+        <div class="body">
+          <h4>Brand architecture for companies that grew <span class="it">faster than their logo.</span></h4>
+          <span class="read">Read article <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="ins" href="#" aria-label="Read: The KPI we care about most and the 4 we throw out">
+        <div class="img"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/e4427099f405fc95f13c24d3252de0092fd38ce6-2160x3840.png?w=900&h=1200&fit=crop&auto=format" alt=""></div>
+        <div class="overlay"></div>
+        <div class="grain"></div>
+        <div class="tag-row">
+          <span class="tag cat-growth"><span class="swatch"></span>Growth</span>
+          <span class="meta-time">3 min read · Mar 26, 2026</span>
+        </div>
+        <div class="body">
+          <h4>The KPI we care about most — <span class="it">and the 4 we throw out.</span></h4>
+          <span class="read">Read article <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ─────────────────────────────────────────────────── -->
+<section id="contact" style="padding-top: 0;">
+  <div class="container">
+    <div class="final reveal cursor-glow dual">
+      <div class="inner">
+        <span class="eyebrow" style="color: rgba(247,245,238,.75); margin-bottom: 24px; display: inline-flex;"><span class="dot"></span>Let's commence</span>
+        <h2 class="h2">Ready to see where your brand and commerce are <span class="it">leaking revenue?</span></h2>
+        <p>Start with a Shopify Blueprint — a 14-day strategic diagnostic that shows you exactly what to fix, in what order, with numbers attached.</p>
+        <div class="row">
+          <a class="btn btn-accent" href="#" data-magnet>Start a Blueprint <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#" style="border-color: rgba(247,245,238,.22); color: var(--paper);" data-magnet>Book a free call <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────────────── -->
+<footer id="about">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="Homepage.html" aria-label="Commence Studio home">
+          <svg class="brandmark" viewBox="0 0 577.06 527.02" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M467.09,366.2H190.5a4.76,4.76,0,0,1-4.75-4.79V347.55a5.13,5.13,0,0,0,.1-1V122.84a5.22,5.22,0,0,0-8.91-3.7l-76.88,76.79a5.23,5.23,0,0,0-1.53,3.7V448.76a4.76,4.76,0,0,0,4.76,4.76H389.76a4.79,4.79,0,0,0,3.37-1.39l77.31-78A4.63,4.63,0,0,0,467.09,366.2Z"/><path d="M240.13,179.8H367.48a4.76,4.76,0,0,1,4.76,4.76v120.6a4.76,4.76,0,0,0,8.12,3.36l96.8-97a4.81,4.81,0,0,0,1.38-3.37V78.26a4.76,4.76,0,0,0-4.75-4.76H240.13a4.76,4.76,0,0,0-4.75,4.76v96.79A4.75,4.75,0,0,0,240.13,179.8Z"/></svg>
+          <span class="brand-text">Commence</span>
+        </a>
+        <p>A brand and commerce partner for growth-stage companies. Reno-based. Operating everywhere.</p>
+        <form class="footer-newsletter" onsubmit="return false;">
+          <input type="email" placeholder="Your email — get the Monthly Brief" aria-label="Email address" />
+          <button type="submit" class="btn btn-dark" data-magnet>Subscribe <span class="arrow" aria-hidden="true">→</span></button>
+        </form>
+      </div>
+      <div class="footer-col">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="About.html">About</a></li>
+          <li><a href="Process.html">Our Process</a></li>
+          <li><a href="#">People</a></li>
+          <li><a href="#">Culture</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Services</h6>
+        <ul>
+          <li><a href="Services.html">Unified Commerce</a></li>
+          <li><a href="Services.html">Shopify</a></li>
+          <li><a href="Services.html">Brand Strategy</a></li>
+          <li><a href="Services.html">Brand Identity</a></li>
+          <li><a href="#">Growth</a></li>
+          <li><a href="#">Content</a></li>
+          <li><a href="#">WordPress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Work</h6>
+        <ul>
+          <li><a href="#">All Case Studies</a></li>
+          <li><a href="#">By Industry</a></li>
+          <li><a href="#">By Service</a></li>
+          <li><a href="#">Shopify Blueprint</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Connect</h6>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Dribbble</a></li>
+          <li><a href="mailto:hello@commence.studio">hello@commence.studio</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Oversized wordmark — per wireframe -->
+    <div class="footer-wordmark" aria-hidden="true">
+      <svg viewBox="0 0 2738.22 527.02" xmlns="http://www.w3.org/2000/svg" fill="currentColor" preserveAspectRatio="xMidYMid meet"><path d="M1594.66,369.22v-94c0-68.8-25.69-94-69.72-94-10.4,0-23.24,1.67-33,5-17.73,10.62-37.3,25.17-55,38.59-10.39-31.88-31.19-43.62-63.6-43.62-9.79,0-22.63,2.23-31.8,5-17.12,10.62-32.42,22.37-49.54,35.23a261.54,261.54,0,0,1,2.44-35.79l-7.94-6.15-90.52,29.64,1.22,8.39,30.58,8.95c5.51,9,9.18,26.85,9.18,62.08v80c0,45.31-11,56.5-41.59,59.29v11.19c23.85-1.12,44-1.68,67.88-1.68,23.25,0,36.7.56,61.78,1.68V427.94c-28.75-3.91-32.42-13.42-32.42-59.84V232.75c14.06-7.27,26.3-13.42,39.75-17.9,41.59,0,54.43,15.1,54.43,69.91V367c0,44.74-3,57-32.41,61v11.19c20.8-1.12,39.14-1.68,61.77-1.68,23.85,0,43.42.56,59.93,1.68V427.94c-26.91-3.91-32.41-14-32.41-59.84v-94c0-15.09-1.22-29.64-4.28-39.14,14.07-7.83,29.35-15.66,43.42-20.14,41,0,55.66,15.1,55.66,69.91V368.1c0,46.42-4.29,56.48-32.42,59.84v11.19c21.41-1.12,41-1.68,63.61-1.68,23.24,0,42.2.56,63,1.68V427.94C1605.67,424.58,1594.66,416.19,1594.66,369.22Z"/><path d="M2328.05,409.49c-65.44,0-89.91-56.49-89.29-121.37.61-50.34,15.28-92.28,55-92.28,24.46,0,39.75,25.17,46.48,55.37l9.79,5c18.34-2.24,33.63-13.43,33.63-29.64,0-29.65-36.08-47-74.61-47-70.33,0-126.6,54.81-127.21,135.91-.61,95.63,56.26,132.54,127.82,129.75,23.85-10.07,50.76-22.93,75.84-35.79l-4.28-11.19C2363.52,405,2345.17,409.49,2328.05,409.49Z"/><path d="M2606.92,397.18c-21.4,9.51-39.75,12.31-59.93,12.31-47.09-.56-84.39-35.8-83.17-119.14h133.94l8.55-10.06c1.22-53.69-25.07-100.67-84.39-100.67-59.93,0-114.37,50.33-114.37,135.91-.61,93.4,51.37,133.11,126,129.19,25.68-10.06,50.76-22.37,77.06-36.36Zm-95.4-202.46c23.24,0,40.36,28.52,39.75,81.65l-87.45,2.8C2464.43,230.51,2480.33,194.72,2511.52,194.72Z"/><path d="M2118.28,369.22V274.69c0-71-28.75-93.39-71-93.39a115.39,115.39,0,0,0-33,5c-17.74,10.62-34.25,22.37-51.37,35.23,0-8.38.61-24.05,1.83-35.79l-8-6.15-90.51,29.64,1.22,8.39,30.58,8.95c5.5,9,9.17,28.52,9.17,62.08v80c0,46.43-12.23,56.5-41.59,59.29v11.19c22.63-1.12,44-1.68,67.89-1.68,23.24,0,39.75.56,64.22,1.68V427.94c-30-3.91-34.25-12.86-34.25-59.84V232.75a261,261,0,0,1,41-17.9c41,0,56.88,15.1,56.88,71V368.1c0,46.42-6.12,56.48-34.86,59.84v11.19c21.4-1.12,44-1.68,66.05-1.68,23.24,0,43.42.56,63,1.68V427.94C2128.67,424.58,2118.28,416.19,2118.28,369.22Z"/><path d="M1784.35,409.49c-47.09-.56-84.4-35.8-83.17-119.14h133.93l8.56-10.06c1.23-53.69-25.07-100.67-84.39-100.67-59.94,0-114.37,50.33-114.37,135.91-.61,93.4,51.37,133.11,126,129.19,25.68-10.06,50.76-22.37,77-36.36l-3.66-11.18C1822.88,406.69,1804.53,409.49,1784.35,409.49Zm-35.47-214.77c23.24,0,40.36,28.52,39.75,81.65l-87.45,2.8C1701.79,230.51,1717.69,194.72,1748.88,194.72Z"/><path d="M589.23,179.62c-69.72,0-123.54,48.66-123.54,131.43s53.82,133.67,123.54,133.67c70.33,0,124.15-50.9,124.15-133.67C713.38,228.83,659.56,179.62,589.23,179.62Zm0,250c-40.37,0-59.33-42.51-59.33-118.57s19-117.45,59.33-117.45c41,0,61.16,41.39,61.16,117.45S630.2,429.62,589.23,429.62Z"/><path d="M392,180.66c.1.85,6-.42,14.2-2.64,29.77-8,37.87-43.2,14.13-61.48-24.19-18.64-54.85-35.92-100.7-35.92-104.58,0-192,68.73-192,182.89,0,133.11,80.73,182.88,192.65,182.88C384,446.39,431.15,405,449,362.56L435.63,352C415.93,399.71,373,428.5,322.1,428.5c-84.39,0-117.42-49.78-117.42-165,0-107.94,36.09-166.11,115-166.11C370.65,97.4,386.68,136.78,392,180.66Z"/><path d="M1139,369.22v-94c0-68.8-25.68-94-69.72-94-10.39,0-23.24,1.67-33,5-17.73,10.62-37.31,25.17-55,38.59-10.4-31.88-31.19-43.62-63.6-43.62-9.79,0-22.63,2.23-31.81,5C868.72,197,853.43,208.7,836.3,221.56a260.1,260.1,0,0,1,2.45-35.79l-8-6.15-90.51,29.64,1.22,8.39,30.58,8.95c5.5,9,9.17,26.85,9.17,62.08v80c0,45.31-11,56.5-41.59,59.29v11.19c23.86-1.12,44-1.68,67.89-1.68,23.24,0,36.69.56,61.77,1.68V427.94c-28.75-3.91-32.42-13.42-32.42-59.84V232.75c14.07-7.27,26.3-13.42,39.76-17.9,41.58,0,54.43,15.1,54.43,69.91V367c0,44.74-3.06,57-32.41,61v11.19c20.79-1.12,39.13-1.68,61.76-1.68,23.86,0,43.43.56,59.94,1.68V427.94C993.48,424,988,414,988,368.1v-94c0-15.09-1.23-29.64-4.28-39.14,14.06-7.83,29.35-15.66,43.42-20.14,41,0,55.65,15.1,55.65,69.91V368.1c0,46.42-4.28,56.48-32.41,59.84v11.19c21.4-1.12,41-1.68,63.6-1.68,23.24,0,42.2.56,63,1.68V427.94C1150,424.58,1139,416.19,1139,369.22Z"/></svg>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Commence Studio · Reno, NV</span>
+      <div class="legal">
+        <span>Shopify Plus Partner</span>
+        <span>Clutch Top Agency</span>
+        <span>Awwwards HM</span>
+      </div>
+      <div class="legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── STICKY BUBBLE ─────────────────────────────────────────────── -->
+<a class="bubble" href="#contact">
+  <span class="ava"><img src="https://cdn.sanity.io/images/w2xt1cyc/production/2891a114a10f251d92dec44acb3e06c0ec82927c-1920x1277.jpg?w=600&h=750&fit=crop&auto=format" alt=""></span>
+  <span class="pulse" aria-hidden="true"></span>
+  <span>Talk to a strategist</span>
+</a>
+
+<script>
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ── CUSTOM CURSOR ─────────────────────────────────────────── */
+  const ring = document.getElementById('cursorRing');
+  if (ring && isFinePointer && !reduceMotion){
+    document.documentElement.classList.add('has-cursor');
+    let mx = window.innerWidth/2, my = window.innerHeight/2;
+    let rx = mx, ry = my;
+    let active = false;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      if (!active){ active = true; ring.classList.add('ready'); }
+    });
+    document.addEventListener('mousedown', () => ring.classList.add('click'));
+    document.addEventListener('mouseup',   () => ring.classList.remove('click'));
+    document.addEventListener('mouseleave',() => ring.classList.remove('ready'));
+    document.addEventListener('mouseenter',() => ring.classList.add('ready'));
+    function loop(){
+      rx += (mx - rx) * 0.20;
+      ry += (my - ry) * 0.20;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    const interactive = document.querySelectorAll('a, button, [data-magnet], .ins, .case, .testi, .tile');
+    interactive.forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('over'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('over'));
+    });
+  }
+
+  /* ── MAGNETIC HOVER ────────────────────────────────────────── */
+  if (isFinePointer && !reduceMotion){
+    document.querySelectorAll('[data-magnet]').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width/2;
+        const cy = r.top + r.height/2;
+        const dx = (e.clientX - cx) * 0.18;
+        const dy = (e.clientY - cy) * 0.32;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+  }
+
+  /* ── NAV: scroll state + hide on scroll-down ──────────────── */
+  const nav = document.getElementById('nav');
+  const navShell = document.querySelector('.nav-shell');
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (nav){
+      if (y > 24) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    }
+    if (navShell){
+      if (y > 160 && y > lastY + 4) navShell.classList.add('hide');
+      else if (y < lastY - 4 || y < 80) navShell.classList.remove('hide');
+    }
+    lastY = y;
+  }, { passive: true });
+
+  /* ── KINETIC H1 — word-by-word reveal ─────────────────────── */
+  const words = document.querySelectorAll('#kineticH1 .kinetic-word');
+  if (!reduceMotion){
+    requestAnimationFrame(() => {
+      words.forEach((w, i) => setTimeout(() => w.classList.add('in'), 180 + i * 90));
+    });
+  } else {
+    words.forEach(w => w.classList.add('in'));
+  }
+
+  /* ── CURSOR-REACTIVE GRADIENT BACKGROUNDS ─────────────────── */
+  const glowEls = Array.from(document.querySelectorAll('.cursor-glow'));
+  if (glowEls.length && !reduceMotion){
+    let gMx = window.innerWidth / 2, gMy = window.innerHeight / 2;
+    let gRaf = null;
+    function paintGlow(){
+      glowEls.forEach(el => {
+        const r = el.getBoundingClientRect();
+        // Skip painting elements that aren't on/near the viewport
+        if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+        // Skip painting elements far from the cursor (above/below) — keep last value
+        if (gMy < r.top - 320 || gMy > r.bottom + 320) return;
+        const x = gMx - r.left;
+        const y = gMy - r.top;
+        el.style.setProperty('--gx', x + 'px');
+        el.style.setProperty('--gy', y + 'px');
+      });
+      gRaf = null;
+    }
+    document.addEventListener('mousemove', (e) => {
+      gMx = e.clientX; gMy = e.clientY;
+      if (!gRaf) gRaf = requestAnimationFrame(paintGlow);
+    }, { passive: true });
+    // Repaint on scroll so the gradient follows even when the user is scrolling, not moving the mouse
+    window.addEventListener('scroll', () => {
+      if (!gRaf) gRaf = requestAnimationFrame(paintGlow);
+    }, { passive: true });
+  }
+
+  /* ── HERO PARALLAX ────────────────────────────────────────── */
+  const cells = document.querySelectorAll('#heroCollage [data-parallax]');
+  if (cells.length && !reduceMotion){
+    let ticking = false;
+    function applyParallax(){
+      const y = window.scrollY;
+      cells.forEach(cell => {
+        const speed = parseFloat(cell.dataset.parallax) || 0;
+        cell.style.transform = `translate3d(0, ${y * speed * -1}px, 0)`;
+      });
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking){ requestAnimationFrame(applyParallax); ticking = true; }
+    }, { passive: true });
+  }
+
+  /* ── SCROLL REVEAL + STAGGER ──────────────────────────────── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+  /* ── FILTER PILLS visual state ────────────────────────────── */
+  document.querySelectorAll('.cs-filter .pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.cs-filter .pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+})();
+</script>
+
+<!-- Tweaks system -->
+<style>
+  /* Density variants */
+  body.density-tight section { padding: 64px 0 !important; }
+  body.density-loose section { padding: 144px 0 !important; }
+  @media (min-width: 1024px){
+    body.density-tight section { padding: 88px 0 !important; }
+    body.density-loose section { padding: 176px 0 !important; }
+  }
+  body.force-reduce-motion *,
+  body.force-reduce-motion *::before,
+  body.force-reduce-motion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-bootstrap.jsx"></script>
+
+</body>
+</html>

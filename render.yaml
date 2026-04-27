@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: commence-studio
+    env: static
+    staticPublishPath: .
+    routes:
+      - type: redirect
+        source: /
+        destination: /Homepage.html

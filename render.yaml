@@ -1,8 +1,9 @@
 services:
   - type: web
     name: commence-studio
-    env: static
-    staticPublishPath: .
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
     routes:
       - type: redirect
         source: /
